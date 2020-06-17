@@ -9,7 +9,9 @@ namespace Proteus.Infrastructure.Data
 {
     public class ProteusContext : DbContext
     {
-        public ProteusContext(DbContextOptions options) : base(options)
+        //When registering multiple DbContext types make sure that the constructor for each context type has a DbContextOptions<TContext> parameter rather than a non-generic DbContextOptions parameter   
+        //https://docs.microsoft.com/en-us/ef/core/miscellaneous/configuring-dbcontext
+        public ProteusContext(DbContextOptions<ProteusContext> options) : base(options)
         {
         }
 

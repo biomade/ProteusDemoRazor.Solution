@@ -36,6 +36,8 @@ namespace Proteus.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureDatabases(services);
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                        .AddDefaultUI()
                        .AddEntityFrameworkStores<AppIdentityDbContext>()
@@ -80,7 +82,6 @@ namespace Proteus.UI
         {
             // Add Core Layer
             // Add Infrastructure Layer
-            ConfigureDatabases(services);
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
            //services.AddScoped<IProductRepository, ProductRepository>();
            //services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -105,11 +106,17 @@ namespace Proteus.UI
         private void ConfigureDatabases(IServiceCollection services)
         {
             // use in-memory database
-            services.AddDbContext<ProteusContext>(c =>
-                c.UseInMemoryDatabase("ProteusConnection"));
-            //// Add Identity DbContext
-            //services.AddDbContext<AppIdentityDbContext>(options =>
-            //    options.UseInMemoryDatabase("IdentityConnection"));
+            services.AddDbContext<ProteusContext>(options =>
+                options.UseInMemoryDatabase("Proteus"));
+
+
+            // Add Identity DbContext
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //options.UseSqlServer(
+            //    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseInMemoryDatabase("Identity"));
+
 
             //// use real database
             //services.AddDbContext<ProteusContext>(c =>
