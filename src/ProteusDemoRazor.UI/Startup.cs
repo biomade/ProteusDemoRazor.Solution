@@ -3,11 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Proteus.Infrastructure.Identity;
+using Proteus.Core.Repositories.Base;
+using Proteus.Infrastructure.Repository.Base;
+using Proteus.Infrastructure.Logging;
+using Proteus.Core.Interfaces;
+using Proteus.Infrastructure.Data;
+using AutoMapper;
+using Proteus.UI.Interfaces;
+using Proteus.UI.Services;
+using Proteus.UI.HealthCheck;
 
 namespace Proteus.UI
 {
@@ -23,8 +36,17 @@ namespace Proteus.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                       .AddDefaultUI()
+                       .AddEntityFrameworkStores<AppIdentityDbContext>()
+                                       .AddDefaultTokenProviders();
+
+            // aspnetrun dependencies
+            RegisterServices(services);
+
             services.AddRazorPages();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -32,6 +54,7 @@ namespace Proteus.UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -45,12 +68,55 @@ namespace Proteus.UI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
             });
+        }
+        private void RegisterServices(IServiceCollection services)
+        {
+            // Add Core Layer
+            // Add Infrastructure Layer
+            ConfigureDatabases(services);
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+           //services.AddScoped<IProductRepository, ProductRepository>();
+           //services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+            // Add Application Layer
+            //services.AddScoped<IProductService, ProductService>();
+            //services.AddScoped<ICategoryService, CategoryService>();
+
+            // Add Web Layer
+            services.AddAutoMapper(typeof(Startup)); // Add AutoMapper
+            services.AddScoped<IIndexPageService, IndexPageService>();
+            //services.AddScoped<IProductPageService, ProductPageService>();
+            //services.AddScoped<ICategoryPageService, CategoryPageService>();
+
+            // Add Miscellaneous
+            services.AddHttpContextAccessor();
+            services.AddHealthChecks()
+                .AddCheck<IndexPageHealthCheck>("home_page_health_check");
+        }
+
+        private void ConfigureDatabases(IServiceCollection services)
+        {
+            // use in-memory database
+            services.AddDbContext<ProteusContext>(c =>
+                c.UseInMemoryDatabase("ProteusConnection"));
+            //// Add Identity DbContext
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseInMemoryDatabase("IdentityConnection"));
+
+            //// use real database
+            //services.AddDbContext<ProteusContext>(c =>
+            //    c.UseSqlServer(Configuration.GetConnectionString("ProteusConnection")));
+            // Add Identity DbContext
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
         }
     }
 }
