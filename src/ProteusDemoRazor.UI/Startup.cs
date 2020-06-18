@@ -18,8 +18,6 @@ using Proteus.Infrastructure.Logging;
 using Proteus.Core.Interfaces;
 using Proteus.Infrastructure.Data;
 using AutoMapper;
-using Proteus.UI.Interfaces;
-using Proteus.UI.Services;
 using Proteus.UI.HealthCheck;
 using Proteus.Core.Repositories;
 using Proteus.Infrastructure.Repository;
@@ -87,8 +85,8 @@ namespace Proteus.UI
             // Add Core Layer
             // Add Infrastructure Layer
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-           services.AddScoped<IProductRepository, ProductRepository>();
-           services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
             // Add Application Layer
@@ -96,10 +94,7 @@ namespace Proteus.UI
             services.AddScoped<ICategoryService, CategoryService>();
 
             // Add Web Layer
-            services.AddAutoMapper(typeof(Startup)); // Add AutoMapper
-            services.AddScoped<IIndexPageService, IndexPageService>();
-            services.AddScoped<IProductPageService, ProductPageService>();
-            services.AddScoped<ICategoryPageService, CategoryPageService>();
+           
 
             // Add Miscellaneous
             services.AddHttpContextAccessor();

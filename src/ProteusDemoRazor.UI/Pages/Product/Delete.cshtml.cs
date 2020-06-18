@@ -4,18 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Proteus.UI.Interfaces;
-using Proteus.UI.ViewModels;
+using Proteus.Application.Interfaces;
+using Proteus.Application.ViewModels;
 
 namespace Proteus.UI.Pages.Product
 {
     public class DeleteModel : PageModel
     {
-        private readonly IProductPageService _productPageService;
+        private readonly IProductService _productService;
 
-        public DeleteModel(IProductPageService productPageService)
+        public DeleteModel(IProductService productService)
         {
-            _productPageService = productPageService ?? throw new ArgumentNullException(nameof(productPageService));
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
         [BindProperty]
@@ -28,7 +28,7 @@ namespace Proteus.UI.Pages.Product
                 return NotFound();
             }
 
-            Product = await _productPageService.GetProductById(productId.Value);
+            Product = await _productService.GetProductById(productId.Value);
             if (Product == null)
             {
                 return NotFound();
@@ -43,7 +43,7 @@ namespace Proteus.UI.Pages.Product
                 return NotFound();
             }
 
-            await _productPageService.DeleteProduct(Product);
+            await _productService.Delete(Product);
             return RedirectToPage("./Index");
         }
     }

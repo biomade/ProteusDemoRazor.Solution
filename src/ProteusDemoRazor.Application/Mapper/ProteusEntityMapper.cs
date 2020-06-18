@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Proteus.Application.Models;
+using Proteus.Application.ViewModels;
 using Proteus.Core.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,10 +12,10 @@ namespace Proteus.Application.Mapper
         public ProteusEntityMapper()
         {
             //Create the mapps between the Entities and Models
-            CreateMap<Product, ProductModel>()
+            CreateMap<Product, ProductViewModel>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName)).ReverseMap();
 
-            CreateMap<Category, CategoryModel>().ReverseMap();
+            CreateMap<Category, CategoryViewModel>().ReverseMap();
         }
     }
 }

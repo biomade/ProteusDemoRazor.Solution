@@ -1,9 +1,10 @@
-﻿using System;
+﻿
+using Proteus.Application.ViewModels.Base;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Proteus.UI.ViewModels
+namespace Proteus.Application.ViewModels
 {
     public class ProductViewModel : BaseViewModel
     {

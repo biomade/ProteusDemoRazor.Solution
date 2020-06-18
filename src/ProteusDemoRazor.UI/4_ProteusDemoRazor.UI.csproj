@@ -10,9 +10,25 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Mapper\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="ViewModels\**" />
     <Content Remove="Data\**" />
+    <Content Remove="Interfaces\**" />
+    <Content Remove="Mapper\**" />
+    <Content Remove="Services\**" />
+    <Content Remove="ViewModels\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Mapper\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
     <None Remove="Data\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Mapper\**" />
+    <None Remove="Services\**" />
+    <None Remove="ViewModels\**" />
   </ItemGroup>
 
   <ItemGroup>

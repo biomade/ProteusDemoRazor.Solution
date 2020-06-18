@@ -2,28 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Proteus.UI.Interfaces;
-using Proteus.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Proteus.UI.Services;
+using Proteus.Application.Interfaces;
+using Proteus.Application.ViewModels;
 
 namespace Proteus.UI.Pages.Category
 {
     public class IndexModel : PageModel
     {
-        private readonly ICategoryPageService _categoryPageService;
+        private readonly ICategoryService _categoryService;
 
-        public IndexModel(ICategoryPageService categoryPageService)
+        public IndexModel(ICategoryService categoryService)
         {
-            _categoryPageService = categoryPageService ?? throw new ArgumentNullException(nameof(categoryPageService));
+            _categoryService = categoryService ?? throw new ArgumentNullException(nameof(categoryService));
         }
 
         public IEnumerable<CategoryViewModel> CategoryList { get; set; } = new List<CategoryViewModel>();
 
         public async Task<IActionResult> OnGetAsync()
         {
-            CategoryList = await _categoryPageService.GetCategories();
+            CategoryList = (IEnumerable<CategoryViewModel>)await _categoryService.GetCategoryList();
             return Page();
         }
     }

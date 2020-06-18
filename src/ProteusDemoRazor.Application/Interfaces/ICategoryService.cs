@@ -1,4 +1,4 @@
-﻿using Proteus.Application.Models;
+﻿using Proteus.Application.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +8,6 @@ namespace Proteus.Application.Interfaces
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryModel>> GetCategoryList();
+        Task<IEnumerable<CategoryViewModel>> GetCategoryList();
     }
 }

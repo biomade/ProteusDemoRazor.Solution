@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Proteus.UI.Interfaces;
-using Proteus.UI.ViewModels;
+using Proteus.Application.Interfaces;
+using Proteus.Application.ViewModels;
 
 namespace Proteus.UI.Pages.Product
 {
     public class CreateModel : PageModel
     {
-        private readonly IProductPageService _productPageService;
+        private readonly IProductService _productService;
 
-        public CreateModel(IProductPageService productPageService)
+        public CreateModel(IProductService productService)
         {
-            _productPageService = productPageService ?? throw new ArgumentNullException(nameof(productPageService));
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var categories = await _productPageService.GetCategories();
+            var categories = await _productService.GetCategoryList();
             ViewData["CategoryId"] = new SelectList(categories, "Id", "CategoryName");
             return Page();
         }
@@ -36,7 +36,7 @@ namespace Proteus.UI.Pages.Product
                 return Page();
             }
 
-            Product = await _productPageService.CreateProduct(Product);
+            Product = await _productService.Create(Product);
             return RedirectToPage("./Index");
         }
     }

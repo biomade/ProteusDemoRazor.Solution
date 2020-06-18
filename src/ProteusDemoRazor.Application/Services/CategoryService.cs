@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Proteus.Application.Interfaces;
 using Proteus.Application.Mapper;
-using Proteus.Application.Models;
+using Proteus.Application.ViewModels;
 using Proteus.Core;
 using Proteus.Core.Interfaces;
 using Proteus.Core.Repositories;
@@ -23,10 +23,10 @@ namespace Proteus.Application.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<IEnumerable<CategoryModel>> GetCategoryList()
+        public async Task<IEnumerable<CategoryViewModel>> GetCategoryList()
         {
             var category = await _categoryRepository.GetAllAsync();
-            var mapped = ObjectMapper.Mapper.Map<IEnumerable<CategoryModel>>(category);
+            var mapped = ObjectMapper.Mapper.Map<IEnumerable<CategoryViewModel>>(category);
             return mapped;
         }
 
