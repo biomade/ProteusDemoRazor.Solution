@@ -113,19 +113,20 @@ namespace Proteus.UI
             //services.AddDbContext<ProteusContext>(options =>
             //    options.UseInMemoryDatabase("Proteus"));
             // Add Identity DbContext
-            services.AddDbContext<AppIdentityDbContext>(options =>
-                options.UseInMemoryDatabase("Identity"));
+            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //    options.UseInMemoryDatabase("Identity"));
 
 
             // use real database
             //if used execute the following commands in the Package Manager Console
             //1) dotnet restore
-            //3) update-database -Context ProteusContext
+            //2a) update-database -Context ProteusContext
+            //2b) update-database -Context AppIdentityDbContext
             services.AddDbContext<ProteusContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ProteusConnection")));
             // Add Identity DbContext
-            //services.AddDbContext<AppIdentityDbContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+            services.AddDbContext<AppIdentityDbContext>(c =>
+            c.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
         }
     }
 }
