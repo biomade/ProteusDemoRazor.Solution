@@ -21,6 +21,10 @@ using AutoMapper;
 using Proteus.UI.Interfaces;
 using Proteus.UI.Services;
 using Proteus.UI.HealthCheck;
+using Proteus.Core.Repositories;
+using Proteus.Infrastructure.Repository;
+using Proteus.Application.Interfaces;
+using Proteus.Application.Services;
 
 namespace Proteus.UI
 {
@@ -83,19 +87,19 @@ namespace Proteus.UI
             // Add Core Layer
             // Add Infrastructure Layer
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-           //services.AddScoped<IProductRepository, ProductRepository>();
-           //services.AddScoped<ICategoryRepository, CategoryRepository>();
+           services.AddScoped<IProductRepository, ProductRepository>();
+           services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
             // Add Application Layer
-            //services.AddScoped<IProductService, ProductService>();
-            //services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             // Add Web Layer
             services.AddAutoMapper(typeof(Startup)); // Add AutoMapper
             services.AddScoped<IIndexPageService, IndexPageService>();
-            //services.AddScoped<IProductPageService, ProductPageService>();
-            //services.AddScoped<ICategoryPageService, CategoryPageService>();
+            services.AddScoped<IProductPageService, ProductPageService>();
+            services.AddScoped<ICategoryPageService, CategoryPageService>();
 
             // Add Miscellaneous
             services.AddHttpContextAccessor();
@@ -105,22 +109,20 @@ namespace Proteus.UI
 
         private void ConfigureDatabases(IServiceCollection services)
         {
-            // use in-memory database
-            services.AddDbContext<ProteusContext>(options =>
-                options.UseInMemoryDatabase("Proteus"));
-
-
+            //// use in-memory database
+            //services.AddDbContext<ProteusContext>(options =>
+            //    options.UseInMemoryDatabase("Proteus"));
             // Add Identity DbContext
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //options.UseSqlServer(
-            //    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseInMemoryDatabase("Identity"));
 
 
-            //// use real database
-            //services.AddDbContext<ProteusContext>(c =>
-            //    c.UseSqlServer(Configuration.GetConnectionString("ProteusConnection")));
+            // use real database
+            //if used execute the following commands in the Package Manager Console
+            //1) dotnet restore
+            //3) update-database -Context ProteusContext
+            services.AddDbContext<ProteusContext>(c =>
+                c.UseSqlServer(Configuration.GetConnectionString("ProteusConnection")));
             // Add Identity DbContext
             //services.AddDbContext<AppIdentityDbContext>(options =>
             //options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
