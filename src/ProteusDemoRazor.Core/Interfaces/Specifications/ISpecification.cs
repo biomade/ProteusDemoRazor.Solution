@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Proteus.Core.Specifications.Base
+namespace Proteus.Core.Interfaces.Specifications
 {
     public interface ISpecification<T>
     {

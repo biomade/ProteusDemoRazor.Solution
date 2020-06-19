@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2_ProteusDemoRazor.Infrastr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4_ProteusDemoRazor.UI", "src\ProteusDemoRazor.UI\4_ProteusDemoRazor.UI.csproj", "{C4FD2538-7E6B-42EE-9F67-FB12B2AE7C2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_Proteus.Core.Tests", "test\Proteus.Core.Tests\1_Proteus.Core.Tests.csproj", "{5A4F0FF2-0E7A-4586-A9B0-260A3BF90C68}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +37,6 @@ Global
 		{C4FD2538-7E6B-42EE-9F67-FB12B2AE7C2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4FD2538-7E6B-42EE-9F67-FB12B2AE7C2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4FD2538-7E6B-42EE-9F67-FB12B2AE7C2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A4F0FF2-0E7A-4586-A9B0-260A3BF90C68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A4F0FF2-0E7A-4586-A9B0-260A3BF90C68}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A4F0FF2-0E7A-4586-A9B0-260A3BF90C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A4F0FF2-0E7A-4586-A9B0-260A3BF90C68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +46,6 @@ Global
 		{8B117EA6-84C5-4A2D-8C93-FDCE38018186} = {723AA3F6-484E-44C2-8861-F695EA9201CA}
 		{87C87D21-BAC7-4159-B7D1-B328C9823DAB} = {723AA3F6-484E-44C2-8861-F695EA9201CA}
 		{C4FD2538-7E6B-42EE-9F67-FB12B2AE7C2C} = {723AA3F6-484E-44C2-8861-F695EA9201CA}
-		{5A4F0FF2-0E7A-4586-A9B0-260A3BF90C68} = {E9BAB8DB-B465-416F-8179-9C65615625C3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AAA1B83-BBB7-4B8E-8049-B945933668AB}

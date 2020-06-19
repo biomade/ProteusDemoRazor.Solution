@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Proteus.Core.Entities.Base;
-using Proteus.Core.Specifications.Base;
+using Proteus.Core.Interfaces.Specifications;
 using System.Linq;
 
 namespace Proteus.Infrastructure.Repository.Base

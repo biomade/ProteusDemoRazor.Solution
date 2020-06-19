@@ -1,5 +1,5 @@
 ﻿using Proteus.Core.Entities;
-using Proteus.Core.Repositories;
+using Proteus.Core.Interfaces.Repositories;
 using Proteus.Core.Specifications;
 using Proteus.Infrastructure.Data;
 using Proteus.Infrastructure.Repository.Base;

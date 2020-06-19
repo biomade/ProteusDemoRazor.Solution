@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Proteus.Core.Entities;
-using Proteus.Core.Interfaces;
-using Proteus.Core.Repositories;
 using Proteus.Application.Mapper;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
+using Microsoft.Extensions.Logging;
+using Proteus.Core.Interfaces.Repositories;
 
 namespace Proteus.Application.Services
 {
@@ -16,9 +16,9 @@ namespace Proteus.Application.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IAppLogger<ProductService> _logger;
+        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, IAppLogger<ProductService> logger)
+        public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, ILogger<ProductService> logger)
         {
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
             _categoryRepository = categoryRepository ?? throw new ArgumentNullException(nameof(categoryRepository));

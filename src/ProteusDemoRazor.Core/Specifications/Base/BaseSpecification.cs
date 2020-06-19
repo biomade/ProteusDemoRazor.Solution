@@ -1,4 +1,4 @@
-﻿using Proteus.Core.Specifications;
+﻿using Proteus.Core.Interfaces.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;

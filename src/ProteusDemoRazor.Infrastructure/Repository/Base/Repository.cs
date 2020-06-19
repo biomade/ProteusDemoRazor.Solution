@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Proteus.Core.Entities.Base;
-using Proteus.Core.Repositories.Base;
+using Proteus.Core.Interfaces.Repositories.Base;
+using Proteus.Core.Interfaces.Specifications;
 using Proteus.Core.Specifications;
 using Proteus.Core.Specifications.Base;
 using Proteus.Infrastructure.Data;
@@ -98,5 +99,6 @@ namespace Proteus.Infrastructure.Repository.Base
             _dbContext.Set<T>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+
     }
 }

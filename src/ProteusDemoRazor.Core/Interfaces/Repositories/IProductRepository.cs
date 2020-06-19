@@ -1,11 +1,11 @@
 ﻿using Proteus.Core.Entities;
-using Proteus.Core.Repositories.Base;
+using Proteus.Core.Interfaces.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proteus.Core.Repositories
+namespace Proteus.Core.Interfaces.Repositories
 {
     public interface IProductRepository : IRepository<Product>
     {

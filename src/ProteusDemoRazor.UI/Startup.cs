@@ -12,17 +12,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Proteus.Infrastructure.Identity;
-using Proteus.Core.Repositories.Base;
 using Proteus.Infrastructure.Repository.Base;
-using Proteus.Infrastructure.Logging;
-using Proteus.Core.Interfaces;
 using Proteus.Infrastructure.Data;
 using AutoMapper;
 using Proteus.UI.HealthCheck;
-using Proteus.Core.Repositories;
 using Proteus.Infrastructure.Repository;
 using Proteus.Application.Interfaces;
 using Proteus.Application.Services;
+using Proteus.Core.Interfaces.Repositories.Base;
+using Proteus.Core.Interfaces.Repositories;
 
 namespace Proteus.UI
 {
@@ -87,7 +85,6 @@ namespace Proteus.UI
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
             // Add Application Layer
             services.AddScoped<IProductService, ProductService>();

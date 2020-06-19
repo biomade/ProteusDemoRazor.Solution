@@ -1,6 +1,5 @@
 ﻿using Proteus.Core.Entities.Base;
-using Proteus.Core.Specifications;
-using Proteus.Core.Specifications.Base;
+using Proteus.Core.Interfaces.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proteus.Core.Repositories.Base
+namespace Proteus.Core.Interfaces.Repositories.Base
 {
     public interface IRepository<T> where T : Entity
     {
