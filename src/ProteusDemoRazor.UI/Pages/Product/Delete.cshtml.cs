@@ -15,7 +15,7 @@ namespace Proteus.UI.Pages.Product
         private readonly IProductService _productService;
         private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(IProductService productService, ILogger<CreateModel> logger)
+        public DeleteModel(IProductService productService, ILogger<DeleteModel> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
             _logger = logger;

@@ -17,7 +17,7 @@ namespace Proteus.UI.Pages.Product
         private readonly IProductService _productService;
         private readonly ILogger<EditModel> _logger;
 
-        public EditModel(IProductService productService, ILogger<CreateModel> logger)
+        public EditModel(IProductService productService, ILogger<EditModel> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
             _logger = logger;

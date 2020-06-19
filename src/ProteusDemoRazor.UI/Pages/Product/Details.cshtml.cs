@@ -15,7 +15,7 @@ namespace Proteus.UI.Pages.Product
         private readonly IProductService _productService;
         private readonly ILogger<DetailsModel> _logger;
 
-        public DetailsModel(IProductService productService, ILogger<CreateModel> logger)
+        public DetailsModel(IProductService productService, ILogger<DetailsModel> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
             _logger = logger;
