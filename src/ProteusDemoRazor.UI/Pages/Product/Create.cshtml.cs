@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
 
@@ -13,10 +14,13 @@ namespace Proteus.UI.Pages.Product
     public class CreateModel : PageModel
     {
         private readonly IProductService _productService;
+        private readonly ILogger<CreateModel> _logger;
 
-        public CreateModel(IProductService productService)
+        public CreateModel(IProductService productService, ILogger<CreateModel> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            _logger = logger;
+            _logger.LogDebug(1, "NLog injected into Product Create page");
         }
 
         public async Task<IActionResult> OnGetAsync()

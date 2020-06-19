@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
 
@@ -12,10 +13,13 @@ namespace Proteus.UI.Pages.Product
     public class DeleteModel : PageModel
     {
         private readonly IProductService _productService;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(IProductService productService)
+        public DeleteModel(IProductService productService, ILogger<CreateModel> logger)
         {
             _productService = productService ?? throw new ArgumentNullException(nameof(productService));
+            _logger = logger;
+            _logger.LogDebug(1, "NLog injected into Product Delete page");
         }
 
         [BindProperty]
