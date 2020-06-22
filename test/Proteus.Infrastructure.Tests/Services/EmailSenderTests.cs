@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Proteus.Infrastructure.Tests.Services
 {
+    [TestFixture]//denotes a class that contains unit tests.
     public class EmailSenderTests
     {
         //use moq to abstract the interfaces

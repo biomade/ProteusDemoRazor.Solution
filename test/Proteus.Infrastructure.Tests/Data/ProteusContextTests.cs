@@ -9,16 +9,18 @@ using System.Text;
 
 namespace Proteus.Infrastructure.Tests.Data
 {
+    [TestFixture]//denotes a class that contains unit tests.
     public class ProteusContextTests
     {
-        //For EF Code, do not mock use an inmemory database, as it will validate if the db is correct
-        [Test]
-        public void GetAllCategoriesTest()
+        private ProteusContext _dbContext;
+        [SetUp]//like a constructor
+        public void SetUp()
         {
             // Arrange - We're mocking our dbSet & dbContext
             var options = new DbContextOptionsBuilder<ProteusContext>()
                 .UseInMemoryDatabase(databaseName: "Proteus")
                 .Options;
+
             //insert seed data into db
             using (var context = new ProteusContext(options))
             {
@@ -27,9 +29,16 @@ namespace Proteus.Infrastructure.Tests.Data
                 context.SaveChanges();
             }
 
-            // Act - fetch data
-            var dbContext = new ProteusContext(options);
-            List<Category> acutaldResults = dbContext.Categories.ToList();
+            _dbContext = new ProteusContext(options);
+
+        }
+
+        //For EF Code, do not mock use an inmemory database, as it will validate if the db is correct
+        [Test]
+        public void GetAllCategoriesTest()
+        {           
+            //Act
+            List<Category> acutaldResults = _dbContext.Categories.ToList();
 
             //Assert
             Assert.AreEqual(expected: 2, actual: acutaldResults.Count) ;

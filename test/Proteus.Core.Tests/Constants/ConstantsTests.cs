@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Proteus.Core.Tests
 {
-
+    //this test uses XUnit, not NUnit
     public class ConstantsTests
     {
         [Theory(DisplayName = "Sample Test")]

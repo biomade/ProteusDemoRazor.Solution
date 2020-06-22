@@ -11,9 +11,9 @@ using System.Linq;
 namespace Proteus.Infrastructure.Tests.Repository
 {
     [TestFixture]//denotes a class that contains unit tests.
-    public class CategoryRepositoryTests
+    public class ProductRepositoryTests
     {
-        private ICategoryRepository _sutCategory; //system under test
+        private IProductRepository _sutProduct;//system under test
         private ProteusContext _dbContext;
         [SetUp]
         public void Setup()
@@ -33,13 +33,14 @@ namespace Proteus.Infrastructure.Tests.Repository
             _dbContext = new ProteusContext(options);
         }
 
+
         [Test]
-        public void GetAllCategoriesTest()
+        public void GetAllProductsTest()
         {
-            _sutCategory = new CategoryRepository(_dbContext);
+            _sutProduct = new ProductRepository(_dbContext);
 
             //Act
-            var categoryList = _sutCategory.GetAll();
+            var categoryList = _sutProduct.GetAll();
 
             //Assert
             Assert.AreEqual(expected: 2, actual: categoryList.Count);
