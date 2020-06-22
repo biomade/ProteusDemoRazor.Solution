@@ -6,12 +6,21 @@
     <IsPackable>false</IsPackable>
 
     <AssemblyName>Proteus.Application.Tests</AssemblyName>
+
+    <RootNamespace>Proteus.Application.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Moq" Version="4.14.3" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ProteusDemoRazor.Application\3_ProteusDemoRazor.Application.csproj" />
+    <ProjectReference Include="..\..\src\ProteusDemoRazor.Infrastructure\2_ProteusDemoRazor.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -27,5 +27,7 @@ namespace Proteus.Core.Interfaces.Repositories.Base
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task<int> CountAsync(ISpecification<T> spec);
+
+        public List<T> GetAll();
     }
 }

@@ -100,5 +100,10 @@ namespace Proteus.Infrastructure.Repository.Base
             await _dbContext.SaveChangesAsync();
         }
 
+        public List<T> GetAll()
+        {
+            return  _dbContext.Set<T>().ToList();
+        }
+
     }
 }

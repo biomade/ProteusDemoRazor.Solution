@@ -1,0 +1,1 @@
+﻿Tests for Application would be integration or functional tests 

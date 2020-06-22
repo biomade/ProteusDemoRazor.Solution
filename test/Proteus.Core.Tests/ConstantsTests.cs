@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Proteus.Core.Tests
 {
+
     public class ConstantsTests
     {
         [Theory(DisplayName = "Sample Test")]
