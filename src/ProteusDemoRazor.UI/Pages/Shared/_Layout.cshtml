@@ -39,7 +39,7 @@
         <partial name="_Header" />
 
         <!--Main Sidebar Partial View -->
-        @*<partial name="_MenuSidebar" />*@
+        <partial name="_MenuSidebar" />
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -48,7 +48,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <!-- Page Header Partial View -->
-                        @*<partial name="_PageHeader" />*@
+                        <partial name="_PageHeader" />
 
                         <!--BreadCrumb Partial View -->
                         @*<partial name="_BreadCrumbs" />*@
@@ -75,5 +75,24 @@
     </div>
     <!-- ./wrapper -->
     @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            //this sets the active link , 
+            //the selected route/page will be selected
+
+            var url = window.location;
+
+            // for sidebar menu entirely but not cover treeview
+            $('ul.nav-sidebar a').filter(function () {
+                return this.href == url;
+            }).addClass('active');
+
+            // for treeview
+            $('ul.nav-treeview a').filter(function () {
+                return this.href == url;
+            }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+        });
+    </script>
 </body>
 </html>
