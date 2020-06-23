@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4_ProteusDemoRazor.UI", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1_Proteus.Core.Tests", "test\Proteus.Core.Tests\1_Proteus.Core.Tests.csproj", "{4AFE47AA-CC96-4D3B-B0DC-FEA8E2129046}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2_Proteus.Infrastructure.Tests", "test\Proteus.Infrastructure.Tests\2_Proteus.Infrastructure.Tests.csproj", "{51CE4E2B-5568-415B-9CB2-9878B21CDD42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2_Proteus.Infrastructure.Tests", "test\Proteus.Infrastructure.Tests\2_Proteus.Infrastructure.Tests.csproj", "{51CE4E2B-5568-415B-9CB2-9878B21CDD42}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4_Proteus.UI.Tests", "test\Proteus.UI.Tests\4_Proteus.UI.Tests.csproj", "{2E541625-8ABB-40F6-B8E0-1D666050106A}"
 EndProject
