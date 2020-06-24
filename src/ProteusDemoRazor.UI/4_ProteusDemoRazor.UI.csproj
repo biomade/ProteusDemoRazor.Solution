@@ -9,21 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\StyleGuide\Shared\**" />
     <Compile Remove="Data\**" />
     <Compile Remove="Interfaces\**" />
     <Compile Remove="Mapper\**" />
     <Compile Remove="Services\**" />
     <Compile Remove="ViewModels\**" />
+    <Content Remove="Areas\StyleGuide\Shared\**" />
     <Content Remove="Data\**" />
     <Content Remove="Interfaces\**" />
     <Content Remove="Mapper\**" />
     <Content Remove="Services\**" />
     <Content Remove="ViewModels\**" />
+    <EmbeddedResource Remove="Areas\StyleGuide\Shared\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Interfaces\**" />
     <EmbeddedResource Remove="Mapper\**" />
     <EmbeddedResource Remove="Services\**" />
     <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="Areas\StyleGuide\Shared\**" />
     <None Remove="Data\**" />
     <None Remove="Interfaces\**" />
     <None Remove="Mapper\**" />
@@ -34,6 +38,10 @@
   <ItemGroup>
     <Content Remove="Properties\serviceDependencies.json" />
     <Content Remove="Properties\serviceDependencies.local.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ScaffoldingReadMe.txt" />
   </ItemGroup>
 
   <ItemGroup>
