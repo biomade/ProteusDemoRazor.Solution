@@ -1,0 +1,22 @@
+﻿@page
+@model Proteus.UI.Areas.StyleGuide.Pages.Examples.PaceModel
+@{
+    ViewData["Title"] = "Pace";
+}
+<!-- pace-progress -->
+<link rel="stylesheet" href="~/lib/pace/themes/blue/pace-theme-flat-top.css">
+<section class="pace-primary">
+    <p>
+        Pace is a progress bar that automatically appears at the top of the page.
+        <br />If you did not see it the first time, refresh this page!
+    </p>
+</section>
+
+@section Scripts {
+    <environment names="Development">
+        <script src="~/lib/pace/pace.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/pace/pace.min.js" asp-append-version="true"></script>
+    </environment>
+}

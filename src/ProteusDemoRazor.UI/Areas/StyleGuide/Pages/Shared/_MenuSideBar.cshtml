@@ -72,13 +72,19 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a asp-area="StyleGuide" asp-page="/Index" class="nav-link">
+                                    <i class="fas fa-hotel nav-icon"></i>
+                                    <p>Guide Home</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="StyleGuide" asp-page="/Dashboard/Index" class="nav-link">
                                     <i class="fas fa-tachometer-alt nav-icon"></i>
                                     <p>Dashboard</p>
                                 </a>
                             </li>
                             <!--start Widgets-->
                             <li class="nav-item">
-                                <a asp-area="StyleGuide" asp-page="/Widgets" class="nav-link">
+                                <a asp-area="StyleGuide" asp-page="/Widgets/Widgets" class="nav-link">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
                                         Widgets
@@ -455,53 +461,41 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="pages/examples/lockscreen.html" class="nav-link">
+                                        <a asp-area="StyleGuide" asp-page="/examples/lockscreen" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Lockscreen</p>
                                         </a>
-                                    </li>
+                                    </li>                                    
                                     <li class="nav-item">
-                                        <a href="pages/examples/legacy-user-menu.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Legacy User Menu</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/examples/language-menu.html" class="nav-link">
+                                        <a asp-area="StyleGuide" asp-page="/examples/languagemenu" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Language Menu</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="pages/examples/404.html" class="nav-link">
+                                        <a asp-area="StyleGuide" asp-page="/examples/404"  class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Error 404</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="pages/examples/500.html" class="nav-link">
+                                        <a asp-area="StyleGuide" asp-page="/examples/500" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Error 500</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="pages/examples/pace.html" class="nav-link">
+                                        <a asp-area="StyleGuide" asp-page="/examples/pace" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Pace</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="pages/examples/blank.html" class="nav-link">
+                                        <a asp-area="StyleGuide" asp-page="/examples/blank" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Blank Page</p>
                                         </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="starter.html" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Starter Page</p>
-                                        </a>
-                                    </li>
+                                    </li>  
                                 </ul>
                             </li>
                             <!--end Extras-->
@@ -509,7 +503,7 @@
                             <!--start Misc-->
                             <li class="nav-header">Miscellaneous</li>
                             <li class="nav-item">
-                                <a href="https://adminlte.io/docs/3.0" class="nav-link">
+                                <a asp-area="StyleGuide" asp-page="/Documentation/Index"  class="nav-link">
                                     <i class="nav-icon fas fa-file"></i>
                                     <p>Documentation</p>
                                 </a>

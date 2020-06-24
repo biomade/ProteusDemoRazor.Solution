@@ -8,8 +8,8 @@ $(document).ready(function () {
     //this sets the active link , 
     //the selected route/page will be selected
 
-    var url = window.location;
-
+    var url = window.location.href;
+    
     // for sidebar menu entirely but not cover treeview
     $('ul.nav-sidebar a').filter(function () {
         return this.href == url;
