@@ -1,4 +1,4 @@
-# ProteusDemoRazor.Solution
+# Proteus Demo Razor Solution
 Demo with Razor Pages
 A sample Asp.Net Core 3.1 solution that is built with 
   1) Razor Pages, Identity, local SQLServer database. There are samples for categories and products so you can work with the db.  
