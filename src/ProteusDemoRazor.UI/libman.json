@@ -113,6 +113,10 @@
     {
       "library": "popper.js@1.16.1",
       "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "library": "icheck-bootstrap@3.0.1",
+      "destination": "wwwroot/lib/icheck-bootstrap/"
     }
   ]
 }
