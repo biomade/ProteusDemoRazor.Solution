@@ -16,6 +16,7 @@
     },
     {
       "library": "jquery@3.4.1",
+      //works with older version, newest is 3.5.1
       "destination": "wwwroot/lib/jquery/"
     },
     {
@@ -110,13 +111,18 @@
       "library": "flag-icon-css@3.5.0",
       "destination": "wwwroot/lib/flag-icon-css/"
     },
-    {
-      "library": "popper.js@1.16.1",
-      "destination": "wwwroot/lib/popper.js/"
-    },
+
     {
       "library": "icheck-bootstrap@3.0.1",
       "destination": "wwwroot/lib/icheck-bootstrap/"
+    },
+    {
+      "library": "summernote@0.8.18",
+      "destination": "wwwroot/lib/summernote/"
+    },
+    {
+      "library": "popper.js@1.16.0",
+      "destination": "wwwroot/lib/popper.js/"
     }
   ]
 }
