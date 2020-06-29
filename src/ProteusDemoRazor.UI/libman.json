@@ -130,14 +130,18 @@
       "library": "filterizr@2.2.4",
       "destination": "wwwroot/lib/filterizr/"
     },
-
     {
       "library": "moment.js@2.27.0",
       "destination": "wwwroot/lib/moment/"
     },
     {
-      "library": "fullcalendar@4.4.0",
-      "destination": "wwwroot/lib/fullcalendar/"
+      "library": "pdfmake@0.1.65",
+      "destination": "wwwroot/lib/pdfmake/"
+    },
+    {
+      "library": "jszip@3.5.0",
+      "destination": "wwwroot/lib/jszip/"
     }
+    
   ]
 }
