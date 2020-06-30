@@ -10,7 +10,7 @@
         <script src="~/lib/popper.js/umd/popper.js"></script>
 
         <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
 
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
 
@@ -18,7 +18,9 @@
 
         <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.css" />
         <script src="~/lib/admin-lte/js/adminlte.js"></script>
-
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" href="~/lib/overlayScrollbars/css/OverlayScrollbars.min.css">
+        <script src="~/lib/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
         @*<link rel="stylesheet" href="~/css/site.css" />*@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
@@ -37,7 +39,7 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <!--Header Partial View -->
         <partial name="_Header" />
