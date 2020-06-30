@@ -141,7 +141,10 @@
     {
       "library": "jszip@3.5.0",
       "destination": "wwwroot/lib/jszip/"
+    },
+    {
+      "library": "bs-custom-file-input@1.3.4",
+      "destination": "wwwroot/lib/bs-custom-file-input/"
     }
-    
   ]
 }
