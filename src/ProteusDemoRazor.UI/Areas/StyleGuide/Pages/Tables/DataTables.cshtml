@@ -2,29 +2,6 @@
 @model Proteus.UI.Areas.StyleGuide.Pages.Tables.DataTablesModel
 @{
 }
-    <environment names="Development">
-        <!-- DataTables -->
-        <script src="~/lib/datatables/jquery.dataTables.js"></script>
-
-        <link rel="stylesheet" href="~/lib/datatables-bs4/css/dataTables.bootstrap4.css">
-        <script src="~/lib/datatables-bs4/js/dataTables.bootstrap4.js"></script>
-
-        <link rel="stylesheet" href="~/lib/datatables-responsive/css/responsive.bootstrap4.css">
-        <script src="~/lib/datatables-responsive/js/dataTables.responsive.js"></script>
-        <script src="~/lib/datatables-responsive/js/responsive.bootstrap4.js"></script>
-
-        <!--Print and Export buttons-->
-        <link rel="stylesheet" href="~/lib/datatables-buttons/css/buttons.bootstrap4.css">
-        <script src="~/lib/datatables-buttons/js/dataTables.buttons.js"></script>
-        <script src="~/lib/datatables-buttons/js/buttons.flash.js"></script>
-        <script src="~/lib/jszip/jszip.js"></script>
-        <script src="~/lib/pdfmake/pdfmake.js"></script>
-        <script src="~/lib/pdfmake/vfs_fonts.js"></script>
-        <script src="~/lib/datatables-buttons/js/buttons.html5.js"></script>
-        <script src="~/lib/datatables-buttons/js/buttons.print.js"></script>
-
-    </environment>
-    <environment names="Staging,Production">
         <!-- DataTables -->
         <script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
 
@@ -44,8 +21,6 @@
         <script src="~/lib/pdfmake/vfs_fonts.min.js" asp-append-version="true"></script>
         <script src="~/lib/datatables-buttons/js/buttons.html5.min.js" asp-append-version="true"></script>
         <script src="~/lib/datatables-buttons/js/buttons.print.min.js" asp-append-version="true"></script>
-    </environment>
-
 
 <div class="container-fluid">
     <div class="row">

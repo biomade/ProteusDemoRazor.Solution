@@ -2,16 +2,11 @@
 @model Proteus.UI.Areas.StyleGuide.Pages.Forms.ValidationModel
 @{
 }
-<environment names="Development">
-    <!-- jquery-validation -->
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib//jquery-validation/dist/additional-methods.js"></script>
-</environment>
-<environment names="Staging,Production">
+
     <!-- jquery-validation -->
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib//jquery-validation/dist/additional-methods.min.js" asp-append-version="true"></script>
-</environment>
+
 <div class="container-fluid">
     <div class="row">
         <!-- left column -->

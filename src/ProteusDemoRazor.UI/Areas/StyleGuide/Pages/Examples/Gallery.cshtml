@@ -2,22 +2,12 @@
 @model Proteus.UI.Areas.StyleGuide.Pages.Examples.GalleryModel
 @{
 }
-<environment names="Development">
-    <!-- Ekko Lightbox -->
-    <link rel="stylesheet" href="~/lib/ekko-lightbox/ekko-lightbox.css">
-    <!-- Ekko Lightbox -->
-    <script src="~/lib/ekko-lightbox/ekko-lightbox.min.js"></script>
-    <!-- Filterizr-->
-    <script src="~/lib/filterizr/jquery.filterizr.min.js"></script>
-</environment>
-<environment names="Staging,Production">
     <!-- Ekko Lightbox -->
     <link rel="stylesheet" href="~/lib/ekko-lightbox/ekko-lightbox.css" asp-append-version="true">
     <!-- Ekko Lightbox -->
     <script src="~/lib/ekko-lightbox/ekko-lightbox.min.js" asp-append-version="true"></script>
     <!-- Filterizr-->
     <script src="~/lib/filterizr/jquery.filterizr.min.js" asp-append-version="true"></script>
-</environment>
 
 <div class="container-fluid">
     <div class="row">

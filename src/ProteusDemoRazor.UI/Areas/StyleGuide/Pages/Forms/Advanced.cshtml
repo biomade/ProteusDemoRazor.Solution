@@ -4,35 +4,6 @@
 }
 @*There is an issue where Popper is not loading properly from the Layout page
     but adding it a second time here, makes it work*@
-<environment names="Development">
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/popper.js/umd/popper.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="~/lib/icheck-bootstrap/icheck-bootstrap.css">
-    <!-- Bootstrap Color Picker -->
-    <link rel="stylesheet" href="~/lib//bootstrap-colorpicker/css/bootstrap-colorpicker.css">
-    <script src="~/lib/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-    <!-- Select2 -->
-    <link rel="stylesheet" href="~/lib//select2/css/select2.css">
-    <link rel="stylesheet" href="~/lib//select2-bootstrap4-theme/select2-bootstrap4.css">
-    <script src="~/lib//select2/js/select2.full.js"></script>
-    <!-- Bootstrap4 Duallistbox -->
-    <link rel="stylesheet" href="~/lib/bootstrap4-duallistbox/bootstrap-duallistbox.css">
-    <script src="~/lib//bootstrap4-duallistbox/jquery.bootstrap-duallistbox.js"></script>
-    <!-- InputMask -->
-    <script src="~/lib/moment/moment.min.js"></script>
-    <script src="~/lib/inputmask/jquery.inputmask.bundle.js"></script>
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="~/lib/daterangepicker/daterangepicker.css">
-    <script src="~/lib/daterangepicker/daterangepicker.js"></script>
-    <!-- Tempusdominus Bbootstrap 4 -->
-    <link rel="stylesheet" href="~/lib//tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css">
-    <script src="~/lib/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js"></script>
-    <!-- Bootstrap Switch -->
-    <script src="~/lib/bootstrap-switch/js/bootstrap-switch.js"></script>
-</environment>
-<environment names="Staging,Production">
     <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
     <script src="~/lib/popper.js/umd/popper.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
@@ -59,9 +30,6 @@
     <script src="~/lib/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js" asp-append-version="true"></script>
     <!-- Bootstrap Switch -->
     <script src="~/lib/bootstrap-switch/js/bootstrap-switch.min.js" asp-append-version="true"></script>
-
-</environment>
-
 <div class="container-fluid">
     <!-- SELECT2 EXAMPLE -->
     <div class="card card-default">
