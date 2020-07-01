@@ -1,61 +1,93 @@
 ﻿@page
 @model LoginModel
-
 @{
+    //this tells the system to NOT use the _layout page in the shared folder!
+    Layout = "";
     ViewData["Title"] = "Log in";
 }
-
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"] - Proteus Demo Razor</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.min.css" asp-append-version="true" />
+    <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/admin-lte/js/adminlte.min.js" asp-append-version="true"></script>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="#"><b>Proteus Demo</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Please Sign In</p>
+                <span class="text-danger">@Html.ValidationSummary(true)</span>
+                <form id="account" method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" asp-for="Input.Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        Note that for demo purposes you don't need to register and can login with these credentials:
-                    </p>
-                    <p>
-                        User: <b>demouser@microsoft.com</b>
-                    </p>
-                    <p>
-                        Password: <b>Pass@word1</b>
-                    </p>
-                </div>
-            </form>
-        </section>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" asp-for="Input.Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input asp-for="Input.RememberMe" />
+                                <label for="remember">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+                <p class="mb-0">
+                    <a asp-page="./register" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">Register</a>
+                </p>
+                <p>
+                    Note that for demo purposes you don't need to register and can login with these credentials:
+                </p>
+                <p>
+                    User: <b>demouser@microsoft.com</b>
+                </p>
+                <p>
+                    Password: <b>Pass@word1</b>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
     </div>
-   
-</div>
+    <!-- /.login-box -->
+    <div class="lockscreen-footer text-center">
+        Copyright &copy; 2014-2019 <b><a href="http://adminlte.io" class="text-black">AdminLTE.io</a></b><br>
+        All rights reserved
+    </div>
+</body>
+</html>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

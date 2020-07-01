@@ -2,9 +2,45 @@
 @model LogoutModel
 @{
     ViewData["Title"] = "Log out";
+    //this tells the system to NOT use the _layout page in the shared folder!
+    Layout = "";
 }
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewData["Title"] - Proteus Demo Razor</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    <p>You have successfully logged out of the application.</p>
-</header>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.min.css" asp-append-version="true" />
+    <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/admin-lte/js/adminlte.min.js" asp-append-version="true"></script>
+</head>
+<body class="hold-transition lockscreen">
+    <!-- Automatic element centering -->
+    <div class="lockscreen-wrapper">
+        <div class="lockscreen-logo">
+            <a href="#"><b>Proteus Demo</b></a>
+        </div>
+        <!-- START LOCK SCREEN ITEM -->
+        <div class="lockscreen-item">
+            <br />
+            <p class="text-center"> You have been logged out</p>
+            <br />
+            <div class="text-center">
+                <a asp-page="./login" class="text-center">Login</a>
+            </div>
+            <br />
+        </div>
+        
+        <div class="lockscreen-footer text-center">
+            Copyright &copy; 2014-2019 <b><a href="http://adminlte.io" class="text-black">AdminLTE.io</a></b><br>
+            All rights reserved
+        </div>
+    </div>
+</body>
+</html>

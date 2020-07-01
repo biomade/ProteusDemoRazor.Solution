@@ -56,7 +56,19 @@ namespace Proteus.UI
             // aspnetrun dependencies
             RegisterServices(services);
 
-            services.AddRazorPages();
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/razor-pages-authorization?view=aspnetcore-3.1
+            services.AddRazorPages()
+            .AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizePage("/Index");
+                options.Conventions.AuthorizePage("/Privacy");
+                options.Conventions.AuthorizeFolder("/Category");
+                options.Conventions.AuthorizeFolder("/Product");
+                options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
+                //options.Conventions.AuthorizeAreaPage("Identity", "/Manage/Accounts");
+                //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+                //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+            });
         }
 
 
