@@ -9,9 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
+using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Pages.Product
 {
+    [Breadcrumb("Edit", FromPage = typeof(IndexModel))]
     public class EditModel : PageModel
     {
         private readonly IProductService _productService;

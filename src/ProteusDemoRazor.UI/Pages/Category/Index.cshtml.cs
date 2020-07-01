@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
+using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Pages.Category
 {
+    [Breadcrumb("Category")]
     public class IndexModel : PageModel
     {
         private readonly ICategoryService _categoryService;

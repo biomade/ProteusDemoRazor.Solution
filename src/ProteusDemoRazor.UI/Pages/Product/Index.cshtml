@@ -1,64 +1,110 @@
 ﻿@page
 @model Proteus.UI.Pages.Product.IndexModel
 @{
-    ViewData["Title"] = "Index";
+    // ViewData["Title"] = "Index";
 }
+<!-- DataTables -->
+<script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
 
-    <h1>Product List</h1>
-<form method="get">
-    <div class="form-group">
-        <div class="input-group">
-            <input type="search" class="form-control" asp-for="SearchTerm" />
-            <span class="input-group-btn">
-                <button class="btn btn-default">
-                    Search
-                </button>
-            </span>
+<link rel="stylesheet" href="~/lib/datatables-bs4/css/dataTables.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-bs4/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="~/lib/datatables-responsive/css/responsive.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-responsive/js/dataTables.responsive.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-responsive/js/responsive.bootstrap4.min.js" asp-append-version="true"></script>
+
+<!--Print and Export buttons-->
+<link rel="stylesheet" href="~/lib/datatables-buttons/css/buttons.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.flash.min.js" asp-append-version="true"></script>
+<script src="~/lib/jszip/jszip.min.js" asp-append-version="true"></script>
+<script src="~/lib/pdfmake/pdfmake.min.js" asp-append-version="true"></script>
+<script src="~/lib/pdfmake/vfs_fonts.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.html5.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.print.min.js" asp-append-version="true"></script>
+<div class="container-fluid">
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Product List</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="productTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">UnitPrice</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var product in Model.ProductList)
+                            {
+                                <tr>
+                                    <th scope="row">@product.Id</th>
+                                    <td>@product.ProductName</td>
+                                    <td>@product.UnitPrice</td>
+                                    <td>@product.Category.CategoryName</td>
+                                    <td>
+                                        <a asp-page="./Details"
+                                           asp-route-productId="@product.Id">
+                                            Details
+                                        </a>&nbsp;|&nbsp;
+                                        <a asp-page="./Edit"
+                                           asp-route-productId="@product.Id">
+                                            Edit
+                                        </a>&nbsp;|&nbsp;
+                                        <a asp-page="./Delete"
+                                           asp-route-productId="@product.Id">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
         </div>
     </div>
-</form>
+</div>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+@section scripts {
+    <script>
+        $(function () {
+            $('#productTable').DataTable({
+                "responsive": true,                
+                //based upon this https://datatables.net/extensions/buttons/examples/initialisation/export.html
+                // this is so there is space after the page size list and to get the search box to the right
+                //use for 4 buttons:  "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>"
+                //use for 3 buttons: "<'row'<'col-sm-4'l><'col-sm-2'B><'col-sm-6'f>>"
+                "dom": "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>" +
+                    "<'row'<'col-sm-12'r>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                "buttons": [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">UnitPrice</th>
-            <th scope="col">Category</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model.ProductList)
-        {
-<tr>
-    <th scope="row">@product.Id</th>
-    <td>@product.ProductName</td>
-    <td>@product.UnitPrice</td>
-    <td>@product.Category.CategoryName</td>
-    <td>
-        <a class="btn"
-           asp-page="./Details"
-           asp-route-productId="@product.Id">
-            Details
-        </a>
-        <a class="btn"
-           asp-page="./Edit"
-           asp-route-productId="@product.Id">
-            Edit
-        </a>
-        <a class="btn"
-           asp-page="./Delete"
-           asp-route-productId="@product.Id">
-            Delete
-        </a>
-    </td>
-</tr>}
-    </tbody>
-</table>
+                "paging": true,
+                "searching": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 }
+                ],
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
 
-
+        });
+    </script>
+}

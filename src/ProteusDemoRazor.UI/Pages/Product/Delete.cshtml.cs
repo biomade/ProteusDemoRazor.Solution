@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
+using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Pages.Product
 {
+    [Breadcrumb("Delete", FromPage = typeof(IndexModel))]
     public class DeleteModel : PageModel
     {
         private readonly IProductService _productService;

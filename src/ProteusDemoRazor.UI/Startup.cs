@@ -21,6 +21,7 @@ using Proteus.Application.Interfaces;
 using Proteus.Application.Services;
 using Proteus.Core.Interfaces.Repositories.Base;
 using Proteus.Core.Interfaces.Repositories;
+using SmartBreadcrumbs.Extensions;
 
 namespace Proteus.UI
 {
@@ -43,6 +44,15 @@ namespace Proteus.UI
                        .AddEntityFrameworkStores<AppIdentityDbContext>()
                                        .AddDefaultTokenProviders();
 
+            services.AddBreadcrumbs(GetType().Assembly, options =>
+            {
+                options.TagClasses = "col-sm-6";
+                options.OlClasses = "breadcrumb float-sm-right";
+                options.LiClasses = "breadcrumb-item";
+                options.ActiveLiClasses = "breadcrumb-item active";
+                //// Testing
+                //options.DontLookForDefaultNode = true;
+            });
             // aspnetrun dependencies
             RegisterServices(services);
 
@@ -91,7 +101,6 @@ namespace Proteus.UI
             services.AddScoped<ICategoryService, CategoryService>();
 
             // Add Web Layer
-           
 
             // Add Miscellaneous
             services.AddHttpContextAccessor();

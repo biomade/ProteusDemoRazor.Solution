@@ -8,9 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
+using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Pages.Product
 {
+    [Breadcrumb("Create", FromPage = typeof(IndexModel))]
     public class CreateModel : PageModel
     {
         private readonly IProductService _productService;

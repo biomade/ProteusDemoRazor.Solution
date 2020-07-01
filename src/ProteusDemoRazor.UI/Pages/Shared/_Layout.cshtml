@@ -9,7 +9,12 @@
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
         <link rel="stylesheet" href="~/lib/ionicons/css/ionicons.css" />
         <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.css" />
-        @*<link rel="stylesheet" href="~/css/site.css" />*@
+        <link rel="stylesheet" href="~/css/site.css" />
+
+        <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/admin-lte/js/adminlte.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
@@ -17,19 +22,10 @@
         <link rel="stylesheet" href="~/lib/ionicons/css/ionicons.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.min.css" asp-append-version="true" />
         @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
-    </environment>
-
-    <environment names="Development">
-        <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.js" asp-append-version="true"></script>
-        <script src="~/lib/admin-lte/js/adminlte.js" asp-append-version="true"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment names="Staging,Production">
+    
         <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
         <script src="~/lib/admin-lte/isjs/adminlte.min.js" asp-append-version="true"></script>
-        @*<script src="~/lib/pace/pace.min.js" asp-append-version="true"></script>*@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 </head>
@@ -49,9 +45,8 @@
                     <div class="row mb-2">
                         <!-- Page Header Partial View -->
                         <partial name="_PageHeader" />
-
-                        <!--BreadCrumb Partial View -->
-                        @*<partial name="_BreadCrumbs" />*@
+                        <!--BreadCrumb-->
+                        <breadcrumb></breadcrumb>
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>

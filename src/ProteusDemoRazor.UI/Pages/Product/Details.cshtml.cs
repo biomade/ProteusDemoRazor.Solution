@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels;
+using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Pages.Product
 {
+    [Breadcrumb("Details", FromPage = typeof(IndexModel))]
     public class DetailsModel : PageModel
     {
         private readonly IProductService _productService;
