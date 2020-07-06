@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Proteus.Core.Entities.Base
@@ -7,6 +8,7 @@ namespace Proteus.Core.Entities.Base
 
     public abstract class EntityBase<TId> : IEntityBase<TId>
     {
+        [Key, Required]
         public virtual TId Id { get; protected set; }
 
         int? _requestedHashCode;

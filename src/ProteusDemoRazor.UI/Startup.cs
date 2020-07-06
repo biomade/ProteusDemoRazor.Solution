@@ -22,6 +22,8 @@ using Proteus.Application.Services;
 using Proteus.Core.Interfaces.Repositories.Base;
 using Proteus.Core.Interfaces.Repositories;
 using SmartBreadcrumbs.Extensions;
+using Proteus.Core.Entities.Identity;
+using Proteus.Infrastructure.Identity.Stores;
 
 namespace Proteus.UI
 {
@@ -39,10 +41,25 @@ namespace Proteus.UI
         {
             ConfigureDatabases(services);
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //           .AddDefaultUI()
-            //           .AddEntityFrameworkStores<AppIdentityDbContext>()
-            //                           .AddDefaultTokenProviders();
+            //TODO IDENTITY: Step 5a - Configure the services for Identity
+            //register the IdentityContext as a service
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+            //tell Identity to use our user and roles
+            services.AddIdentity<User, Role>()
+                .AddDefaultTokenProviders();
+
+            //use our custom storage providers
+            services.AddTransient<IUserStore<User>, UserStore>();
+            services.AddTransient<IRoleStore<Role>, RoleStore>();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.LoginPath = "/Login";
+                options.LogoutPath = "/Logout";
+            });
+            //end todo
 
             services.AddBreadcrumbs(GetType().Assembly, options =>
             {
@@ -60,11 +77,11 @@ namespace Proteus.UI
             services.AddRazorPages()
             .AddRazorPagesOptions(options =>
             {
-                options.Conventions.AuthorizePage("/Index");
-                options.Conventions.AuthorizePage("/Privacy");
-                options.Conventions.AuthorizeFolder("/Category");
-                options.Conventions.AuthorizeFolder("/Product");
-                options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
+                //options.Conventions.AuthorizePage("/Index");
+                //options.Conventions.AuthorizePage("/Privacy");
+                //options.Conventions.AuthorizeFolder("/Category");
+                //options.Conventions.AuthorizeFolder("/Product");
+                //options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
                 //options.Conventions.AuthorizeAreaPage("Identity", "/Manage/Accounts");
                 //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                 //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
@@ -73,7 +90,11 @@ namespace Proteus.UI
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        //TODO IDENTITY: Step 5b to seed data, modify the interface of this method
+        //Was - public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            UserManager<User> userManager,
+            RoleManager<Role> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -92,7 +113,10 @@ namespace Proteus.UI
 
             app.UseRouting();
 
+            //TODO IDENTITY: Step 5c Add use of Authentication
             app.UseAuthentication();
+            //TODO IDENTITY: Step 5d - call to method for seed data
+            IdentityDbContextSeed.SeedData(userManager, roleManager);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -126,7 +150,7 @@ namespace Proteus.UI
             //services.AddDbContext<ProteusContext>(options =>
             //    options.UseInMemoryDatabase("Proteus"));
             // Add Identity DbContext
-            //services.AddDbContext<AppIdentityDbContext>(options =>
+            //services.AddDbContext<IdentityDbContext>(options =>
             //    options.UseInMemoryDatabase("Identity"));
 
 
@@ -138,7 +162,7 @@ namespace Proteus.UI
             services.AddDbContext<ProteusContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ProteusConnection")));
             // Add Identity DbContext
-            services.AddDbContext<AppIdentityDbContext>(c =>
+            services.AddDbContext<IdentityDbContext>(c =>
             c.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
         }
     }

@@ -63,10 +63,6 @@ namespace Proteus.UI
                 {
                     var proteusContext = services.GetRequiredService<ProteusContext>();
                     ProteusContextSeed.SeedAsync(proteusContext, loggerFactory).Wait();
-                    //Identity Goes here
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    AppIdentityDbContextSeed.SeedAsync(userManager, roleManager).Wait();
                 }
                 catch (Exception exception)
                 {

@@ -9,24 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\**" />
     <Compile Remove="Areas\StyleGuide\Shared\**" />
     <Compile Remove="Data\**" />
     <Compile Remove="Interfaces\**" />
     <Compile Remove="Mapper\**" />
     <Compile Remove="Services\**" />
     <Compile Remove="ViewModels\**" />
+    <Content Remove="Areas\Identity\**" />
     <Content Remove="Areas\StyleGuide\Shared\**" />
     <Content Remove="Data\**" />
     <Content Remove="Interfaces\**" />
     <Content Remove="Mapper\**" />
     <Content Remove="Services\**" />
     <Content Remove="ViewModels\**" />
+    <EmbeddedResource Remove="Areas\Identity\**" />
     <EmbeddedResource Remove="Areas\StyleGuide\Shared\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Interfaces\**" />
     <EmbeddedResource Remove="Mapper\**" />
     <EmbeddedResource Remove="Services\**" />
     <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="Areas\Identity\**" />
     <None Remove="Areas\StyleGuide\Shared\**" />
     <None Remove="Data\**" />
     <None Remove="Interfaces\**" />
