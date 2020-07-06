@@ -39,10 +39,10 @@ namespace Proteus.UI
         {
             ConfigureDatabases(services);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                       .AddDefaultUI()
-                       .AddEntityFrameworkStores<AppIdentityDbContext>()
-                                       .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //           .AddDefaultUI()
+            //           .AddEntityFrameworkStores<AppIdentityDbContext>()
+            //                           .AddDefaultTokenProviders();
 
             services.AddBreadcrumbs(GetType().Assembly, options =>
             {

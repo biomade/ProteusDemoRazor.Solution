@@ -26,4 +26,8 @@
     <ProjectReference Include="..\ProteusDemoRazor.Core\1_ProteusDemoRazor.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Identity\Migrations\" />
+  </ItemGroup>
+
 </Project>
