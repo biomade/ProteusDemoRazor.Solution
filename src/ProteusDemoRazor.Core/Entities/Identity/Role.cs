@@ -13,11 +13,13 @@ namespace Proteus.Core.Entities.Identity
     {
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
         public DateTime ModifiedDate { get; set; }
 
         public string NormalizedName { get; set; }
 
-        [ForeignKey("Id")]
         public ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -79,8 +79,8 @@ namespace Proteus.UI
             {
                 //options.Conventions.AuthorizePage("/Index");
                 //options.Conventions.AuthorizePage("/Privacy");
-                //options.Conventions.AuthorizeFolder("/Category");
-                //options.Conventions.AuthorizeFolder("/Product");
+                options.Conventions.AuthorizeFolder("/Category");
+                options.Conventions.AuthorizeFolder("/Product");
                 //options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
                 //options.Conventions.AuthorizeAreaPage("Identity", "/Manage/Accounts");
                 //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");

@@ -15,6 +15,7 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     NormalizedName = table.Column<string>(nullable: true)
                 },
@@ -30,14 +31,18 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(maxLength: 50, nullable: false),
+                    NormalizedUserName = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<string>(maxLength: 1024, nullable: false),
                     Email = table.Column<string>(maxLength: 128, nullable: false),
+                    NormalizedEmail = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     MI = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    ModifiedDate = table.Column<DateTime>(nullable: false),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true)
+                    IsApproved = table.Column<bool>(nullable: false),
+                    IsLockedOut = table.Column<bool>(nullable: false),
+                    LastLoginDate = table.Column<DateTime>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,6 +57,7 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

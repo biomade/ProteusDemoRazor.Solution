@@ -28,7 +28,7 @@ namespace Proteus.Infrastructure.Identity
                 role.Name = "Admin";
                 role.NormalizedName = role.Name.ToUpper();
                 role.Description = "Administrator of Application";
-                role.ModifiedDate = System.DateTime.Now;
+                role.CreatedDate = System.DateTime.Now;
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
 
@@ -39,7 +39,7 @@ namespace Proteus.Infrastructure.Identity
                 role.Name = "SuperUser";
                 role.NormalizedName = role.Name.ToUpper();
                 role.Description = "Can do more than a normal user but less than the admin";
-                role.ModifiedDate = System.DateTime.Now;
+                role.CreatedDate = System.DateTime.Now;
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
 
@@ -50,7 +50,7 @@ namespace Proteus.Infrastructure.Identity
                 role.Name = "GeneralUser";
                 role.NormalizedName = role.Name.ToUpper();
                 role.Description = "They can look but not touch";
-                role.ModifiedDate = System.DateTime.Now;
+                role.CreatedDate = System.DateTime.Now;
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
         }
@@ -67,7 +67,9 @@ namespace Proteus.Infrastructure.Identity
                 user.NormalizedUserName = user.UserName.ToUpper();
                 user.Email = "admin@gmail.com";
                 user.NormalizedEmail = user.Email.ToUpper();
-                user.ModifiedDate = System.DateTime.Now;
+                user.IsApproved = true;
+                user.IsLockedOut = false;
+                user.CreatedDate = System.DateTime.Now;
                 IdentityResult userResult = userManager.CreateAsync(user, "Fluxgate1!").Result;
                 if (userResult.Succeeded)
                 {
@@ -84,7 +86,9 @@ namespace Proteus.Infrastructure.Identity
                 user.Email = "mary.lamb@oldmac.farm";
                 user.NormalizedEmail = user.Email.ToUpper();
                 user.NormalizedUserName = user.UserName.ToUpper();
-                user.ModifiedDate = System.DateTime.Now;
+                user.IsApproved = true;
+                user.IsLockedOut = false;
+                user.CreatedDate = System.DateTime.Now;
                 IdentityResult userResult = userManager.CreateAsync(user, "Fluxgate1!").Result;
                 if (userResult.Succeeded)
                 {

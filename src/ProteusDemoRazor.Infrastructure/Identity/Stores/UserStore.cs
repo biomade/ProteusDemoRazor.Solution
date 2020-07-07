@@ -193,7 +193,7 @@ namespace Proteus.Infrastructure.Identity.Stores
             {
                 RoleId = role.Id,
                 UserId = user.Id,
-                ModifiedDate = System.DateTime.Now
+                CreatedDate = System.DateTime.Now
             };
             _dbContext.UserRoles.Add(userRole);
             _dbContext.SaveChangesAsync();
