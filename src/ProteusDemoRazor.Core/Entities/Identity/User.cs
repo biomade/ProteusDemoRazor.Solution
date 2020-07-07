@@ -31,7 +31,7 @@ namespace Proteus.Core.Entities.Identity
 
         public string LastName { get; set; }
 
-        public bool IsApproved { get; set; }
+        public bool IsEnabled { get; set; }
 
         public bool IsLockedOut { get; set; }
 

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Proteus.Infrastructure.Identity.Stores
 {
     //TODO IDENTITY: Step 3a - Create User store 
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>
+    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IUserEmailStore<User>
     {
         private bool disposedValue;
         private readonly IdentityDbContext _dbContext;
@@ -20,6 +20,7 @@ namespace Proteus.Infrastructure.Identity.Stores
             _dbContext = identityContext;
         }
 
+        #region users
         public async Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
@@ -36,7 +37,7 @@ namespace Proteus.Infrastructure.Identity.Stores
             cancellationToken.ThrowIfCancellationRequested();
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
-
+            //What about removing roles? 
             _dbContext.Remove(user);
             int i = await _dbContext.SaveChangesAsync(cancellationToken);
             return await Task.FromResult(i == 1 ? IdentityResult.Success : IdentityResult.Failed());
@@ -50,8 +51,7 @@ namespace Proteus.Infrastructure.Identity.Stores
 
             if (int.TryParse(userId, out int id))
             {
-                //can't use Include with FindBy so changed
-                var users = await _dbContext.Users.Include(u => u.UserRoles).ThenInclude(r=>r.Role).FirstOrDefaultAsync(u => u.Id == id);
+                var users = await _dbContext.Users.FindAsync(id);
                 //return =await users.FindAsync(id);
                 return users;
             }
@@ -63,7 +63,7 @@ namespace Proteus.Infrastructure.Identity.Stores
             cancellationToken.ThrowIfCancellationRequested();
             if (String.IsNullOrEmpty(normalizedUserName))
                 throw new ArgumentNullException(nameof(normalizedUserName));
-            var user =   await _dbContext.Users.Include(u=>u.UserRoles).ThenInclude(r=>r.Role).SingleOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken);
+            var user =   await _dbContext.Users.SingleOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken);
             return user;
         }
 
@@ -178,6 +178,8 @@ namespace Proteus.Infrastructure.Identity.Stores
             return Task.FromResult(!string.IsNullOrWhiteSpace(user.PasswordHash));
         }
 
+        #endregion users
+        
         #region userRoles
 
         public Task AddToRoleAsync(User user, string roleName, CancellationToken cancellationToken = default(CancellationToken))
@@ -227,8 +229,17 @@ namespace Proteus.Infrastructure.Identity.Stores
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            //get roles for the user
-            List<UserRole> usersRoles = user.UserRoles.ToList();
+            List<UserRole> usersRoles;
+            if (user.UserRoles == null)
+            {
+                usersRoles = new List<UserRole>();
+            }
+            else
+            {
+                //get roles for the user
+                usersRoles = user.UserRoles.ToList();
+            }
+
 
             //now get the role Names for the role attached to the userrole
             IList<string> roleNames = usersRoles.Select(ur => ur.Role.Name).ToList();
@@ -255,5 +266,51 @@ namespace Proteus.Infrastructure.Identity.Stores
         }
 
         #endregion userRoles
+
+        #region UserEmail
+
+        public Task SetEmailAsync(User user, string email, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetEmailAsync(User user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.Email); 
+        }
+
+        public Task<bool> GetEmailConfirmedAsync(User user, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetEmailConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (String.IsNullOrEmpty(normalizedEmail))
+                throw new ArgumentNullException(nameof(normalizedEmail));
+            var user =  _dbContext.Users.SingleOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail, cancellationToken);
+            return user;
+        }
+
+        public Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(user.NormalizedEmail);
+           // throw new NotImplementedException();
+        }
+
+        public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken)
+        {
+            user.NormalizedEmail = normalizedEmail;
+            // throw new NotImplementedException();
+            return Task.FromResult((User)null);
+        }
+
+        #endregion UserEmail
     }
 }

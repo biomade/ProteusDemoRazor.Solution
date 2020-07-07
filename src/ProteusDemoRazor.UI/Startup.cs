@@ -44,20 +44,44 @@ namespace Proteus.UI
             //TODO IDENTITY: Step 5a - Configure the services for Identity
             //register the IdentityContext as a service
             services.AddDbContext<IdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             //tell Identity to use our user and roles
-            services.AddIdentity<User, Role>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<User, Role>(
+                //opt =>
+                //{
+                //    opt.Lockout.AllowedForNewUsers = true;
+                //    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                //    opt.Lockout.MaxFailedAccessAttempts = 3;
+                //}
+            );
 
             //use our custom storage providers
             services.AddTransient<IUserStore<User>, UserStore>();
             services.AddTransient<IRoleStore<Role>, RoleStore>();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._@";
+            });
+
             services.ConfigureApplicationCookie(options =>
             {
+                options.Cookie.Name = "ProteusDemo";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(60); //how long to keep the cookie
                 options.Cookie.HttpOnly = true;
-                options.LoginPath = "/Login";
-                options.LogoutPath = "/Logout";
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account//Logout";
             });
             //end todo
 

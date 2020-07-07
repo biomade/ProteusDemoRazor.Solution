@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
@@ -19,6 +20,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
 
         public string ReturnUrl { get; set; }
         [TempData]
@@ -26,11 +28,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         
         [BindProperty]
         public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
             _logger.LogDebug(1, "NLog injected into LoginPage page");
+            _configuration = configuration;
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -51,22 +54,55 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            string why = string.Empty;
 
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
+                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
+                var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
+                
+                if (!user.IsEnabled)
+                {
+                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;                    
+                }
+                else if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
+                {
+                    //if they have not logged in for x number of days
+                    //disable the account!
+                    user.IsEnabled = false;
+                    await _signInManager.UserManager.UpdateAsync(user);
+                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
+                    why = "AccountDisabledDueToLackOfUse";
+                }                
+                else
+                {
+                    //allow the user in!
+                    result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
+                    //now set the login time
+                    user.LastLoginDate = DateTime.Now;
+                    await _signInManager.UserManager.UpdateAsync(user);
+                }
+
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                
-                if (result.IsLockedOut)
+                else if (result.IsNotAllowed)
                 {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
+                    if(why == "AccountDisabledDueToLackOfUse")
+                    {
+                        ModelState.AddModelError(string.Empty, "User Account has been Disabled due to lack of use.");
+                        _logger.LogWarning("User Account has not been enabled or it has been Disabled due to lack of use");
+                        return Page();
+                    }
+                    
+                    ModelState.AddModelError(string.Empty, "User Account has not been Enabled.");
+                    _logger.LogWarning("User Account has not been Enabled.");
+                    return RedirectToPage("./AccountDisabled");
                 }
                 else
                 {

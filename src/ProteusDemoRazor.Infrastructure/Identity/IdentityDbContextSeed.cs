@@ -67,7 +67,7 @@ namespace Proteus.Infrastructure.Identity
                 user.NormalizedUserName = user.UserName.ToUpper();
                 user.Email = "admin@gmail.com";
                 user.NormalizedEmail = user.Email.ToUpper();
-                user.IsApproved = true;
+                user.IsEnabled = true;
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
                 IdentityResult userResult = userManager.CreateAsync(user, "Fluxgate1!").Result;
@@ -86,7 +86,7 @@ namespace Proteus.Infrastructure.Identity
                 user.Email = "mary.lamb@oldmac.farm";
                 user.NormalizedEmail = user.Email.ToUpper();
                 user.NormalizedUserName = user.UserName.ToUpper();
-                user.IsApproved = true;
+                user.IsEnabled = true;
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
                 IdentityResult userResult = userManager.CreateAsync(user, "Fluxgate1!").Result;
