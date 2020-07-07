@@ -17,6 +17,7 @@ namespace Proteus.Core.Entities.Identity
 
         public string NormalizedName { get; set; }
 
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        [ForeignKey("Id")]
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

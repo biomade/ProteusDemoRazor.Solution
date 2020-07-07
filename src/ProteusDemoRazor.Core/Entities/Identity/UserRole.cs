@@ -22,7 +22,11 @@ namespace Proteus.Core.Entities.Identity
         public int RoleId { get; set; }
         public DateTime ModifiedDate { get; set; }
         //for this userrole, get the user and the role info
-        public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
+
+        [ForeignKey("RoleId")]
+        public Role Role { get; set; }
+
+        [ForeignKey("UserId")]
+        public User User { get; set; }
     }
 }

@@ -48,7 +48,10 @@ namespace Proteus.Infrastructure.Identity.Stores
                 throw new ArgumentNullException(nameof(roleId));
             if (int.TryParse(roleId, out int id))
             {
-                return await _dbContext.Roles.FindAsync(id);
+                //can't use Include with FindBy so changed
+                var roles = await _dbContext.Roles.Include(r => r.UserRoles).FirstOrDefaultAsync(r=>r.Id == id);
+
+                return roles;
             }
             return await Task.FromResult((Role)null);
         }
@@ -61,7 +64,7 @@ namespace Proteus.Infrastructure.Identity.Stores
 
             //net core no longer evaluates linq in memory on the server, this needs to be broken into 2 parts
             //return await _dbContext.Roles.FirstOrDefaultAsync(r => r.Name.Equals(normalizedRoleName, StringComparison.OrdinalIgnoreCase), cancellationToken);
-            return await _dbContext.Roles.FirstOrDefaultAsync<Role>(r => r.NormalizedName == normalizedRoleName, cancellationToken);
+            return await _dbContext.Roles.Include(r=>r.UserRoles).FirstOrDefaultAsync<Role>(r => r.NormalizedName == normalizedRoleName, cancellationToken);
         }
 
         public Task<string> GetNormalizedRoleNameAsync(Role role, CancellationToken cancellationToken = default(CancellationToken))

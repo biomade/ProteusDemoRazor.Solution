@@ -50,7 +50,10 @@ namespace Proteus.Infrastructure.Identity.Stores
 
             if (int.TryParse(userId, out int id))
             {
-                return await _dbContext.Users.FindAsync(id);
+                //can't use Include with FindBy so changed
+                var users = await _dbContext.Users.Include(u => u.UserRoles).ThenInclude(r=>r.Role).FirstOrDefaultAsync(u => u.Id == id);
+                //return =await users.FindAsync(id);
+                return users;
             }
             return await Task.FromResult((User)null);
         }
@@ -60,8 +63,8 @@ namespace Proteus.Infrastructure.Identity.Stores
             cancellationToken.ThrowIfCancellationRequested();
             if (String.IsNullOrEmpty(normalizedUserName))
                 throw new ArgumentNullException(nameof(normalizedUserName));
-
-            return await _dbContext.Users.SingleOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken);
+            var user =   await _dbContext.Users.Include(u=>u.UserRoles).ThenInclude(r=>r.Role).SingleOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName, cancellationToken);
+            return user;
         }
 
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
@@ -226,6 +229,7 @@ namespace Proteus.Infrastructure.Identity.Stores
 
             //get roles for the user
             List<UserRole> usersRoles = user.UserRoles.ToList();
+
             //now get the role Names for the role attached to the userrole
             IList<string> roleNames = usersRoles.Select(ur => ur.Role.Name).ToList();
 
