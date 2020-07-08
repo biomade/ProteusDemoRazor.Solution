@@ -31,8 +31,8 @@
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">
-                @Html.ValidationSummary(false)                
+            <div class="card-body login-card-body">                   
+                <span class="text-danger">@Html.ValidationSummary(true)</span>
                 <p class="login-box-msg">Sign in to start your session</p>
                 <form method="post" role="form">
                     <div class="input-group mb-3">
@@ -62,9 +62,9 @@
                 <p class="mb-1">
                     If you do not want to register, use one of these logins:
                     <br />
-                    Admin/Fluxgate1!
+                    Admin/Abc123!
                     <br />
-                    Mary.Lamb/Fluxgate1!
+                    Mary.Lamb/Abc123!
                     <br />
                 </p>
                 <p class="mb-1">

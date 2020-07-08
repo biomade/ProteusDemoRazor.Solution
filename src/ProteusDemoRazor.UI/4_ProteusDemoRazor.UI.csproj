@@ -63,8 +63,4 @@
     <ProjectReference Include="..\ProteusDemoRazor.Infrastructure\2_ProteusDemoRazor.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Pages\Manage\" />
-  </ItemGroup>
-
 </Project>

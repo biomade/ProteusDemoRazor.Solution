@@ -38,7 +38,7 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                     FirstName = table.Column<string>(nullable: true),
                     MI = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    IsApproved = table.Column<bool>(nullable: false),
+                    IsEnabled = table.Column<bool>(nullable: false),
                     IsLockedOut = table.Column<bool>(nullable: false),
                     LastLoginDate = table.Column<DateTime>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),

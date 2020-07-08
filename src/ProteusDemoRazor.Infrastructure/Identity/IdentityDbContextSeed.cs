@@ -70,7 +70,8 @@ namespace Proteus.Infrastructure.Identity
                 user.IsEnabled = true;
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
-                IdentityResult userResult = userManager.CreateAsync(user, "Fluxgate1!").Result;
+                user.LastLoginDate = System.DateTime.Now;
+                IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
                     Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Admin");//use normaized role name
@@ -89,7 +90,8 @@ namespace Proteus.Infrastructure.Identity
                 user.IsEnabled = true;
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
-                IdentityResult userResult = userManager.CreateAsync(user, "Fluxgate1!").Result;
+                user.LastLoginDate = System.DateTime.Now;
+                IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
                     Task<IdentityResult> result = userManager.AddToRoleAsync(user, "GeneralUser");

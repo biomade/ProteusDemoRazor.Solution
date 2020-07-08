@@ -1,0 +1,65 @@
+﻿@page
+@model Proteus.UI.Areas.Identity.Pages.Account.Manage.IndexModel
+@{
+    ViewData["Title"] = "User Profile";
+}
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">User Profile</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <!-- form start -->
+                    <form method="post" role="form">
+                        <div class="card-body">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label for="Input.UserName" class="control-label">UserName: </label>
+                                @Html.DisplayFor(model => model.Input.UserName)
+                                <input type="hidden" asp-for="Input.UserName" />
+                                <input type="hidden" asp-for="Input.Id" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.FirstName" class="control-label"> First Name</label>
+                                <input asp-for="Input.FirstName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.MI" class="control-label">M.I.</label>
+                                <input asp-for="Input.MI" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.LastName" class="control-label">Last Name</label>
+                                <input asp-for="Input.LastName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Email" class="control-label">Email</label>
+                                <input asp-for="Input.Email" class="form-control" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Password" class="control-label">Password</label>
+                                <input asp-for="Input.Password" class="form-control" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.ConfirmPassword" class="control-label">Password</label>
+                                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>

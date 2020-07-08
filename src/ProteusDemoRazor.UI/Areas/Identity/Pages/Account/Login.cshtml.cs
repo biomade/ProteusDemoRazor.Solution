@@ -32,7 +32,6 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         {
             _signInManager = signInManager;
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into LoginPage page");
             _configuration = configuration;
         }
 
@@ -62,8 +61,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
                 Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
                 var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
-                
-                if (!user.IsEnabled)
+                if(user == null)
+                {
+                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
+                }
+                else if (!user.IsEnabled)
                 {
                     result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;                    
                 }
