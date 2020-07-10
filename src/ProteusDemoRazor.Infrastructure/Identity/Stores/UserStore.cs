@@ -232,7 +232,9 @@ namespace Proteus.Infrastructure.Identity.Stores
             List<UserRole> usersRoles;
             if (user.UserRoles == null)
             {
-                usersRoles = new List<UserRole>();
+                //get the user roles and include the roles so we can get the names
+
+                usersRoles = _dbContext.UserRoles.Include(ur => ur.Role).Where(ur => ur.UserId == user.Id).ToList();
             }
             else
             {

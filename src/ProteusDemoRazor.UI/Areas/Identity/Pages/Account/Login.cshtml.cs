@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -80,16 +81,36 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 }                
                 else
                 {
-                    //allow the user in!
-                    result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
-                    //now set the login time
-                    user.LastLoginDate = DateTime.Now;
-                    await _signInManager.UserManager.UpdateAsync(user);
+                    //check the password is correct
+                    bool validPassword = await _signInManager.UserManager.CheckPasswordAsync(user, Input.Password);
+                    if (validPassword)
+                    {
+                        //create claims
+                    }
+                    else
+                    {
+                        //get the roles
+                        List<string> roleNames = (List<string>)await _signInManager.UserManager.GetRolesAsync(user) ;
+                        var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()));
+                        identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
+                        foreach (var roleName in roleNames)
+                        {
+                            new Claim(ClaimTypes.Role, roleName);
+                            await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, new ClaimsPrincipal(identity));
+                            result = Microsoft.AspNetCore.Identity.SignInResult.Success;
+                        }
+                        //allow the user in!
+                       // result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
+                    }
+                   
                 }
-
 
                 if (result.Succeeded)
                 {
+                    //now set the login time
+                    user.LastLoginDate = DateTime.Now;
+                    await _signInManager.UserManager.UpdateAsync(user);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
