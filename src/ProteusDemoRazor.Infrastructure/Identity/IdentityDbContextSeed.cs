@@ -3,6 +3,7 @@ using Proteus.Core.Constants;
 using Proteus.Core.Entities.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,16 +17,43 @@ namespace Proteus.Infrastructure.Identity
             //used to call everything else
             SeedRoles(roleManager);
             SeedUser(userManager);
+            //SeedUserRoles(userManager, roleManager);
+        }
+
+        private static void SeedUserRoles(UserManager<User> userManager, RoleManager<Role> roleManager)
+        {
+
+            var user = userManager.FindByNameAsync("Admin").Result;
+            var role = roleManager.FindByNameAsync("Administrator").Result;
+            var userRoles = userManager.GetRolesAsync(user).Result;
+            if (!userRoles.Contains("Administrator"))
+            {
+                UserRole ur = new UserRole();
+                ur.RoleId = role.Id;
+                ur.UserId = user.Id;
+                ur.CreatedDate = System.DateTime.Now;
+            }
+
+            user = userManager.FindByNameAsync("Mary.Lamb").Result;
+            role = roleManager.FindByNameAsync("Visitor").Result;
+            userRoles = userManager.GetRolesAsync(user).Result;
+            if (!userRoles.Contains("Visitor"))
+            {
+                UserRole ur = new UserRole();
+                ur.RoleId = role.Id;
+                ur.UserId = user.Id;
+                ur.CreatedDate = System.DateTime.Now;
+            }
         }
 
         private static void SeedRoles(RoleManager<Role> roleManager)
         {
-            bool roleExists = roleManager.RoleExistsAsync("Admin").Result;
+            bool roleExists = roleManager.RoleExistsAsync("Administrator").Result;
             //only create roles
             if (!roleExists)
             {
                 Role role = new Role();
-                role.Name = "Admin";
+                role.Name = "Administrator";
                 role.NormalizedName = role.Name.ToUpper();
                 role.Description = "Administrator of Application";
                 role.CreatedDate = System.DateTime.Now;
@@ -47,7 +75,7 @@ namespace Proteus.Infrastructure.Identity
             if (!roleExists)
             {
                 Role role = new Role();
-                role.Name = "GeneralUser";
+                role.Name = "Visitor";
                 role.NormalizedName = role.Name.ToUpper();
                 role.Description = "They can look but not touch";
                 role.CreatedDate = System.DateTime.Now;
@@ -74,7 +102,7 @@ namespace Proteus.Infrastructure.Identity
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
-                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Admin");//use normaized role name
+                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Administrator");//use normaized role name
                 }
             }
 
@@ -84,7 +112,7 @@ namespace Proteus.Infrastructure.Identity
                 user.FirstName = "Mary";
                 user.LastName = "Lamb";
                 user.UserName = "Mary.Lamb";
-                user.Email = "mary.lamb@oldmac.farm";
+                user.Email = "mary.lamb@gmail.com";
                 user.NormalizedEmail = user.Email.ToUpper();
                 user.NormalizedUserName = user.UserName.ToUpper();
                 user.IsEnabled = true;
@@ -94,9 +122,10 @@ namespace Proteus.Infrastructure.Identity
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
-                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "GeneralUser");
+                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Visitor");
                 }
             }
         }
+
     }
 }

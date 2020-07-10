@@ -46,15 +46,12 @@ namespace Proteus.UI
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
+            
             //tell Identity to use our user and roles
-            services.AddIdentity<User, Role>(
-                //opt =>
-                //{
-                //    opt.Lockout.AllowedForNewUsers = true;
-                //    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
-                //    opt.Lockout.MaxFailedAccessAttempts = 3;
-                //}
+            services.AddIdentity<User, Role>(                 
             );
+
+            services.AddScoped<IUserClaimsPrincipalFactory<User>, UserClaimsPrincipalFactory<User, Role>>();
 
             //use our custom storage providers
             services.AddTransient<IUserStore<User>, UserStore>();
@@ -81,7 +78,8 @@ namespace Proteus.UI
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60); //how long to keep the cookie
                 options.Cookie.HttpOnly = true;
                 options.LoginPath = "/Identity/Account/Login";
-                options.LogoutPath = "/Identity/Account//Logout";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/AccessDenied";
             });
             //end todo
 
@@ -101,12 +99,12 @@ namespace Proteus.UI
             services.AddRazorPages()
             .AddRazorPagesOptions(options =>
             {
-                //options.Conventions.AuthorizePage("/Index");
-                //options.Conventions.AuthorizePage("/Privacy");
+                options.Conventions.AuthorizePage("/Index");
+                options.Conventions.AuthorizePage("/Privacy");
                 options.Conventions.AuthorizeFolder("/Category");
                 options.Conventions.AuthorizeFolder("/Product");
-                //options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
-                //options.Conventions.AuthorizeAreaPage("Identity", "/Manage/Accounts");
+                options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
+                options.Conventions.AuthorizeAreaPage("Identity", "/Accounts/Manage");
                 //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                 //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
             });

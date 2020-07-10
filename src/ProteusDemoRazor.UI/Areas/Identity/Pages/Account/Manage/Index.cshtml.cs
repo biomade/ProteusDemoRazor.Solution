@@ -36,10 +36,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             _passwordHasher = passwordHasher;
         }
         public async Task<IActionResult> OnGet()
-        {   //get the current users claims           
-            var userClaim = this.User;
+        {        
             //now get the user
-            var user = await _userManager.GetUserAsync(userClaim);
+            var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
             Input.Id = user.Id;
             Input.UserName = user.UserName;
             Input.FirstName = user.FirstName;

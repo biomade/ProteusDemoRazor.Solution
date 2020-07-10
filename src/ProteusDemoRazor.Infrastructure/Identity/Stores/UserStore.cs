@@ -256,9 +256,14 @@ namespace Proteus.Infrastructure.Identity.Stores
                 throw new ArgumentNullException(nameof(user));
 
             //first find role with roleName
+            bool found = false;
             var role = _dbContext.Roles.Include(r => r.UserRoles).ToList().Find(r => r.NormalizedName == roleName.ToUpper());
+            if (role != null)
+            {
+                found = role.UserRoles.ToList().Find(u => u.UserId == user.Id) == null ? false : true;
+            }
             //now see if userid is in the list
-            bool found = role.UserRoles.ToList().Find(u => u.UserId == user.Id) == null ? false : true;
+
             return Task.FromResult(found);
         }
 
