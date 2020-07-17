@@ -1,0 +1,159 @@
+﻿@page
+@model Proteus.UI.Areas.Identity.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+<!-- DataTables -->
+<script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="~/lib/datatables-bs4/css/dataTables.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-bs4/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="~/lib/datatables-responsive/css/responsive.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-responsive/js/dataTables.responsive.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-responsive/js/responsive.bootstrap4.min.js" asp-append-version="true"></script>
+
+<!--Print and Export buttons-->
+<link rel="stylesheet" href="~/lib/datatables-buttons/css/buttons.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.flash.min.js" asp-append-version="true"></script>
+<script src="~/lib/jszip/jszip.min.js" asp-append-version="true"></script>
+<script src="~/lib/pdfmake/pdfmake.min.js" asp-append-version="true"></script>
+<script src="~/lib/pdfmake/vfs_fonts.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.html5.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.print.min.js" asp-append-version="true"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Users List</h3> 
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <p>
+                        <a asp-page="Create">Create New User</a>
+                    </p>
+                    <table id="usersTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User Name
+                                </th>
+                                <th>
+                                    Email
+                                </th>                                
+                                <th>
+                                    Enabled
+                                </th>
+                                <th>
+                                    Locked Out
+                                </th>
+                                <th>
+                                   Last Login Date
+                                </th>
+                                <th>
+                                   Created Date
+                                </th>
+                                <th>
+                                    Modified Date
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Users)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Email)
+                                    </td>
+                                    <td align="center">
+                                        @if (item.IsEnabled)
+                                        {
+                                            <i class="fas fa-check" style="color:green"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-times" style="color:red"></i>
+                                        }
+                                    </td>
+                                    <td align="center">
+                                        @if (item.IsLockedOut)
+                                        {
+                                            <i class="fas fa-lock" style="color:red"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-lock-open" style="color:green"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LastLoginDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                    </td>
+                                    <td>
+                                        @if (item.ModifiedDate == DateTime.MinValue)
+                                        {
+                                            //do nothing
+                                        }
+                                        else
+                                        {
+                                            @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                        }
+                                    </td>
+                                    <td>
+                                        &nbsp;&nbsp;
+                                        <a asp-page="./Details" asp-route-id="@item.Id" title="Details"><i class="fas fa-info"></i></a>&nbsp;&nbsp;
+                                        <a asp-page="./Edit" asp-route-id="@item.Id" title="Edit"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
+                                        <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $('#usersTable').DataTable({
+                "responsive": true,
+                //based upon this https://datatables.net/extensions/buttons/examples/initialisation/export.html
+                // this is so there is space after the page size list and to get the search box to the right
+                //use for 4 buttons:  "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>"
+                //use for 3 buttons: "<'row'<'col-sm-4'l><'col-sm-2'B><'col-sm-6'f>>"
+                "dom": "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>" +
+                    "<'row'<'col-sm-12'r>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                "buttons": [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+
+                "paging": true,
+                "searching": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 7 }
+                ],
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+
+        });
+    </script>
+}
+

@@ -1,0 +1,80 @@
+﻿@page
+@model Proteus.UI.Areas.Identity.Pages.Users.CreateModel
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Create User</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="post" role="form">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="User.UserName" class="control-label">User Name</label>
+                            <input asp-for="User.UserName" class="form-control" />
+                            <span asp-validation-for="User.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.Email" class="control-label">Email </label>
+                            <input asp-for="User.Email" class="form-control" />
+                            <span asp-validation-for="User.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.PasswordHash" class="control-label">Password</label>
+                            <input asp-for="User.PasswordHash" class="form-control" />
+                            <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.FirstName" class="control-label">First Name</label>
+                            <input asp-for="User.FirstName" class="form-control" />
+                            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.MI" class="control-label">M.I.</label>
+                            <input asp-for="User.MI" class="form-control" />
+                            <span asp-validation-for="User.MI" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.LastName" class="control-label">Last Name</label>
+                            <input asp-for="User.LastName" class="form-control" />
+                            <span asp-validation-for="User.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="User.IsEnabled" /> User Account Is Enabled
+                            </label>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="User.IsLockedOut" /> User Account Is Locked Out
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>&nbsp;&nbsp;
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </form>        
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,7 +1,8 @@
 ﻿@page
-@model Proteus.UI.Pages.Product.IndexModel
+@model Proteus.UI.Areas.Identity.Pages.Roles.IndexModel
+
 @{
-    ViewData["Title"] = "Manage Products";
+    ViewData["Title"] = "Manage Roles";
 }
 <!-- DataTables -->
 <script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
@@ -23,55 +24,71 @@
 <script src="~/lib/datatables-buttons/js/buttons.html5.min.js" asp-append-version="true"></script>
 <script src="~/lib/datatables-buttons/js/buttons.print.min.js" asp-append-version="true"></script>
 <div class="container-fluid">
-    <p>
-        <a asp-page="Create">Create New</a>
-    </p>
     <div class="row">
         <div class="col-12">
             <div class="card card-light">
                 <div class="card-header">
-                    <h3 class="card-title">Product List</h3>
+                    <h3 class="card-title">Roles List</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="productTable" class="table table-bordered table-hover">
+                    <p>
+                        <a asp-page="Create">Create New Role</a>
+                    </p>
+                    <table id="rolesTable" class="table table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">UnitPrice</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Action</th>
+                                <th>
+                                    Role Name
+                                </th>
+                                <th>
+                                    User Count
+                                </th>
+                                <th>
+                                    Created Date
+                                </th>
+                                <th>
+                                    Modified Date
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var product in Model.ProductList)
+                            @foreach (var item in Model.Roles)
                             {
-                                <tr>
-                                    <th scope="row">@product.Id</th>
-                                    <td>@product.ProductName</td>
-                                    <td>@product.UnitPrice</td>
-                                    <td>@product.Category.CategoryName</td>
-                                    <td>
-                                        <a asp-page="./Details"
-                                           asp-route-productId="@product.Id">
-                                           <i class="fa dtr-details"></i>
-                                        </a>&nbsp;|&nbsp;
-                                        <a asp-page="./Edit"
-                                           asp-route-productId="@product.Id">
-                                            Edit
-                                        </a>&nbsp;|&nbsp;
-                                        <a asp-page="./Delete"
-                                           asp-route-productId="@product.Id">
-                                            Delete
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @item.UserRoles.Count()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td>
+                                    @if (item.ModifiedDate == DateTime.MinValue)
+                                    {
+                                        //do nothing
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                    }
+                                </td>
+                                <td>
+                                    &nbsp;&nbsp;
+                                    <a asp-page="./Details" asp-route-id="@item.Id" title="Details"><i class="fas fa-info"></i></a>&nbsp;&nbsp;
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" title="Edit"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
                 </div>
-                <!-- /.card-body -->
             </div>
         </div>
     </div>
@@ -80,8 +97,8 @@
 @section scripts {
     <script>
         $(function () {
-            $('#productTable').DataTable({
-                "responsive": true,                
+            $('#rolesTable').DataTable({
+                "responsive": true,
                 //based upon this https://datatables.net/extensions/buttons/examples/initialisation/export.html
                 // this is so there is space after the page size list and to get the search box to the right
                 //use for 4 buttons:  "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>"
@@ -108,3 +125,4 @@
         });
     </script>
 }
+

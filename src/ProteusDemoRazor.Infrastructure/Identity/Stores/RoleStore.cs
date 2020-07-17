@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Proteus.Core.Entities.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,13 +11,24 @@ using System.Threading.Tasks;
 namespace Proteus.Infrastructure.Identity.Stores
 {
     //TODO IDENTITY: Step 3b - Create role store
-    public class RoleStore : IRoleStore<Role>
+    public class RoleStore : IQueryableRoleStore<Role>
     {
         private bool disposedValue;
         private readonly IdentityDbContext _dbContext;
+
+        
         public RoleStore(IdentityDbContext identityContext)
         {
             _dbContext = identityContext;
+        }
+
+        public IQueryable<Role> Roles
+        {
+            get
+            {
+                var roles = _dbContext.Roles.Include(r => r.UserRoles).ThenInclude(ur=>ur.User);
+                return (IQueryable<Role>)roles;
+            }
         }
 
         public async Task<IdentityResult> CreateAsync(Role role, CancellationToken cancellationToken = default(CancellationToken))

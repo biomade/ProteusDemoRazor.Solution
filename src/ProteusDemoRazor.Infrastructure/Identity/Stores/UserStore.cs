@@ -11,16 +11,27 @@ using System.Threading.Tasks;
 namespace Proteus.Infrastructure.Identity.Stores
 {
     //TODO IDENTITY: Step 3a - Create User store 
-    public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IUserEmailStore<User>
+    public class UserStore : IQueryableUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>,IUserEmailStore<User>
     {
         private bool disposedValue;
         private readonly IdentityDbContext _dbContext;
+
         public UserStore(IdentityDbContext identityContext)
         {
             _dbContext = identityContext;
         }
 
         #region users
+
+        public IQueryable<User> Users
+        {
+            get
+            {
+                var roles = _dbContext.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role);
+                return (IQueryable<User>)roles;
+            }
+        }
+
         public async Task<IdentityResult> CreateAsync(User user, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();

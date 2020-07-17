@@ -1,0 +1,49 @@
+﻿@page
+@model Proteus.UI.Areas.Identity.Pages.Roles.CreateModel
+
+@{
+    ViewData["Title"] = "Create Role";
+}
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Create Role</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="post" role="form">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Role.Description" class="control-label">Role Name</label>
+                            <input asp-for="Role.Name" class="form-control" type="text" />
+                            <span asp-validation-for="Role.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Role.Description" class="control-label"> Role Description</label>
+                            <input asp-for="Role.Description" class="form-control" />
+                            <span asp-validation-for="Role.Description" class="text-danger"></span>
+                        </div>                     
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>&nbsp;&nbsp;
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
