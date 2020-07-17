@@ -105,6 +105,8 @@ namespace Proteus.UI
                 options.Conventions.AuthorizeFolder("/Product");
                 options.Conventions.AuthorizeAreaFolder("StyleGuide", "/");//all pages in the style guide area
                 options.Conventions.AuthorizeAreaPage("Identity", "/Accounts/Manage");
+                options.Conventions.AuthorizeAreaFolder("Identity", "/Roles");
+                options.Conventions.AuthorizeAreaFolder("Identity", "/Users");
                 //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                 //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
             });

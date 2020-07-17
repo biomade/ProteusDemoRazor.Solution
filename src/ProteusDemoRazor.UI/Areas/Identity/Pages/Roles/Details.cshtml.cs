@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -9,9 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity;
+using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.Roles
 {
+    [Breadcrumb("Details", FromPage = typeof(IndexModel))]
+    [Authorize(Roles = "Administrator")]
     public class DetailsModel : PageModel
     {
         private readonly RoleManager<Role> _roleManager;
