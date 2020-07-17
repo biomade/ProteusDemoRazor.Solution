@@ -82,7 +82,11 @@
                                     &nbsp;&nbsp;
                                     <a asp-page="./Details" asp-route-id="@item.Id" title="Details"><i class="fas fa-info"></i></a>&nbsp;&nbsp;
                                     <a asp-page="./Edit" asp-route-id="@item.Id" title="Edit"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
-                                    <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
+                                    @if (item.UserRoles.Count == 0)
+                                    {
+                                        <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                    }
+                                    &nbsp;&nbsp;
                                 </td>
                             </tr>
                             }

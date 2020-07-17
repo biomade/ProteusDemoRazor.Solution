@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity;
@@ -17,12 +18,14 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         private readonly UserManager<User> _userManager;
         private readonly ILogger<CreateModel> _logger;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IConfiguration _configuration;
 
-        public CreateModel(UserManager<User> userManager, ILogger<CreateModel> logger, IPasswordHasher<User> passwordHasher)
+        public CreateModel(UserManager<User> userManager, ILogger<CreateModel> logger, IPasswordHasher<User> passwordHasher,  IConfiguration configuration)
         {
             _userManager = userManager;
             _logger = logger;
             _passwordHasher = passwordHasher;
+            _configuration = configuration; 
         }
 
         public IActionResult OnGet()
@@ -65,6 +68,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
                 return Page();
             }
+            //set up user with the visitor Role
+            //now set up a default role
+            User = await _userManager.FindByNameAsync(User.UserName);
+
+            var roleResult = _userManager.AddToRoleAsync(User, _configuration["AppSettings:DefaultRole"].ToString());
 
             return RedirectToPage("./Index");
         }

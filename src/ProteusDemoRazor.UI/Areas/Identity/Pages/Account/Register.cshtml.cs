@@ -4,6 +4,7 @@ using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
+using Microsoft.Extensions.Configuration;
 
 namespace Proteus.UI.Areas.Identity.Pages.Account
 {
@@ -21,15 +23,17 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _configuration = configuration;
         }
 
         public string ReturnUrl { get; set; }
@@ -57,9 +61,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    
                     //now set up a default role
-                    user= await _userManager.FindByNameAsync(user.UserName);
-                    var roleResult = _userManager.AddToRoleAsync(user, "GeneralUser");
+                    user = await _userManager.FindByNameAsync(user.UserName);
+                   
+                    var roleResult = _userManager.AddToRoleAsync(user, _configuration["AppSettings:DefaultRole"].ToString());
                     _logger.LogInformation("User created a new account with password.");
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToPage("./AccountDisabled");
