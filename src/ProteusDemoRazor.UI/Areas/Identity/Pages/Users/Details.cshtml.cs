@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -16,11 +18,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
     [Authorize(Roles = "Administrator")]
     public class DetailsModel : PageModel
     {
-        private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly ILogger<DetailsModel> _logger;
 
-        public DetailsModel(Proteus.Infrastructure.Identity.IdentityDbContext context)
+        public DetailsModel(UserManager<User> userManager, ILogger<DetailsModel> logger)
         {
-            _context = context;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         public User User { get; set; }
@@ -32,7 +36,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            User = await _userManager.FindByIdAsync(id.ToString());
 
             if (User == null)
             {

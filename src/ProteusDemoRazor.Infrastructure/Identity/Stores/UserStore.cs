@@ -66,7 +66,7 @@ namespace Proteus.Infrastructure.Identity.Stores
                 if(user != null)
                 {
                     //find the user roles 
-                    var userRoles = _dbContext.UserRoles.Include(ur => ur.Role).Where(u => u.Id == user.Id).ToList();
+                    var userRoles = _dbContext.UserRoles.Include(ur => ur.Role).Where(u => u.UserId == user.Id).ToList();
                     user.UserRoles = (ICollection<UserRole>)userRoles;
                 }
 

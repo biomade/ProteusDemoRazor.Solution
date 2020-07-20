@@ -61,7 +61,7 @@ namespace Proteus.Infrastructure.Identity.Stores
             if (int.TryParse(roleId, out int id))
             {
                 //can't use Include with FindBy so changed
-                var roles = await _dbContext.Roles.Include(r => r.UserRoles).FirstOrDefaultAsync(r=>r.Id == id);
+                var roles = await _dbContext.Roles.Include(r => r.UserRoles).ThenInclude(ur=>ur.User).FirstOrDefaultAsync(r=>r.Id == id);
 
                 return roles;
             }

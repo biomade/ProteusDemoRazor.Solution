@@ -2,7 +2,7 @@
 @model Proteus.UI.Areas.Identity.Pages.Users.DeleteModel
 
 @{
-    ViewData["Title"] = "Delete User";
+    ViewData["Title"] = "User Delete";
 }
 
 <div class="container-fluid">
@@ -11,108 +11,114 @@
             <h3 class="card-title">Delete User</h3>
         </div>
         <div class="card-deck">
-            <div class="card col-8">
+            <div class="card col-7">
                 <div class="card-body">
                     <h5 class="card-title">User Information</h5>
                     <br />
                     <div class="card-body">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <dt class="col-sm-4">
-                            User Name
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.UserName)
-                        </dd>
-                        <dt class="col-sm-4">
-                            Email
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.Email)
-                        </dd>
-                        <dt class="col-sm-2">
-                            First Name
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.FirstName)
-                        </dd>
-                        <dt class="col-sm-2">
-                            M.I.
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.MI)
-                        </dd>
-                        <dt class="col-sm-2">
-                            Last Name
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.LastName)
-                        </dd>
-                        <dt class="col-sm-4">
-                            Is Enabled
-                        </dt>
-                        <dd class="col-sm-10">
-                            @if (Model.User.IsEnabled)
-                            {
-                                <i class="fas fa-check" style="color:green"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-times" style="color:red"></i>
-                            }
-                        </dd>
-                        <dt class="col-sm-4">
-                            Is Locked Out
-                        </dt>
-                        <dd class="col-sm-10">
-                            @if (Model.User.IsLockedOut)
-                            {
-                                <i class="fas fa-lock" style="color:red"></i>
-                            }
-                            else
-                            {
-                                <i class="fas fa-lock-open" style="color:green"></i>
-                            }
-                        </dd>
-                        <dt class="col-sm-4">
-                            Last Login Date
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.LastLoginDate)
-                        </dd>
-                        <dt class="col-sm-4">
-                            Created Date
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.User.CreatedDate)
-                        </dd>
-                        <dt class="col-sm-4">
-                            Modified Date
-                        </dt>
-                        <dd class="col-sm-10">
-                            @if (Model.User.ModifiedDate > DateTime.MinValue)
-                            {
-                                @Html.DisplayFor(model => model.User.ModifiedDate)
-                            }
-                        </dd>
+                        <dl class="row">
+                            <dt class="col-sm-3">
+                                User Name
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.UserName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Email
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.Email)
+                            </dd>
+                            <dt class="col-sm-3">
+                                First Name
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.FirstName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                M.I.
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.MI)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Last Name
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.LastName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Is Enabled
+                            </dt>
+                            <dd class="col-sm-7">
+                                @if (Model.User.IsEnabled)
+                                {
+                                    <i class="fas fa-check" style="color:green"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-times" style="color:red"></i>
+                                }
+                            </dd>
+                            <dt class="col-sm-3">
+                                Is Locked Out
+                            </dt>
+                            <dd class="col-sm-7">
+                                @if (Model.User.IsLockedOut)
+                                {
+                                    <i class="fas fa-lock" style="color:red"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-lock-open" style="color:green"></i>
+                                }
+                            </dd>
+                            <dt class="col-sm-3">
+                                Last Login Date
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.LastLoginDate)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Created Date
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.CreatedDate)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Modified Date
+                            </dt>
+                            <dd class="col-sm-7">
+                                @if (Model.User.ModifiedDate > DateTime.MinValue)
+                                {
+                                    @Html.DisplayFor(model => model.User.ModifiedDate)
+                                }
+                            </dd>
+
+                        </dl>
                     </div>
                     <!-- /.card-body -->
                 </div>
             </div>
-            <div class="card col-4">
+            <div class="card col-5">
                 <div class="card-body">
                     <h5 class="card-title">User Roles</h5>
                     <br />
-                    @foreach (var userRole in Model.User.UserRoles)
-                    {
-                        <dt class="col-sm-4">
-                            Role Name
-                        </dt>
-                        <dd class="col-sm-2">
-                            @userRole.Role.Name
-                        </dd>
+                    <div class="card-body">
+                        <dl class="row">
+                            @foreach (var userRole in Model.User.UserRoles)
+                            {
+                                <dt class="col-sm-3">
+                                    Role Name
+                                </dt>
+                                <dd class="col-sm-7">
+                                    @userRole.Role.Name
+                                </dd>
 
-                    }
-
+                            }
+                        </dl>
+                    </div>
                 </div>
             </div>
         </div>
