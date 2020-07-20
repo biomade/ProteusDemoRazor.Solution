@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -16,11 +18,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
     [Authorize(Roles = "Administrator")]
     public class DeleteModel : PageModel
     {
-        private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(Proteus.Infrastructure.Identity.IdentityDbContext context)
+        public DeleteModel(UserManager<User> userManager, ILogger<DeleteModel> logger)
         {
-            _context = context;
+            _userManager = userManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -33,7 +37,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            User = await _userManager.FindByIdAsync(id.ToString());
 
             if (User == null)
             {
@@ -49,12 +53,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _context.Users.FindAsync(id);
+            User = await _userManager.FindByIdAsync(id.ToString());
 
             if (User != null)
             {
-                _context.Users.Remove(User);
-                await _context.SaveChangesAsync();
+                //this will delete the user roles too
+             var result =   await  _userManager.DeleteAsync(User); 
+                
             }
 
             return RedirectToPage("./Index");

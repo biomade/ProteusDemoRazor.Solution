@@ -19,9 +19,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
     public class DeleteModel : PageModel
     {
         private readonly RoleManager<Role> _roleManager;
-        private readonly ILogger<CreateModel> _logger;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(RoleManager<Role> roleManager, ILogger<CreateModel> logger)
+        public DeleteModel(RoleManager<Role> roleManager, ILogger<DeleteModel> logger)
         {
             _roleManager = roleManager;
             _logger = logger;
@@ -58,6 +58,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             if (Role != null)
             {
                 //if there a users in the role, don't delete
+                if (Role.UserRoles.Count >= 0)
+                {
+                    ModelState.AddModelError(string.Empty, "Users assigned to this role must be removed before you can delete the Role");
+                    _logger.LogWarning("Delete Role: Users assigned to this role must be removed before you can delete the Role");
+                    return Page();
+                }
               var result =   await _roleManager.DeleteAsync(Role);
             }
 

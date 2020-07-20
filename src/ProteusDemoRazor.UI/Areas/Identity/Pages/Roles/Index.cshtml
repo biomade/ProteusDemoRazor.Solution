@@ -84,6 +84,7 @@
                                     <a asp-page="./Edit" asp-route-id="@item.Id" title="Edit"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
                                     @if (item.UserRoles.Count == 0)
                                     {
+                                        //only if there are no users in the role
                                         <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                     }
                                     &nbsp;&nbsp;

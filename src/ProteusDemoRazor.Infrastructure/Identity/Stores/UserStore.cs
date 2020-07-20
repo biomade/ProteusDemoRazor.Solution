@@ -48,7 +48,7 @@ namespace Proteus.Infrastructure.Identity.Stores
             cancellationToken.ThrowIfCancellationRequested();
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
-            //What about removing roles? 
+            //this will delete the user roles too
             _dbContext.Remove(user);
             int i = await _dbContext.SaveChangesAsync(cancellationToken);
             return await Task.FromResult(i == 1 ? IdentityResult.Success : IdentityResult.Failed());
@@ -62,9 +62,16 @@ namespace Proteus.Infrastructure.Identity.Stores
 
             if (int.TryParse(userId, out int id))
             {
-                var users = await _dbContext.Users.FindAsync(id);
+                var user = await _dbContext.Users.FindAsync(id);
+                if(user != null)
+                {
+                    //find the user roles 
+                    var userRoles = _dbContext.UserRoles.Include(ur => ur.Role).Where(u => u.Id == user.Id).ToList();
+                    user.UserRoles = (ICollection<UserRole>)userRoles;
+                }
+
                 //return =await users.FindAsync(id);
-                return users;
+                return user;
             }
             return await Task.FromResult((User)null);
         }
