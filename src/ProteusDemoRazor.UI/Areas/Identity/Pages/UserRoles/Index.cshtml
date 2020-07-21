@@ -1,0 +1,114 @@
+﻿@page
+@model Proteus.UI.Areas.Identity.Pages.UserRoles.IndexModel
+
+@{
+    ViewData["Title"] = "Manage User Roles";
+}
+<!-- DataTables -->
+<script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="~/lib/datatables-bs4/css/dataTables.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-bs4/js/dataTables.bootstrap4.min.js" asp-append-version="true"></script>
+
+<link rel="stylesheet" href="~/lib/datatables-responsive/css/responsive.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-responsive/js/dataTables.responsive.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-responsive/js/responsive.bootstrap4.min.js" asp-append-version="true"></script>
+
+<!--Print and Export buttons-->
+<link rel="stylesheet" href="~/lib/datatables-buttons/css/buttons.bootstrap4.min.css" asp-append-version="true">
+<script src="~/lib/datatables-buttons/js/dataTables.buttons.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.flash.min.js" asp-append-version="true"></script>
+<script src="~/lib/jszip/jszip.min.js" asp-append-version="true"></script>
+<script src="~/lib/pdfmake/pdfmake.min.js" asp-append-version="true"></script>
+<script src="~/lib/pdfmake/vfs_fonts.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.html5.min.js" asp-append-version="true"></script>
+<script src="~/lib/datatables-buttons/js/buttons.print.min.js" asp-append-version="true"></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Users Roles List</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <p>
+                        <a asp-page="Create" asp-route-id="@Model.Id" asp-route-type ="@Model.UserRoleType">Create New Role</a>
+                    </p>
+                    <table id="userrolesTable" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                   Role Name
+                                </th>
+                                <th>
+                                  User Name
+                                </th>
+                                <th>
+                                   User Email
+                                </th>
+                                <th>
+                                    Created Date
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.UserRole)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Role.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>                                
+                                <td>
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(function () {
+            $('#userrolesTable').DataTable({
+                "responsive": true,
+                //based upon this https://datatables.net/extensions/buttons/examples/initialisation/export.html
+                // this is so there is space after the page size list and to get the search box to the right
+                //use for 4 buttons:  "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>"
+                //use for 3 buttons: "<'row'<'col-sm-4'l><'col-sm-2'B><'col-sm-6'f>>"
+                "dom": "<'row'<'col-sm-4' l><'col-sm-4' B><'col-sm-4' f>>" +
+                    "<'row'<'col-sm-12'r>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                "buttons": [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+
+                "paging": true,
+                "searching": true,
+                "columnDefs": [
+                    { "orderable": false, "targets": 4 }
+                ],
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+
+        });
+    </script>
+}
