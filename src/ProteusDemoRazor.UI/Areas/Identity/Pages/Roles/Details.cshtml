@@ -44,6 +44,9 @@
                         </dl>
                     </div>
                     <!-- /.card-body -->
+                    <div >
+                        <a asp-page="./Edit" asp-route-id="@Model.Role.Id">Edit Role</a>
+                    </div>
                 </div>
             </div>
             <div class="card col-5">
@@ -64,11 +67,14 @@
                             }
                         </dl>
                     </div>
+                    <div>
+                        <a asp-area="Identity" asp-page="/UserRoles/EditRoleUsers" asp-route-id="@Model.Role.Id">Edit Role Users</a>
+                    </div>
                 </div>
             </div>
         </div>       
     </div>
     <div>
-        <a asp-page="./Edit" asp-route-id="@Model.Role.Id">Edit</a> &nbsp;|&nbsp; <a asp-page="./Index">Back to List</a>
+        <a asp-page="./Details">Back to Details</a>&nbsp;|&nbsp;<a asp-page="./Index">Back to List</a>
     </div>
 </div>

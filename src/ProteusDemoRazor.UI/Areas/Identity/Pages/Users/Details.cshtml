@@ -92,6 +92,9 @@
                                 @Html.DisplayFor(model => model.User.ModifiedDate)
                             </dd>
                         </dl>
+                        <div>
+                            <a asp-page="./Edit" asp-route-id="@Model.User.Id">Edit</a>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -105,7 +108,7 @@
                             @foreach (var userRole in Model.User.UserRoles)
                             {
                                 <dt class="col-sm-3">
-                                   Role Name
+                                    Role Name
                                 </dt>
                                 <dd class="col-sm-7">
                                     @userRole.Role.Name
@@ -113,12 +116,15 @@
 
                             }
                         </dl>
+                        <div>
+                            <a asp-area="Identity" asp-page="/UserRoles/EditUserRoles" asp-route-id="@Model.User.Id">Edit User Roles</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <a asp-page="./Edit" asp-route-id="@Model.User.Id">Edit</a> &nbsp;|&nbsp; <a asp-page="./Index">Back to List</a>
+       <a asp-page="./Index">Back to List</a>
     </div>
 </div>
