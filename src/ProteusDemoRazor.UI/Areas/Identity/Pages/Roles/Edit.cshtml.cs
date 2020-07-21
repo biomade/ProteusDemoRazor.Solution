@@ -20,9 +20,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
     public class EditModel : PageModel
     {
         private readonly RoleManager<Role> _roleManager;
-        private readonly ILogger<CreateModel> _logger;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(RoleManager<Role> roleManager, ILogger<CreateModel> logger)
+        public EditModel(RoleManager<Role> roleManager, ILogger<EditModel> logger)
         {
             _roleManager = roleManager;
             _logger = logger;
@@ -59,6 +59,10 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
 
             try
             {
+                //Possibly don't allow role name to change 
+                //in case it is used for authorization which will mess things up
+                Role.NormalizedName = Role.Name.ToUpper();
+                Role.ModifiedDate = System.DateTime.Now;
                 await _roleManager.UpdateAsync(Role);
             }
             catch (DbUpdateConcurrencyException)

@@ -5,89 +5,79 @@
     ViewData["Title"] = "User Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="User.UserName" class="control-label"></label>
-                <input asp-for="User.UserName" class="form-control" />
-                <span asp-validation-for="User.UserName" class="text-danger"></span>
+<div class="container-fluid">
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">Edit User</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="post" role="form">
+                    <div class="card-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="User.UserName" class="control-label">User Name</label>
+                            <input asp-for="User.UserName" class="form-control" readonly="readonly" />
+                            <span asp-validation-for="User.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.Email" class="control-label">Email </label>
+                            <input asp-for="User.Email" class="form-control" />
+                            <span asp-validation-for="User.Email" class="text-danger"></span>
+                        </div>
+                        @*<div class="form-group">
+                            <label asp-for="User.PasswordHash" class="control-label">Password</label>
+                            <input asp-for="User.PasswordHash" class="form-control" />
+                            <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
+                        </div>*@
+                        
+                        <div class="form-group">
+                            <label asp-for="User.FirstName" class="control-label">First Name</label>
+                            <input asp-for="User.FirstName" class="form-control" />
+                            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.MI" class="control-label">M.I.</label>
+                            <input asp-for="User.MI" class="form-control" />
+                            <span asp-validation-for="User.MI" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.LastName" class="control-label">Last Name</label>
+                            <input asp-for="User.LastName" class="form-control" />
+                            <span asp-validation-for="User.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="User.IsEnabled" /> User Account Is Enabled
+                            </label>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="User.IsLockedOut" /> User Account Is Locked Out
+                            </label>
+                        </div>                        
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <input type="hidden" asp-for="User.Id" />
+                        <input type="hidden" asp-for="User.PasswordHash" />
+                        <input type="hidden" asp-for="User.LastLoginDate" />
+                        <input type="hidden" asp-for="User.CreatedDate" />
+                        <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
+                        <button type="reset" class="btn btn-primary">Reset</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="User.NormalizedUserName" class="control-label"></label>
-                <input asp-for="User.NormalizedUserName" class="form-control" />
-                <span asp-validation-for="User.NormalizedUserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.PasswordHash" class="control-label"></label>
-                <input asp-for="User.PasswordHash" class="form-control" />
-                <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.Email" class="control-label"></label>
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.NormalizedEmail" class="control-label"></label>
-                <input asp-for="User.NormalizedEmail" class="form-control" />
-                <span asp-validation-for="User.NormalizedEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.FirstName" class="control-label"></label>
-                <input asp-for="User.FirstName" class="form-control" />
-                <span asp-validation-for="User.FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.MI" class="control-label"></label>
-                <input asp-for="User.MI" class="form-control" />
-                <span asp-validation-for="User.MI" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.LastName" class="control-label"></label>
-                <input asp-for="User.LastName" class="form-control" />
-                <span asp-validation-for="User.LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="User.IsEnabled" /> @Html.DisplayNameFor(model => model.User.IsEnabled)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="User.IsLockedOut" /> @Html.DisplayNameFor(model => model.User.IsLockedOut)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.LastLoginDate" class="control-label"></label>
-                <input asp-for="User.LastLoginDate" class="form-control" />
-                <span asp-validation-for="User.LastLoginDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.CreatedDate" class="control-label"></label>
-                <input asp-for="User.CreatedDate" class="form-control" />
-                <span asp-validation-for="User.CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="User.ModifiedDate" class="control-label"></label>
-                <input asp-for="User.ModifiedDate" class="form-control" />
-                <span asp-validation-for="User.ModifiedDate" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="User.Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <!-- /.card -->
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
+    <div>
+        <a asp-page="./Index">Back to List</a>
+    </div>
 </div>
 
 @section Scripts {

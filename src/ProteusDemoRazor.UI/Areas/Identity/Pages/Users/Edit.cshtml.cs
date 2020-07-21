@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -17,11 +19,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
     [Authorize(Roles = "Administrator")]
     public class EditModel : PageModel
     {
-        private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(Proteus.Infrastructure.Identity.IdentityDbContext context)
+        public EditModel(UserManager<User> userManager, ILogger<EditModel> logger)
         {
-            _context = context;
+             _userManager = userManager;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -34,7 +38,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            User = await _userManager.FindByIdAsync(id.ToString());
 
             if (User == null)
             {
@@ -52,11 +56,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return Page();
             }
 
-            _context.Attach(User).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                User.ModifiedDate = System.DateTime.Now;
+                User.NormalizedEmail = User.Email.ToUpper();
+                await _userManager.UpdateAsync(User);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -75,7 +79,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.Id == id);
+            var user = _userManager.FindByIdAsync(id.ToString()).Result;
+
+            return (user != null) ? true : false;
         }
     }
 }
