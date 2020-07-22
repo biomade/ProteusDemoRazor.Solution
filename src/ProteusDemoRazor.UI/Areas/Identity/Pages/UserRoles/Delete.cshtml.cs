@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
+using Proteus.Core.Interfaces.Identity;
 using Proteus.Infrastructure.Identity;
+using Proteus.Infrastructure.Identity.Stores;
 using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.UserRoles
@@ -16,11 +21,13 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
     [Authorize(Roles = "Administrator")]
     public class DeleteModel : PageModel
     {
-        private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context;
+        private readonly IUserRoleStore _userRoleStore; //use the store as there is no manager
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(Proteus.Infrastructure.Identity.IdentityDbContext context)
+        public DeleteModel(IUserRoleStore userRoleStore, ILogger<DeleteModel> logger)
         {
-            _context = context;
+            _userRoleStore = (UserRoleStore)userRoleStore;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -33,9 +40,7 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
                 return NotFound();
             }
 
-            UserRole = await _context.UserRoles
-                .Include(u => u.Role)
-                .Include(u => u.User).FirstOrDefaultAsync(m => m.Id == id);
+            UserRole = await _userRoleStore.FindByIdAsync((int)id);
 
             if (UserRole == null)
             {
@@ -51,12 +56,11 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
                 return NotFound();
             }
 
-            UserRole = await _context.UserRoles.FindAsync(id);
+            UserRole = await _userRoleStore.FindByIdAsync((int)id);
 
             if (UserRole != null)
             {
-                _context.UserRoles.Remove(UserRole);
-                await _context.SaveChangesAsync();
+                await _userRoleStore.DeleteAsync(UserRole); 
             }
 
             return RedirectToPage("./Index");

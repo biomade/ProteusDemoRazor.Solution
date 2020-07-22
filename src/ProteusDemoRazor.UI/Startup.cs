@@ -24,6 +24,7 @@ using Proteus.Core.Interfaces.Repositories;
 using SmartBreadcrumbs.Extensions;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity.Stores;
+using Proteus.Core.Interfaces.Identity;
 
 namespace Proteus.UI
 {
@@ -107,6 +108,7 @@ namespace Proteus.UI
                 options.Conventions.AuthorizeAreaPage("Identity", "/Accounts/Manage");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Roles");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Users");
+                options.Conventions.AuthorizeAreaFolder("Identity", "/UserRoles");
                 //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                 //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
             });
@@ -155,7 +157,8 @@ namespace Proteus.UI
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-
+            services.AddScoped<IUserRoleStore, UserRoleStore>();
+            
             // Add Application Layer
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();

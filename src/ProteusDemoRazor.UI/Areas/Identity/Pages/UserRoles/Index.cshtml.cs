@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Proteus.Core.Entities.Identity;
+using Proteus.Core.Interfaces.Identity;
 using Proteus.Infrastructure.Identity;
+using Proteus.Infrastructure.Identity.Stores;
 using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.UserRoles
@@ -16,11 +21,13 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
     [Authorize(Roles = "Administrator")]
     public class IndexModel : PageModel
     {
-        private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context;
+        private readonly IUserRoleStore _userRoleStore; //use the store as there is no manager
+        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(Proteus.Infrastructure.Identity.IdentityDbContext context)
+        public IndexModel(IUserRoleStore userRoleStore, ILogger<IndexModel> logger)
         {
-            _context = context;
+            _userRoleStore = userRoleStore;
+            _logger = logger;
         }
 
         public IList<UserRole> UserRole { get; set; }
@@ -35,21 +42,15 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
 
             if (id == null)
             {
-                UserRole = await _context.UserRoles
-                .Include(u => u.Role)
-                .Include(u => u.User).ToListAsync();
+                UserRole = await _userRoleStore.GetUserRolesAsync();
             }
             else if (type.ToLower() =="r")
             {
-                UserRole = await _context.UserRoles
-               .Include(u => u.Role)
-               .Include(u => u.User).Where(ur=>ur.RoleId == id).ToListAsync();
+                UserRole = await _userRoleStore.GetUserRolesForRoleAsync((int)id);
             }
             else if (type.ToLower() == "u")
             {
-                UserRole = await _context.UserRoles
-               .Include(u => u.Role)
-               .Include(u => u.User).Where(ur => ur.UserId == id).ToListAsync();
+                UserRole = await _userRoleStore.GetUserRolesForUserAsync((int)id);
             }
         }
     }
