@@ -25,31 +25,53 @@ using SmartBreadcrumbs.Extensions;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity.Stores;
 using Proteus.Core.Interfaces.Identity;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Microsoft.AspNetCore.Http;
 
 namespace Proteus.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
+        private readonly IHostingEnvironment _env;
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureDatabases(services);
+            //https://pradeeploganathan.com/aspnetcore/https-in-asp-net-core-31/
+            //https://www.thesslstore.com/blog/how-to-make-ssl-certificates-play-nice-with-asp-net-core/
+            if (!_env.IsDevelopment())
+            {
+                services.AddHttpsRedirection(opts => {
+                    opts.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                    opts.HttpsPort = 44300;
+                });
+            }
+            else
+            {
+                    services.AddHttpsRedirection(opts => {
+                        opts.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                        opts.HttpsPort = 44300;
+                    });
+             }
+
+
+             ConfigureDatabases(services);
 
             //TODO IDENTITY: Step 5a - Configure the services for Identity
             //register the IdentityContext as a service
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-            
+
             //tell Identity to use our user and roles
-            services.AddIdentity<User, Role>(                 
+            services.AddIdentity<User, Role>(
             );
 
             services.AddScoped<IUserClaimsPrincipalFactory<User>, UserClaimsPrincipalFactory<User, Role>>();
@@ -90,9 +112,9 @@ namespace Proteus.UI
                 options.OlClasses = "breadcrumb float-sm-right";
                 options.LiClasses = "breadcrumb-item";
                 options.ActiveLiClasses = "breadcrumb-item active";
-                //// Testing
-                //options.DontLookForDefaultNode = true;
-            });
+                    //// Testing
+                    //options.DontLookForDefaultNode = true;
+                });
             // aspnetrun dependencies
             RegisterServices(services);
 
@@ -109,9 +131,9 @@ namespace Proteus.UI
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Roles");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Users");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/UserRoles");
-                //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
-                //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
-            });
+                    //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+                    //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+                });
         }
 
 
@@ -158,7 +180,7 @@ namespace Proteus.UI
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserRoleStore, UserRoleStore>();
-            
+
             // Add Application Layer
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();

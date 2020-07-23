@@ -45,12 +45,13 @@ namespace Proteus.UI
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
              WebHost.CreateDefaultBuilder(args)
              .UseStartup<Startup>()
+             .UseSetting("https_port", "443")
              .ConfigureLogging(logging =>
              {
                  logging.ClearProviders();
                  logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
              })
-                .UseNLog();  // NLog: Setup NLog for Dependency injection
+             .UseNLog();  // NLog: Setup NLog for Dependency injection
 
         private static void SeedDatabase(IWebHost host)
         {
