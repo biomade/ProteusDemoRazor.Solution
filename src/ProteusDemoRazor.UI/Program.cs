@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Proteus.Infrastructure.Data;
 using Proteus.Infrastructure.Identity;
 using NLog.Web;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 
 namespace Proteus.UI
 {
@@ -46,6 +47,12 @@ namespace Proteus.UI
              WebHost.CreateDefaultBuilder(args)
              .UseStartup<Startup>()
              .UseSetting("https_port", "443")
+            // TODO CAC Authentication 4: configure app to always requrire certificates
+            .ConfigureKestrel(options =>
+            {
+                options.ConfigureHttpsDefaults(opt =>
+                opt.ClientCertificateMode = ClientCertificateMode.RequireCertificate);
+            })
              .ConfigureLogging(logging =>
              {
                  logging.ClearProviders();

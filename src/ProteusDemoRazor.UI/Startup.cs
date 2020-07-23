@@ -27,6 +27,7 @@ using Proteus.Infrastructure.Identity.Stores;
 using Proteus.Core.Interfaces.Identity;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Certificate;
 
 namespace Proteus.UI
 {
@@ -61,8 +62,7 @@ namespace Proteus.UI
                     });
              }
 
-
-             ConfigureDatabases(services);
+            ConfigureDatabases(services);
 
             //TODO IDENTITY: Step 5a - Configure the services for Identity
             //register the IdentityContext as a service
@@ -134,6 +134,21 @@ namespace Proteus.UI
                     //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                     //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
                 });
+
+            //TODO CAC Authentication 0: Add Microsoft.AspNetCoreAuthentication.Certificate nuget package
+            //TODO CAC Authentication 1: add "https_port": 443, to the appsettings.json config
+            //TODO CAC Authentication 2a: configure service to validate cert         
+            //TODO CAC Authentication 2b: configure authentication Serive
+            //add the cert validation service out here
+            services.AddSingleton<CertValidationService>();
+            services.AddAuthentication(
+            CertificateAuthenticationDefaults.AuthenticationScheme)
+            .AddCertificate(
+                options => {
+                    options.AllowedCertificateTypes = CertificateTypes.All;
+                    //no validation here as we will want a login screen
+                }
+            );
         }
 
 
@@ -161,11 +176,19 @@ namespace Proteus.UI
 
             app.UseRouting();
 
+            //TODO CAC Authentication 3:Add use cert forwarding
+            app.UseCertificateForwarding();
             //TODO IDENTITY: Step 5c Add use of Authentication
             app.UseAuthentication();
+
+           
+            //5: and that we are using authentication to get into the application
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+
             //TODO IDENTITY: Step 5d - call to method for seed data
             IdentityDbContextSeed.SeedData(userManager, roleManager);
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
