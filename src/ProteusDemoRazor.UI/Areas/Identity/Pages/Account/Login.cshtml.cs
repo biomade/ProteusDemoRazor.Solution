@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -56,11 +57,31 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             string why = string.Empty;
 
+            if (Input.DODAccept == false)
+            {
+                ModelState.AddModelError(string.Empty, "You MUST accept the DoD statement before you can use this website.");
+                return Page();
+            }
+
             if (ModelState.IsValid)
             {
+                //grab the uers cert
+                X509Certificate2 x509 = HttpContext.Connection.ClientCertificate;
+
+                var user = await _signInManager.UserManager.FindByNameAsync("Admin");
+
+                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
+
+                //var user = await _signInManager.UserManager.
+
+                var blah =  _signInManager.SignInAsync(user, false);
+
+                return LocalRedirect(returnUrl);
+
+                /*
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
-                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
+               
                 var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
                 if(user == null)
                 {
@@ -99,9 +120,10 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         //allow the user in!
                        result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
                     }
-                   
-                }
-
+                   */
+            }
+           
+            /*
                 if (result.Succeeded)
                 {
                     //now set the login time
@@ -129,6 +151,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
+            */
 
             // If we got this far, something failed, redisplay form
             return Page();

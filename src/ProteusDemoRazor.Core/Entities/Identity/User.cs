@@ -37,6 +37,11 @@ namespace Proteus.Core.Entities.Identity
 
         public DateTime LastLoginDate { get; set; } //used to autolock users who have not logged in for a certain amount of time
 
+        public string GovPOCName { get; set; }
+        public string GovPOCEmail { get; set; }
+        public string GovPOCPhoneNumber { get; set; }
+        public string EDI { get; set; }
+
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
 

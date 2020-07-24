@@ -7,11 +7,8 @@ namespace Proteus.Application.ViewModels.Identity.Account
 {
     public class LoginViewModel
     {
+        //modified to only have the checkbox for Cert login, no username/pwd
         [Required]
-        public string UserName { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public bool DODAccept { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proteus.Infrastructure.Identity;
 
 namespace Proteus.Infrastructure.Migrations.IdentityDb
 {
     [DbContext(typeof(IdentityDbContext))]
-    partial class IdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200724172802_CAC")]
+    partial class CAC
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,24 +58,12 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EDI")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GovPOCEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GovPOCName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GovPOCPhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsEnabled")
@@ -104,6 +94,9 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                         .IsRequired()
                         .HasColumnType("nvarchar(1024)")
                         .HasMaxLength(1024);
+
+                    b.Property<string>("Thumbprint")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
                         .IsRequired()

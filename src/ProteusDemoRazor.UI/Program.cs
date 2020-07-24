@@ -40,25 +40,25 @@ namespace Proteus.UI
                 // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
                 NLog.LogManager.Shutdown();
             }
-           
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
              WebHost.CreateDefaultBuilder(args)
-             .UseStartup<Startup>()
-             .UseSetting("https_port", "443")
-            // TODO CAC Authentication 4: configure app to always requrire certificates
-            .ConfigureKestrel(options =>
-            {
-                options.ConfigureHttpsDefaults(opt =>
-                opt.ClientCertificateMode = ClientCertificateMode.RequireCertificate);
-            })
-             .ConfigureLogging(logging =>
-             {
-                 logging.ClearProviders();
-                 logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
-             })
-             .UseNLog();  // NLog: Setup NLog for Dependency injection
+                .UseStartup<Startup>()
+                .UseSetting("https_port", "443")
+                // TODO CAC Authentication 4: configure app to always requrire certificates, this prompts for the CAC pin
+                .ConfigureKestrel(options =>
+                {
+                    options.ConfigureHttpsDefaults(opt =>
+                    opt.ClientCertificateMode = ClientCertificateMode.RequireCertificate);
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
+                })
+                .UseNLog();  // NLog: Setup NLog for Dependency injection
 
         private static void SeedDatabase(IWebHost host)
         {

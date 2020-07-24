@@ -141,14 +141,16 @@ namespace Proteus.UI
             //TODO CAC Authentication 2b: configure authentication Serive
             //add the cert validation service out here
             services.AddSingleton<CertValidationService>();
-            services.AddAuthentication(
-            CertificateAuthenticationDefaults.AuthenticationScheme)
-            .AddCertificate(
-                options => {
-                    options.AllowedCertificateTypes = CertificateTypes.All;
-                    //no validation here as we will want a login screen
-                }
-            );
+            
+            //COMMENTED OUT SO NOT prompted again, before login!
+            //services.AddAuthentication(
+            //CertificateAuthenticationDefaults.AuthenticationScheme)
+            //.AddCertificate(
+            //    options => {
+            //        options.AllowedCertificateTypes = CertificateTypes.All;
+            //        //no validation here as we will want a login screen
+            //    }
+            //);
         }
 
 
@@ -181,14 +183,10 @@ namespace Proteus.UI
             //TODO IDENTITY: Step 5c Add use of Authentication
             app.UseAuthentication();
 
-           
-            //5: and that we are using authentication to get into the application
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-
             //TODO IDENTITY: Step 5d - call to method for seed data
             IdentityDbContextSeed.SeedData(userManager, roleManager);
+            //TODO IDENTITY: Step 5e - turn on authorization for users and roles
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -227,6 +225,8 @@ namespace Proteus.UI
 
 
             // use real database
+            //NOTE IF YOU ARE MODIFYING THE DATABASE RUN
+            //Add-Migration  xxx -Context ProteusContext
             //if used execute the following commands in the Package Manager Console
             //1) dotnet restore
             //2a) update-database -Context ProteusContext
