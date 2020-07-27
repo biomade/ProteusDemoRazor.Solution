@@ -23,6 +23,8 @@ namespace Proteus.Core.Entities.Identity
         [Required, MaxLength(128)]
         public string Email { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public string NormalizedEmail { get; set; }
 
         public string FirstName { get; set; }
