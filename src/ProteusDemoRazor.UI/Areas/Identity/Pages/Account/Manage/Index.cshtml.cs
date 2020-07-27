@@ -36,7 +36,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             _passwordHasher = passwordHasher;
         }
         public async Task<IActionResult> OnGet()
-        {        
+        {
             //now get the user
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
             Input.Id = user.Id;
@@ -45,6 +45,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             Input.MI = user.MI;
             Input.LastName = user.LastName;
             Input.Email = user.Email;
+            Input.Phone = user.PhoneNumber;
+            Input.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
+            Input.GovPOCName = user.GovPOCName;
+            Input.GovPOCEmail = user.GovPOCEmail;
+            Input.EDI = user.EDI;
             return Page();
         }
 
@@ -58,9 +63,15 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             //get user and update the profile fields
             var user = await _userManager.FindByIdAsync(Input.Id.ToString());
 
-             user.FirstName  = Input.FirstName ;
-             user.MI= Input.MI;
-             user.LastName = Input.LastName;
+            user.FirstName = Input.FirstName;
+            user.MI = Input.MI;
+            user.LastName = Input.LastName;
+            user.PhoneNumber = Input.Phone;
+            user.GovPOCEmail = Input.GovPOCEmail;
+            user.GovPOCName = Input.GovPOCName;
+            user.GovPOCPhoneNumber = Input.GovPOCPhoneNumber;
+            user.EDI = Input.EDI;
+
             if (String.IsNullOrEmpty(Input.Email))
             {
                 ModelState.AddModelError(string.Empty, "Email can not be empty");
@@ -71,8 +82,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             {
                 user.Email = Input.Email;
             }
-             user.ModifiedDate = System.DateTime.Now;
-           if (!string.IsNullOrEmpty(Input.Password))
+
+            user.ModifiedDate = System.DateTime.Now;
+            if (!string.IsNullOrEmpty(Input.Password))
             {
                 user.PasswordHash = _passwordHasher.HashPassword(user, Input.Password);
             }
