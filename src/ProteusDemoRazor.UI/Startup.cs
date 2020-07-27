@@ -139,8 +139,6 @@ namespace Proteus.UI
             //TODO CAC Authentication 1: add "https_port": 443, to the appsettings.json config
             //TODO CAC Authentication 2a: configure service to validate cert         
             //TODO CAC Authentication 2b: configure authentication Serive
-            //add the cert validation service out here
-            services.AddSingleton<CertValidationService>();
             
             //COMMENTED OUT SO NOT prompted again, before login!
             //services.AddAuthentication(
@@ -205,6 +203,7 @@ namespace Proteus.UI
             // Add Application Layer
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICertValidationService, CertValidationService>();
 
             // Add Web Layer
 

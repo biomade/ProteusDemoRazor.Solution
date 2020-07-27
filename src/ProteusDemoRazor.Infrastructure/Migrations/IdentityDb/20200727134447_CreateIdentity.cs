@@ -41,6 +41,10 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                     IsEnabled = table.Column<bool>(nullable: false),
                     IsLockedOut = table.Column<bool>(nullable: false),
                     LastLoginDate = table.Column<DateTime>(nullable: false),
+                    GovPOCName = table.Column<string>(nullable: true),
+                    GovPOCEmail = table.Column<string>(nullable: true),
+                    GovPOCPhoneNumber = table.Column<string>(nullable: true),
+                    EDI = table.Column<string>(maxLength: 1024, nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ModifiedDate = table.Column<DateTime>(nullable: false)
                 },

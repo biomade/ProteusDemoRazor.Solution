@@ -40,6 +40,8 @@ namespace Proteus.Core.Entities.Identity
         public string GovPOCName { get; set; }
         public string GovPOCEmail { get; set; }
         public string GovPOCPhoneNumber { get; set; }
+
+        [Required, MaxLength(1024)]
         public string EDI { get; set; }
 
         public DateTime CreatedDate { get; set; }

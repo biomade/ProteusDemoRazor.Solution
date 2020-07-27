@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -12,32 +9,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
 
 namespace Proteus.UI.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class LoginModel : PageModel
+    public class Login2Model : PageModel
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
-        private readonly ICertValidationService _validationService;
 
         public string ReturnUrl { get; set; }
         [TempData]
         public string ErrorMessage { get; set; }
-        
+
         [BindProperty]
-        public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration, ICertValidationService service)
+        public Login2ViewModel Input { get; set; }
+        public Login2Model(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
             _configuration = configuration;
-            _validationService = service;
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -60,40 +54,20 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             string why = string.Empty;
 
-            if (Input.DODAccept == false)
-            {
-                ModelState.AddModelError(string.Empty, "You MUST accept the DoD statement before you can use this website.");
-                return Page();
-            }
-
             if (ModelState.IsValid)
             {
-                //grab the uers cert
-                X509Certificate2 x509 = HttpContext.Connection.ClientCertificate;
-                List<Tuple<string, string>> certInfo =  _validationService.GetCertificateInfo(x509);
-
-                var user = await _signInManager.UserManager.FindByNameAsync("Admin");
-
-                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
-
-                //var user = await _signInManager.UserManager.
-
-                var blah =  _signInManager.SignInAsync(user, false);
-
-                return LocalRedirect(returnUrl);
-
-                /*
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
-               
+                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
                 var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
-                if(user == null)
+                if (user == null)
                 {
                     result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
                 }
                 else if (!user.IsEnabled)
                 {
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;                    
+                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
+                  
                 }
                 else if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
                 {
@@ -103,7 +77,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     await _signInManager.UserManager.UpdateAsync(user);
                     result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
                     why = "AccountDisabledDueToLackOfUse";
-                }                
+                }
                 else
                 {
                     //check the password is correct
@@ -122,12 +96,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         //    result = Microsoft.AspNetCore.Identity.SignInResult.Success;
                         //}
                         //allow the user in!
-                       result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
+
+                        result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
                     }
-                   */
-            }
-           
-            /*
+
+                }
+
                 if (result.Succeeded)
                 {
                     //now set the login time
@@ -138,13 +112,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 }
                 else if (result.IsNotAllowed)
                 {
-                    if(why == "AccountDisabledDueToLackOfUse")
+                    if (why == "AccountDisabledDueToLackOfUse")
                     {
                         ModelState.AddModelError(string.Empty, "User Account has been Disabled due to lack of use.");
                         _logger.LogWarning("User Account has not been enabled or it has been Disabled due to lack of use");
                         return Page();
                     }
-                    
+
                     ModelState.AddModelError(string.Empty, "User Account has not been Enabled.");
                     _logger.LogWarning("User Account has not been Enabled.");
                     return RedirectToPage("./AccountDisabled");
@@ -155,10 +129,10 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
-            */
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
     }
 }
+

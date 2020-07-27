@@ -28,5 +28,13 @@ namespace Proteus.Application.ViewModels.Identity.Account
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string GovPOCName { get; set; }
+        public string GovPOCEmail { get; set; }
+        public string GovPOCPhoneNumber { get; set; }
+
+        [Required, MaxLength(1024)]
+        //note this grabbed from the CAC
+        public string EDI { get; set; }
     }
 }

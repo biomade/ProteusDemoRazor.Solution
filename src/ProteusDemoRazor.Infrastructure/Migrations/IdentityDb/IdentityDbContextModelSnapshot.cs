@@ -57,7 +57,9 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EDI")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1024)")
+                        .HasMaxLength(1024);
 
                     b.Property<string>("Email")
                         .IsRequired()

@@ -10,14 +10,14 @@ using Proteus.Infrastructure.Identity;
 namespace Proteus.Infrastructure.Migrations.IdentityDb
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20200708125118_CreateIdentity")]
+    [Migration("20200727134447_CreateIdentity")]
     partial class CreateIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -58,12 +58,26 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EDI")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1024)")
+                        .HasMaxLength(1024);
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GovPOCEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GovPOCName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GovPOCPhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsEnabled")
