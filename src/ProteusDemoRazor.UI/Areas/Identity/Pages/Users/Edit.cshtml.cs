@@ -29,7 +29,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         }
 
         [BindProperty]
-        public User User { get; set; }
+        public User UserViewModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,9 +38,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _userManager.FindByIdAsync(id.ToString());
-
-            if (User == null)
+            UserViewModel = await _userManager.FindByIdAsync(id.ToString());
+            
+            if (UserViewModel == null)
             {
                 return NotFound();
             }
@@ -58,13 +58,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
             try
             {
-                User.ModifiedDate = System.DateTime.Now;
-                User.NormalizedEmail = User.Email.ToUpper();
-                await _userManager.UpdateAsync(User);
+                UserViewModel.ModifiedDate = System.DateTime.Now;
+                UserViewModel.NormalizedEmail = UserViewModel.Email.ToUpper();
+                await _userManager.UpdateAsync(UserViewModel);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(User.Id))
+                if (!UserExists(UserViewModel.Id))
                 {
                     return NotFound();
                 }

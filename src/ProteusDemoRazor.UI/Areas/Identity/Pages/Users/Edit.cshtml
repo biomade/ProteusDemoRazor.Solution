@@ -20,53 +20,78 @@
                     <div class="card-body">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="User.UserName" class="control-label">User Name</label>
-                            <input asp-for="User.UserName" class="form-control" readonly="readonly" />
-                            <span asp-validation-for="User.UserName" class="text-danger"></span>
+                            <label asp-for="UserViewModel.UserName" class="control-label">User Name</label>
+                            <input asp-for="UserViewModel.UserName" class="form-control" /> (Name from CAC in the format of LastName.FirstName[.xx])
+                            <span asp-validation-for="UserViewModel.UserName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="User.Email" class="control-label">Email </label>
-                            <input asp-for="User.Email" class="form-control" />
-                            <span asp-validation-for="User.Email" class="text-danger"></span>
+                            <label asp-for="UserViewModel.EDI" class="control-label">EDI</label>
+                            <input asp-for="UserViewModel.EDI" class="form-control" /> (EDI from CAC)
+                            <span asp-validation-for="UserViewModel.EDI" class="text-danger"></span>
                         </div>
                         @*<div class="form-group">
-                            <label asp-for="User.PasswordHash" class="control-label">Password</label>
-                            <input asp-for="User.PasswordHash" class="form-control" />
-                            <span asp-validation-for="User.PasswordHash" class="text-danger"></span>
+                            <label asp-for="UserViewModel.PasswordHash" class="control-label">Password</label>
+                            <input asp-for="UserViewModel.PasswordHash" class="form-control" />
+                            <span asp-validation-for="UserViewModel.PasswordHash" class="text-danger"></span>
                         </div>*@
-                        
                         <div class="form-group">
-                            <label asp-for="User.FirstName" class="control-label">First Name</label>
-                            <input asp-for="User.FirstName" class="form-control" />
-                            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                            <label asp-for="UserViewModel.Email" class="control-label">Email </label>
+                            <input asp-for="UserViewModel.Email" class="form-control" />
+                            <span asp-validation-for="UserViewModel.Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="User.MI" class="control-label">M.I.</label>
-                            <input asp-for="User.MI" class="form-control" />
-                            <span asp-validation-for="User.MI" class="text-danger"></span>
+                            <label asp-for="UserViewModel.PhoneNumber" class="control-label">Phone </label>
+                            <input asp-for="UserViewModel.PhoneNumber" class="form-control" />
+                            <span asp-validation-for="UserViewModel.PhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="User.LastName" class="control-label">Last Name</label>
-                            <input asp-for="User.LastName" class="form-control" />
-                            <span asp-validation-for="User.LastName" class="text-danger"></span>
+                            <label asp-for="UserViewModel.FirstName" class="control-label">First Name</label>
+                            <input asp-for="UserViewModel.FirstName" class="form-control" />
+                            <span asp-validation-for="UserViewModel.FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.MI" class="control-label">M.I.</label>
+                            <input asp-for="UserViewModel.MI" class="form-control" />
+                            <span asp-validation-for="UserViewModel.MI" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.LastName" class="control-label">Last Name</label>
+                            <input asp-for="UserViewModel.LastName" class="form-control" />
+                            <span asp-validation-for="UserViewModel.LastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.GovPOCName" class="control-label">Gov. POC Name</label>
+                            <input asp-for="UserViewModel.GovPOCName" class="form-control" />
+                            <span asp-validation-for="UserViewModel.GovPOCName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.GovPOCEmail" class="control-label">Gov. POC Email</label>
+                            <input asp-for="UserViewModel.GovPOCEmail" class="form-control" />
+                            <span asp-validation-for="UserViewModel.GovPOCEmail" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.GovPOCPhoneNumber" class="control-label">Gov. POC Phone </label>
+                            <input asp-for="UserViewModel.GovPOCPhoneNumber" class="form-control" />
+                            <span asp-validation-for="UserViewModel.GovPOCPhoneNumber" class="text-danger"></span>
                         </div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="User.IsEnabled" /> User Account Is Enabled
+                                <input class="form-check-input" asp-for="UserViewModel.IsEnabled" /> User Account Is Enabled
                             </label>
                         </div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="User.IsLockedOut" /> User Account Is Locked Out
+                                <input class="form-check-input" asp-for="UserViewModel.IsLockedOut" /> User Account Is Locked Out
                             </label>
-                        </div>                        
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <input type="hidden" asp-for="User.Id" />
-                        <input type="hidden" asp-for="User.PasswordHash" />
-                        <input type="hidden" asp-for="User.LastLoginDate" />
-                        <input type="hidden" asp-for="User.CreatedDate" />
+                        <input type="hidden" asp-for="UserViewModel.Id" />
+                        <input type="hidden" asp-for="UserViewModel.PasswordHash" />
+                        <input type="hidden" asp-for="UserViewModel.LastLoginDate" />
+                        <input type="hidden" asp-for="UserViewModel.CreatedDate" />
                         <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
                         <button type="reset" class="btn btn-primary">Reset</button>
                     </div>

@@ -22,15 +22,27 @@
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.User.UserName)
-                            </dd>  
+                            </dd>
+                            <dt class="col-sm-3">
+                                EDI
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.EDI)
+                            </dd>
                             <dt class="col-sm-3">
                                 Email
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.User.Email)
-                            </dd>                            
+                            </dd>
                             <dt class="col-sm-3">
-                               First Name
+                                Phone
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.PhoneNumber)
+                            </dd>
+                            <dt class="col-sm-3">
+                                First Name
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.User.FirstName)
@@ -42,10 +54,28 @@
                                 @Html.DisplayFor(model => model.User.MI)
                             </dd>
                             <dt class="col-sm-3">
-                               Last Name
+                                Last Name
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.User.LastName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Gov. POC Name
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.GovPOCName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Gov.POC Email
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.GovPOCEmail)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Gov. POC Phone 
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.GovPOCPhoneNumber)
                             </dd>
                             <dt class="col-sm-3">
                                 Is Enabled

@@ -25,10 +25,22 @@
                                 @Html.DisplayFor(model => model.User.UserName)
                             </dd>
                             <dt class="col-sm-3">
+                                EDI
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.EDI)
+                            </dd>
+                            <dt class="col-sm-3">
                                 Email
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.User.Email)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Phone 
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.PhoneNumber)
                             </dd>
                             <dt class="col-sm-3">
                                 First Name
@@ -47,6 +59,24 @@
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.User.LastName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Gov. POC Name
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.GovPOCName)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Gov.POC Email
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.GovPOCEmail)
+                            </dd>
+                            <dt class="col-sm-3">
+                                Gov. POC Phone
+                            </dt>
+                            <dd class="col-sm-7">
+                                @Html.DisplayFor(model => model.User.GovPOCPhoneNumber)
                             </dd>
                             <dt class="col-sm-3">
                                 Is Enabled
@@ -90,12 +120,8 @@
                                 Modified Date
                             </dt>
                             <dd class="col-sm-7">
-                                @if (Model.User.ModifiedDate > DateTime.MinValue)
-                                {
-                                    @Html.DisplayFor(model => model.User.ModifiedDate)
-                                }
+                                @Html.DisplayFor(model => model.User.ModifiedDate)
                             </dd>
-
                         </dl>
                     </div>
                     <!-- /.card-body -->
