@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -29,7 +30,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
         [TempData]
         public string ErrorMessage { get; set; }
-        
+
         [BindProperty]
         public LoginViewModel Input { get; set; }
         public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration, ICertValidationService service)
@@ -58,7 +59,6 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            string why = string.Empty;
 
             if (Input.DODAccept == false)
             {
@@ -70,95 +70,70 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
             {
                 //grab the uers cert
                 X509Certificate2 x509 = HttpContext.Connection.ClientCertificate;
-                List<Tuple<string, string>> certInfo =  _validationService.GetCertificateInfo(x509);
+                List<Tuple<string, string>> certInfo = _validationService.GetCertificateInfo(x509);
+                var user = await _signInManager.UserManager.FindByNameAsync(certInfo[1].Item2);
 
-                var user = await _signInManager.UserManager.FindByNameAsync("Admin");
-
-                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
-
-                //var user = await _signInManager.UserManager.
-
-                var blah =  _signInManager.SignInAsync(user, false);
-
-                return LocalRedirect(returnUrl);
-
-                /*
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
-               
-                var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
-                if(user == null)
+                if (user == null)
                 {
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
+                    this.Input.DODAccept = false;
+                    ModelState.Clear();
+                    TempData["ViewData"] = "No account found, registration is required.";
+                    _logger.LogWarning("No account found, registration required.");
+                    return Redirect("./Register");
                 }
                 else if (!user.IsEnabled)
                 {
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;                    
-                }
-                else if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
-                {
-                    //if they have not logged in for x number of days
-                    //disable the account!
-                    user.IsEnabled = false;
-                    await _signInManager.UserManager.UpdateAsync(user);
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
-                    why = "AccountDisabledDueToLackOfUse";
-                }                
-                else
-                {
-                    //check the password is correct
-                    bool validPassword = await _signInManager.UserManager.CheckPasswordAsync(user, Input.Password);
-                    if (validPassword)
-                    {
-                        ////get the roles
-                        //List<string> roleNames = (List<string>)await _signInManager.UserManager.GetRolesAsync(user) ;
-                        //var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
-                        //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()));
-                        //identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-                        //foreach (var roleName in roleNames)
-                        //{
-                        //    new Claim(ClaimTypes.Role, roleName);
-                        //    await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, new ClaimsPrincipal(identity));
-                        //    result = Microsoft.AspNetCore.Identity.SignInResult.Success;
-                        //}
-                        //allow the user in!
-                       result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
-                    }
-                   */
-            }
-           
-            /*
-                if (result.Succeeded)
-                {
-                    //now set the login time
-                    user.LastLoginDate = DateTime.Now;
-                    await _signInManager.UserManager.UpdateAsync(user);
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                else if (result.IsNotAllowed)
-                {
-                    if(why == "AccountDisabledDueToLackOfUse")
-                    {
-                        ModelState.AddModelError(string.Empty, "User Account has been Disabled due to lack of use.");
-                        _logger.LogWarning("User Account has not been enabled or it has been Disabled due to lack of use");
-                        return Page();
-                    }
-                    
-                    ModelState.AddModelError(string.Empty, "User Account has not been Enabled.");
-                    _logger.LogWarning("User Account has not been Enabled.");
+                    this.Input.DODAccept = false;
+                    ModelState.Clear();
                     return RedirectToPage("./AccountDisabled");
                 }
+                else if (user.IsLockedOut)
+                {
+                    this.Input.DODAccept = false;
+                    ModelState.Clear();
+                    _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]), user.UserName));
+                    return RedirectToPage("./AccountLocked");
+                }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
+                    //we have an account but SHOULD they be locked out
+                    if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
+                    {
+                        //if they have not logged in for x number of days
+                        //disable the account!
+                        user.IsEnabled = false;
+                        await _signInManager.UserManager.UpdateAsync(user);
+                        this.Input.DODAccept = false;
+                        ModelState.Clear();
+                        _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]), user.UserName));
+                        return RedirectToPage("./AccountLocked");
+                    }
+                    //do they have a session already??
+
+                    //LOG THEM IN!!
+                    //create the CAC as a claim 
+                    //note: roles are added as claims due to the configuration statup.cs file
+                    //add cac edit info to the claims                  
+                    var identityClaim = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
+                    var customClaims = new[]
+                    {
+                         new Claim(ClaimTypes.NameIdentifier,certInfo[0].Item2, ClaimValueTypes.String,"DOD-CAC"),
+                          new Claim(ClaimTypes.GivenName,certInfo[1].Item2, ClaimValueTypes.String)
+                    };                    
+                   
+                    await _signInManager.SignInWithClaimsAsync(user, isPersistent: false , customClaims);
+                    //now set the login date time
+                    user.LastLoginDate = DateTime.Now;
+                    await _signInManager.UserManager.UpdateAsync(user);
+                    _logger.LogInformation(String.Format("User logged in: {0}.", user.UserName));
+                    return LocalRedirect(returnUrl);
                 }
             }
-            */
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }
+

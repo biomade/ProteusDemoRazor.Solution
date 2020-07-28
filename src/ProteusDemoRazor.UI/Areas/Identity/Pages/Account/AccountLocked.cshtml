@@ -1,7 +1,7 @@
 ﻿@page
-@model Proteus.UI.Areas.Identity.Pages.Account.AccountDisabledModel
+@model Proteus.UI.Areas.Identity.Pages.Account.AccountLockedModel
 @{
-    ViewData["Title"] = "Account Disabled";
+    ViewData["Title"] = "Account Locked";
     //this tells the system to NOT use the _layout page in the shared folder!
     Layout = "";
 }
@@ -30,11 +30,19 @@
             <div class="card-body login-card-body">
                 <div class="lockscreen-item">
                     <br />
-                    <p class="text-center"  style="font-weight:bold">Account Disabled</p>
-                    <p class="text-center"> Your account is currently DISABLED and has to be approved. You will be notified when your account has been enabled. </p>
+                    <p class="text-center" style="font-weight:bold">Account Locked</p>
+                    <p class="text-center">
+                        Your account has been locked.
+                        <br />
+                        You have NOT logged in for more than
+                        <br /> @ViewData["LockDays"] days.
+                        <br />
+                        Email the Admin to unlock the account.
+                    </p>
                     <br />
                     <div class="text-center">
-                        <a asp-page="./login" class="text-center">Login</a>
+                        @*<a asp-page="./login" class="text-center">Login</a>*@
+                        <a href="mailto:ProteusAdmin@blah.com">Email The Administrator</a>
                     </div>
                     <br />
                 </div>

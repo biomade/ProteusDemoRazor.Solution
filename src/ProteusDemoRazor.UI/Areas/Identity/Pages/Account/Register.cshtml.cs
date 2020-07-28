@@ -45,6 +45,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public RegisterViewModel Input { get; set; }
         public void OnGet(string returnUrl = null)
         {
+            if (TempData["ViewData"] != null)
+            {
+                ModelState.AddModelError(string.Empty, TempData["ViewData"].ToString());
+            }
+
             //get the user name and edi
             X509Certificate2 x509 = HttpContext.Connection.ClientCertificate;
             List<Tuple<string, string>> certInfo = _certValidationService.GetCertificateInfo(x509);

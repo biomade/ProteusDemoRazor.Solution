@@ -45,6 +45,9 @@ namespace Proteus.Application.Services
             idx = CN.LastIndexOf(".") + 1;
             Tuple<string, string> EID = Tuple.Create<string, string>("eid",CN.Substring(idx));
             certInfo.Add(EID);
+
+            certInfo.Add(EID);
+
             return certInfo;
         }
 

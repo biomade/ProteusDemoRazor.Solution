@@ -7,7 +7,6 @@
     Layout = "";
     ViewData["Title"] = "Login";
 }
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -76,12 +75,14 @@
             </div>
         </div>
         <div align="center">
-            <span class="text-danger">@Html.ValidationSummary(true)</span>
-            <span asp-validation-for="Input.DODAccept" class="text-danger"></span>
-            <br />
-            <input type="checkbox" asp-for="Input.DODAccept" placeholder="DoDAccept" value="true" />&nbsp;I Agree to the DoD statement above
-            <br />
-            <input type="submit" id="btnAccept" value="Accept & Login" title="Accept" />
+            <div style="width: 50%">
+                <span class="text-danger">@Html.ValidationSummary(true)</span>
+                <br />
+                <input type="checkbox" asp-for="Input.DODAccept" placeholder="DoDAccept" value="true" />&nbsp;I Agree to the DoD statement above
+                <br />
+                <input type="submit" id="btnAccept" value="Accept & Login" title="Accept" />
+            </div>
+           
         </div>
     </form>
     <br />
