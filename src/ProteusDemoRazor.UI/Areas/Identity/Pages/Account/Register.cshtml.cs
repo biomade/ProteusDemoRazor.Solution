@@ -1,19 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using System.Linq;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
-using Microsoft.Extensions.Configuration;
 using Proteus.Application.Interfaces;
 using System.Security.Cryptography.X509Certificates;
 
