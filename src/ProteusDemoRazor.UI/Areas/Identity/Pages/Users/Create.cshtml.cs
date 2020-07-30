@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Proteus.Core.Constants;
 using Proteus.Core.Entities.Identity;
-using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.Users
@@ -52,7 +48,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             UserViewModel.NormalizedUserName = UserViewModel.UserName.ToUpper();
             UserViewModel.NormalizedEmail = UserViewModel.Email.ToUpper();
             //hash the password and put it back!
-            UserViewModel.PasswordHash = _passwordHasher.HashPassword(UserViewModel, UserViewModel.PasswordHash);
+            UserViewModel.PasswordHash = _passwordHasher.HashPassword(UserViewModel,AuthorizationConstants.DEFAULT_PASSWORD);
 
             if (UserViewModel.IsEnabled)
             {

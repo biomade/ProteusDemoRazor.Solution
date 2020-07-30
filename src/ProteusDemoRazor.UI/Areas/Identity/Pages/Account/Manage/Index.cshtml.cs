@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -39,17 +36,8 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
         {
             //now get the user
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
-            Input.Id = user.Id;
-            Input.UserName = user.UserName;
-            Input.FirstName = user.FirstName;
-            Input.MI = user.MI;
-            Input.LastName = user.LastName;
-            Input.Email = user.Email;
-            Input.Phone = user.PhoneNumber;
-            Input.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
-            Input.GovPOCName = user.GovPOCName;
-            Input.GovPOCEmail = user.GovPOCEmail;
-            Input.EDI = user.EDI;
+            //automapper converts it
+           Input =  ObjectMapper.Mapper.Map<UserProfileViewModel>(user);           
             return Page();
         }
 
@@ -84,10 +72,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             }
 
             user.ModifiedDate = System.DateTime.Now;
-            if (!string.IsNullOrEmpty(Input.Password))
-            {
-                user.PasswordHash = _passwordHasher.HashPassword(user, Input.Password);
-            }
+            user.PasswordHash = Input.PasswordHash;
 
             IdentityResult result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)

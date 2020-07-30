@@ -1,21 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.SymbolStore;
-using System.Linq;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
-using Microsoft.Extensions.Configuration;
 using Proteus.Application.Interfaces;
 using System.Security.Cryptography.X509Certificates;
+using Proteus.Core.Constants;
 
 namespace Proteus.UI.Areas.Identity.Pages.Account
 {
@@ -78,8 +73,8 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     IsLockedOut = false,
                     CreatedDate = DateTime.Now
                 };
-               
-                var result = await _userManager.CreateAsync(user, Input.Password);
+
+                var result = await _userManager.CreateAsync(user, AuthorizationConstants.DEFAULT_PASSWORD);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(String.Format("User created a new account{0} with password.", Input.Name));

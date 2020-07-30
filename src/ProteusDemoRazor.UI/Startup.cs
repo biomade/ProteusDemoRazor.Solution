@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Proteus.Infrastructure.Identity;
 using Proteus.Infrastructure.Repository.Base;
 using Proteus.Infrastructure.Data;
-using AutoMapper;
 using Proteus.UI.HealthCheck;
 using Proteus.Infrastructure.Repository;
 using Proteus.Application.Interfaces;
@@ -27,7 +21,6 @@ using Proteus.Infrastructure.Identity.Stores;
 using Proteus.Core.Interfaces.Identity;
 using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication.Certificate;
 
 namespace Proteus.UI
 {
@@ -98,7 +91,8 @@ namespace Proteus.UI
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "ProteusDemo";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(60); //how long to keep the cookie
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(15); //how long to keep the cookie, then the user will be logged out
                 options.Cookie.HttpOnly = true;
                 options.LoginPath = "/Identity/Account/Login";
                 options.LogoutPath = "/Identity/Account/Logout";
