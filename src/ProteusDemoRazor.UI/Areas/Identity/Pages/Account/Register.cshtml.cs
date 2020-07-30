@@ -10,6 +10,7 @@ using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
 using Proteus.Application.Interfaces;
 using System.Security.Cryptography.X509Certificates;
+using Proteus.Core.Constants;
 
 namespace Proteus.UI.Areas.Identity.Pages.Account
 {
@@ -72,8 +73,8 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     IsLockedOut = false,
                     CreatedDate = DateTime.Now
                 };
-               
-                var result = await _userManager.CreateAsync(user, Input.Password);
+
+                var result = await _userManager.CreateAsync(user, AuthorizationConstants.DEFAULT_PASSWORD);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(String.Format("User created a new account{0} with password.", Input.Name));
