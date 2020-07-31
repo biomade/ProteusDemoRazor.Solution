@@ -41,7 +41,7 @@
 #jquery-idle-hands-dialog-title {
     color: #ffffff !important;
     text-align: center !important;
-    background-color: #1484c8 !important;
+    background-color: red !important;/*#1484c8 */
     border-radius: 4px !important;
     padding: 4px !important;
     margin: 4px !important;
