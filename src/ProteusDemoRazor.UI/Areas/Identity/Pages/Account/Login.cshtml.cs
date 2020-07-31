@@ -21,7 +21,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
         private readonly ICertValidationService _validationService;
 
         public string ReturnUrl { get; set; }
@@ -30,7 +30,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         [BindProperty]
         public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration, ICertValidationService service)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration, ICertValidationService service)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -88,13 +88,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 {
                     this.Input.DODAccept = false;
                     ModelState.Clear();
-                    _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]), user.UserName));
+                    _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", _configuration.MaxDaysBetweenLogins, user.UserName));
                     return RedirectToPage("./AccountLocked");
                 }
                 else
                 {
                     //we have an account but SHOULD they be locked out
-                    if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
+                    if (DateTime.Now.Subtract(user.LastLoginDate).Days >= _configuration.MaxDaysBetweenLogins)
                     {
                         //if they have not logged in for x number of days
                         //disable the account!
@@ -102,7 +102,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         await _signInManager.UserManager.UpdateAsync(user);
                         this.Input.DODAccept = false;
                         ModelState.Clear();
-                        _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]), user.UserName));
+                        _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", _configuration.MaxDaysBetweenLogins, user.UserName));
                         return RedirectToPage("./AccountLocked");
                     }
                     //do they have a session already??

@@ -20,12 +20,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         private readonly ICertValidationService _certValidationService;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
 
         public RegisterModel(
             UserManager<User> userManager,
             ICertValidationService certValidationService,
-            ILogger<RegisterModel> logger, Microsoft.Extensions.Configuration.IConfiguration configuration)
+            ILogger<RegisterModel> logger, 
+            IApplicationConfiguration configuration)
         {
             _userManager = userManager;
             _certValidationService = certValidationService;
@@ -81,7 +82,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     //now set up a default role
                     user = await _userManager.FindByNameAsync(user.UserName);
                    
-                    var roleResult = _userManager.AddToRoleAsync(user, _configuration["AppSettings:DefaultRole"].ToString());
+                    var roleResult = _userManager.AddToRoleAsync(user, _configuration.DefaultRole);
                     _logger.LogInformation(String.Format("User {0} added to role {1}.", Input.Name, roleResult));
                     return RedirectToPage("./AccountDisabled");
                 }
