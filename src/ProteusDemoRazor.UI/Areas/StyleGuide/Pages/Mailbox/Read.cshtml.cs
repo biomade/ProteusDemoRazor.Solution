@@ -3,7 +3,7 @@ using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.StyleGuide.Pages.Mailbox
 {
-    [Breadcrumb(AreaName = "StyleGuide", Title = "Email-Read", FromPage = typeof(StyleGuide.Pages.IndexModel))]
+    [Breadcrumb(AreaName = "StyleGuide", Title = "Email-Read", FromPage = typeof(StyleGuide.Pages.IndexStyleModel))]
     public class ReadModel : PageModel
     {
         public void OnGet()
