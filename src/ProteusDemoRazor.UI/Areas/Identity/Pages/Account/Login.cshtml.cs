@@ -107,6 +107,15 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     }
                     //do they have a session already??
 
+                    //verify the EDI matches what is on file
+                    if (user.EDI != certInfo[2].Item2)
+                    {
+                        //cert 
+                        _logger.LogWarning(string.Format("EDI on CAC does not match Database:{0}",  0 ));
+                        ModelState.AddModelError(string.Empty, "There is an issue with your CAC login, contact the Administrator and let them know.");
+                        return Page();
+                    }
+
                     //LOG THEM IN!!
                     //create the CAC as a claim 
                     //note: roles are added as claims due to the configuration statup.cs file
