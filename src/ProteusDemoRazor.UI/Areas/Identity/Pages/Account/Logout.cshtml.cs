@@ -21,6 +21,10 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync()
         {
+            //reset online flag
+            var user = await _signInManager.UserManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            user.UserOnLine = false;
+            await _signInManager.UserManager.UpdateAsync(user);
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
         }

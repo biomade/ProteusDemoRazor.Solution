@@ -105,13 +105,32 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", _configuration.MaxDaysBetweenLogins, user.UserName));
                         return RedirectToPage("./AccountLocked");
                     }
+
                     //do they have a session already??
+                    if(user.UserOnLine == true )
+                    {
+                        //if if was yesterday log them out so they can log in
+                        if(user.LastLoginDate < DateTime.Today)
+                        {                           
+                            user.UserOnLine = false;
+                            await _signInManager.UserManager.UpdateAsync(user);
+                            await _signInManager.SignOutAsync();
+                        }
+
+                        if (user.LastLoginDate.Date == DateTime.Today)
+                        { 
+                            //anytime today is not allowed
+                            _logger.LogWarning(string.Format("Second Sesson:{0}", user.UserName));
+                            ModelState.AddModelError(string.Empty, "It applears that you are attempting to start another session, that is prohibited.");
+                            return Page();
+                        }
+                    }
 
                     //verify the EDI matches what is on file
                     if (user.EDI != certInfo[2].Item2)
                     {
                         //cert 
-                        _logger.LogWarning(string.Format("EDI on CAC does not match Database:{0}",  0 ));
+                        _logger.LogWarning(string.Format("EDI on CAC does not match Database:{0}",  user.UserName ));
                         ModelState.AddModelError(string.Empty, "There is an issue with your CAC login, contact the Administrator and let them know.");
                         return Page();
                     }
@@ -124,12 +143,14 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     var customClaims = new[]
                     {
                          new Claim(ClaimTypes.NameIdentifier,certInfo[0].Item2, ClaimValueTypes.String,"DOD-CAC"),
-                          new Claim(ClaimTypes.GivenName,certInfo[1].Item2, ClaimValueTypes.String)
+                         new Claim(ClaimTypes.GivenName,certInfo[1].Item2, ClaimValueTypes.String)
                     };                    
                    
                     await _signInManager.SignInWithClaimsAsync(user, isPersistent: false , customClaims);
+
                     //now set the login date time
                     user.LastLoginDate = DateTime.Now;
+                    user.UserOnLine = true;
                     await _signInManager.UserManager.UpdateAsync(user);
                     _logger.LogInformation(String.Format("User logged in: {0}.", user.UserName));
                     return LocalRedirect(returnUrl);
