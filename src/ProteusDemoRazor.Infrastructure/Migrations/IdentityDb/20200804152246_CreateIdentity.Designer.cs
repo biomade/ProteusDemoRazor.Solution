@@ -10,8 +10,8 @@ using Proteus.Infrastructure.Identity;
 namespace Proteus.Infrastructure.Migrations.IdentityDb
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20200727162855_registrationInfo")]
-    partial class registrationInfo
+    [Migration("20200804152246_CreateIdentity")]
+    partial class CreateIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,6 +116,9 @@ namespace Proteus.Infrastructure.Migrations.IdentityDb
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<bool>("UserOnLine")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
