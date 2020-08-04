@@ -1,0 +1,16 @@
+﻿@inject Proteus.Application.Interfaces.IApplicationConfiguration AppSettings;
+@{
+    var network = AppSettings.NetworkLocation;
+}
+@if (string.IsNullOrEmpty(network))
+{
+    //do nothing
+}
+else if (network.ToLower() == "high")
+{
+    <nav class="high">CLASSIFIED</nav>
+}
+else if (network.ToLower() == "low")
+{
+    <nav class="low">UNCLASSIFIED</nav>
+}

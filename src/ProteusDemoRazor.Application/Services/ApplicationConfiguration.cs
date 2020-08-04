@@ -7,10 +7,11 @@ namespace Proteus.Application.Services
 {
     public class ApplicationConfiguration : IApplicationConfiguration
     {
-        public int MaxDaysBetweenLogins { get; set; }
         public string DefaultRole { get; set; }
-        public int WarnAfterMinutes { get; set; }
         public int EarlyWarningSeconds { get; set; }
-        public int SessionTimeOutMinutes { get ; set ; }
+        public string NetworkLocation { get; set; }
+        public int SessionTimeOutMinutes { get; set; }
+        public int MaxDaysBetweenLogins { get; set; }
+        public int WarnAfterMinutes { get; set; }
     }
 }

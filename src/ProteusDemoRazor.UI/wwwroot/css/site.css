@@ -1,1 +1,10 @@
-﻿
+﻿.low{
+    background-color:green;
+    color:white;
+    text-align:center;
+}
+.high {
+    background-color: red;
+    color: white;
+    text-align: center;
+}
