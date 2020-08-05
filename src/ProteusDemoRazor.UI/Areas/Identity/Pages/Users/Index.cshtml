@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Manage Users";
+    string tmp = DateTime.Now.ToShortDateString();
 }
 <!-- DataTables -->
 <script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
@@ -44,7 +45,7 @@
                                 </th>
                                 <th>
                                     Email
-                                </th>                                
+                                </th>
                                 <th>
                                     Enabled
                                 </th>
@@ -52,10 +53,13 @@
                                     Locked Out
                                 </th>
                                 <th>
-                                   Last Login Date
+                                    Last Login Date
                                 </th>
                                 <th>
-                                   Created Date
+                                    Session Flag
+                                </th>
+                                <th>
+                                    Created Date
                                 </th>
                                 <th>
                                     Modified Date
@@ -66,56 +70,79 @@
                         <tbody>
                             @foreach (var item in Model.Users)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.UserName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Email)
-                                    </td>
-                                    <td align="center">
-                                        @if (item.IsEnabled)
-                                        {
-                                            <i class="fas fa-check" style="color:green"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="fas fa-times" style="color:red"></i>
-                                        }
-                                    </td>
-                                    <td align="center">
-                                        @if (item.IsLockedOut)
-                                        {
-                                            <i class="fas fa-lock" style="color:red"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="fas fa-lock-open" style="color:green"></i>
-                                        }
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.LastLoginDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                                    </td>
-                                    <td>
-                                        @if (item.ModifiedDate == DateTime.MinValue)
-                                        {
-                                            //do nothing
-                                        }
-                                        else
-                                        {
-                                            @Html.DisplayFor(modelItem => item.ModifiedDate)
-                                        }
-                                    </td>
-                                    <td>
-                                        &nbsp;&nbsp;
-                                        <a asp-page="./Details" asp-route-id="@item.Id" title="Details"><i class="fas fa-info"></i></a>&nbsp;&nbsp;
-                                        <a asp-page="./Edit" asp-route-id="@item.Id" title="Edit"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
-                                        <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td align="center">
+                                    @if (item.IsEnabled)
+                                    {
+                                        <i class="fas fa-check" style="color:green"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-times" style="color:red"></i>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.IsLockedOut)
+                                    {
+                                        <i class="fas fa-lock" style="color:red"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fas fa-lock-open" style="color:green"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.LastLoginDate == DateTime.MinValue)
+                                    {
+                                        //do nothing
+                                    }
+                                    else
+                                    {
+                                        tmp = item.LastLoginDate.ToString("dd-MMM-yyyy");
+                                        <label>@tmp</label>
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (item.UserOnLine)
+                                    {
+                                    <i class="fas fa-lock-open" style="color:green"></i>
+                                    }
+                                    else
+                                    {
+                                    <i class="fas fa-lock" style="color:red"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                         tmp = item.CreatedDate.ToString("dd-MMM-yyyy");
+                                        <label>@tmp</label>
+                                    }
+                                </td>
+                                <td>
+                                    @if (item.ModifiedDate == DateTime.MinValue)
+                                    {
+                                        //do nothing
+                                    }
+                                    else
+                                    {
+                                        tmp = item.ModifiedDate.ToString("dd-MMM-yyyy");
+                                        <label>@tmp</label>
+                                       
+                                    }
+                                </td>
+                                <td>
+                                    &nbsp;&nbsp;
+                                    <a asp-page="./Details" asp-route-id="@item.Id" title="Details"><i class="fas fa-info"></i></a>&nbsp;&nbsp;
+                                    <a asp-page="./Edit" asp-route-id="@item.Id" title="Edit"><i class="fas fa-pencil-alt"></i></a>&nbsp;&nbsp;
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" title="Delete"><i class="fas fa-trash-alt"></i></a>&nbsp;&nbsp;
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

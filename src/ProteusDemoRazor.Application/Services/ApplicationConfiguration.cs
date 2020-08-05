@@ -7,6 +7,7 @@ namespace Proteus.Application.Services
 {
     public class ApplicationConfiguration : IApplicationConfiguration
     {
+        //don't forget to add any new properties to the interface
         public string DefaultRole { get; set; }
         public int EarlyWarningSeconds { get; set; }
         public string NetworkLocation { get; set; }

@@ -30,10 +30,10 @@
                             <span asp-validation-for="UserViewModel.EDI" class="text-danger"></span>
                         </div>
                         @*<div class="form-group">
-                            <label asp-for="UserViewModel.PasswordHash" class="control-label">Password</label>
-                            <input asp-for="UserViewModel.PasswordHash" class="form-control" />
-                            <span asp-validation-for="UserViewModel.PasswordHash" class="text-danger"></span>
-                        </div>*@
+            <label asp-for="UserViewModel.PasswordHash" class="control-label">Password</label>
+            <input asp-for="UserViewModel.PasswordHash" class="form-control" />
+            <span asp-validation-for="UserViewModel.PasswordHash" class="text-danger"></span>
+        </div>*@
                         <div class="form-group">
                             <label asp-for="UserViewModel.Email" class="control-label">Email </label>
                             <input asp-for="UserViewModel.Email" class="form-control" />
@@ -83,6 +83,12 @@
                         <div class="form-group form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" asp-for="UserViewModel.IsLockedOut" /> User Account Is Locked Out
+                            </label>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="UserViewModel.UserOnLine" /> User is On Line (Last Logged in Date:  <label asp-for="UserViewModel.LastLoginDate">@Model.UserViewModel.LastLoginDate</label> )
                             </label>
                         </div>
                     </div>
