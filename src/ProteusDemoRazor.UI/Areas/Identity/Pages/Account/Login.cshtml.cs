@@ -21,7 +21,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
         private readonly ICertValidationService _validationService;
 
         public string ReturnUrl { get; set; }
@@ -30,7 +30,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         [BindProperty]
         public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration, ICertValidationService service)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration, ICertValidationService service)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -88,13 +88,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 {
                     this.Input.DODAccept = false;
                     ModelState.Clear();
-                    _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]), user.UserName));
+                    _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", _configuration.MaxDaysBetweenLogins, user.UserName));
                     return RedirectToPage("./AccountLocked");
                 }
                 else
                 {
                     //we have an account but SHOULD they be locked out
-                    if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
+                    if (DateTime.Now.Subtract(user.LastLoginDate).Days >= _configuration.MaxDaysBetweenLogins)
                     {
                         //if they have not logged in for x number of days
                         //disable the account!
@@ -102,10 +102,38 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         await _signInManager.UserManager.UpdateAsync(user);
                         this.Input.DODAccept = false;
                         ModelState.Clear();
-                        _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]), user.UserName));
+                        _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", _configuration.MaxDaysBetweenLogins, user.UserName));
                         return RedirectToPage("./AccountLocked");
                     }
+
                     //do they have a session already??
+                    if(user.UserOnLine == true )
+                    {
+                        //if if was yesterday log them out so they can log in
+                        if(user.LastLoginDate < DateTime.Today)
+                        {                           
+                            user.UserOnLine = false;
+                            await _signInManager.UserManager.UpdateAsync(user);
+                            await _signInManager.SignOutAsync();
+                        }
+
+                        if (user.LastLoginDate.Date == DateTime.Today)
+                        { 
+                            //anytime today is not allowed
+                            _logger.LogWarning(string.Format("Second Sesson:{0}", user.UserName));
+                            ModelState.AddModelError(string.Empty, "It applears that you are attempting to start another session, that is prohibited.");
+                            return Page();
+                        }
+                    }
+
+                    //verify the EDI matches what is on file
+                    if (user.EDI != certInfo[2].Item2)
+                    {
+                        //cert 
+                        _logger.LogWarning(string.Format("EDI on CAC does not match Database:{0}",  user.UserName ));
+                        ModelState.AddModelError(string.Empty, "There is an issue with your CAC login, contact the Administrator and let them know.");
+                        return Page();
+                    }
 
                     //LOG THEM IN!!
                     //create the CAC as a claim 
@@ -115,12 +143,14 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     var customClaims = new[]
                     {
                          new Claim(ClaimTypes.NameIdentifier,certInfo[0].Item2, ClaimValueTypes.String,"DOD-CAC"),
-                          new Claim(ClaimTypes.GivenName,certInfo[1].Item2, ClaimValueTypes.String)
+                         new Claim(ClaimTypes.GivenName,certInfo[1].Item2, ClaimValueTypes.String)
                     };                    
                    
                     await _signInManager.SignInWithClaimsAsync(user, isPersistent: false , customClaims);
+
                     //now set the login date time
                     user.LastLoginDate = DateTime.Now;
+                    user.UserOnLine = true;
                     await _signInManager.UserManager.UpdateAsync(user);
                     _logger.LogInformation(String.Format("User logged in: {0}.", user.UserName));
                     return LocalRedirect(returnUrl);

@@ -3,7 +3,7 @@ using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.StyleGuide.Pages.Examples
 {
-    [Breadcrumb(AreaName = "StyleGuide", Title = "Language Menu", FromPage = typeof(StyleGuide.Pages.IndexModel))]
+    [Breadcrumb(AreaName = "StyleGuide", Title = "Language Menu", FromPage = typeof(StyleGuide.Pages.IndexStyleModel))]
     public class LanguageMenuModel : PageModel
     {
         public void OnGet()

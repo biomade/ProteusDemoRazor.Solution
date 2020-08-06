@@ -33,7 +33,7 @@ namespace Proteus.UI
         }
 
         private readonly IHostingEnvironment _env;
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -42,18 +42,28 @@ namespace Proteus.UI
             //https://www.thesslstore.com/blog/how-to-make-ssl-certificates-play-nice-with-asp-net-core/
             if (!_env.IsDevelopment())
             {
-                services.AddHttpsRedirection(opts => {
+                services.AddHttpsRedirection(opts =>
+                {
                     opts.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
                     opts.HttpsPort = 44300;
                 });
             }
             else
             {
-                    services.AddHttpsRedirection(opts => {
-                        opts.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-                        opts.HttpsPort = 44300;
-                    });
-             }
+                services.AddHttpsRedirection(opts =>
+                {
+                    opts.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                    opts.HttpsPort = 44300;
+                });
+            }
+
+            /**
+                Create a service for DI that will return the ApplicationConfiguration
+                section of appsettings. This is just a factory function.
+            */
+            services.AddScoped<IApplicationConfiguration, ApplicationConfiguration>(
+                e => Configuration.GetSection("AppSettings")
+                        .Get<ApplicationConfiguration>());
 
             ConfigureDatabases(services);
 
@@ -92,8 +102,8 @@ namespace Proteus.UI
             {
                 options.Cookie.Name = "ProteusDemo";
                 options.SlidingExpiration = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(15); //how long to keep the cookie, then the user will be logged out
-                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(Convert.ToDouble(Configuration["AppSettings:SessionTimeOutMinutes"])); //how long to keep the cookie, then the user will be logged out
+                //options.Cookie.HttpOnly = true;
                 options.LoginPath = "/Identity/Account/Login";
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/AccessDenied";
@@ -106,9 +116,9 @@ namespace Proteus.UI
                 options.OlClasses = "breadcrumb float-sm-right";
                 options.LiClasses = "breadcrumb-item";
                 options.ActiveLiClasses = "breadcrumb-item active";
-                    //// Testing
-                    //options.DontLookForDefaultNode = true;
-                });
+                //// Testing
+                //options.DontLookForDefaultNode = true;
+            });
             // aspnetrun dependencies
             RegisterServices(services);
 
@@ -125,15 +135,15 @@ namespace Proteus.UI
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Roles");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/Users");
                 options.Conventions.AuthorizeAreaFolder("Identity", "/UserRoles");
-                    //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
-                    //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
-                });
+                //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
+                //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
+            });
 
             //TODO CAC Authentication 0: Add Microsoft.AspNetCoreAuthentication.Certificate nuget package
             //TODO CAC Authentication 1: add "https_port": 443, to the appsettings.json config
             //TODO CAC Authentication 2a: configure service to validate cert         
             //TODO CAC Authentication 2b: configure authentication Serive
-            
+
             //COMMENTED OUT SO NOT prompted again, before login!
             //services.AddAuthentication(
             //CertificateAuthenticationDefaults.AuthenticationScheme)
@@ -166,6 +176,7 @@ namespace Proteus.UI
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

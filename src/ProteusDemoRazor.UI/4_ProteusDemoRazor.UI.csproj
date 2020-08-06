@@ -65,4 +65,8 @@
     <ProjectReference Include="..\ProteusDemoRazor.Infrastructure\2_ProteusDemoRazor.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\session-expiration-idle-hands\" />
+  </ItemGroup>
+
 </Project>

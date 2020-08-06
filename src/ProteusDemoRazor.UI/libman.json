@@ -145,6 +145,10 @@
     {
       "library": "bs-custom-file-input@1.3.4",
       "destination": "wwwroot/lib/bs-custom-file-input/"
+    },
+    {
+      "library": "basil.js@0.4.10",
+      "destination": "wwwroot/lib/basil.js/"
     }
   ]
 }

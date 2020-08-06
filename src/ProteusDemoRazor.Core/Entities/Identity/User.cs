@@ -37,6 +37,7 @@ namespace Proteus.Core.Entities.Identity
 
         public bool IsLockedOut { get; set; }
 
+        public bool UserOnLine { get; set; }
         public DateTime LastLoginDate { get; set; } //used to autolock users who have not logged in for a certain amount of time
 
         public string GovPOCName { get; set; }

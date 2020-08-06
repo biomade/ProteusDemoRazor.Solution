@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Proteus.Application.Interfaces;
 using Proteus.Core.Constants;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -18,9 +19,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         private readonly UserManager<User> _userManager;
         private readonly ILogger<CreateModel> _logger;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly IConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
 
-        public CreateModel(UserManager<User> userManager, ILogger<CreateModel> logger, IPasswordHasher<User> passwordHasher,  IConfiguration configuration)
+        public CreateModel(UserManager<User> userManager, ILogger<CreateModel> logger, IPasswordHasher<User> passwordHasher, IApplicationConfiguration configuration)
         {
             _userManager = userManager;
             _logger = logger;
@@ -73,7 +74,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             //now set up a default role
             UserViewModel = await _userManager.FindByNameAsync(UserViewModel.UserName);
 
-            var roleResult = _userManager.AddToRoleAsync(UserViewModel, _configuration["AppSettings:DefaultRole"].ToString());
+            var roleResult = _userManager.AddToRoleAsync(UserViewModel, _configuration.DefaultRole);
 
             return RedirectToPage("./Index");
         }
