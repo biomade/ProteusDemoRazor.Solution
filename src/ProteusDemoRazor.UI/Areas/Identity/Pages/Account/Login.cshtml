@@ -7,7 +7,6 @@
     Layout = "";
     ViewData["Title"] = "Login";
 }
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -25,59 +24,69 @@
     <script src="~/lib/admin-lte/js/adminlte.min.js" asp-append-version="true"></script>
 </head>
 <body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <a href="#"><b>Proteus Demo</b></a>
+    <form method="post" role="form">
+        <div style="text-align:center; margin-left: 10px; margin-top: 10px;">
+            <h3>  US DEPARTMENT OF DEFENSE NOTICE AND CONSENT STATEMENT</h3>
         </div>
-        <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">                   
-                <span class="text-danger">@Html.ValidationSummary(true)</span>
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form method="post" role="form">
-                    <div class="input-group mb-3">
-                        <input type="text" asp-for="Input.UserName" class="form-control" placeholder="UserName">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-user-alt"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="password" asp-for="Input.Password" class="form-control" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
-                <p class="mb-1">
-                    If you do not want to register, use one of these logins:
-                    <br />
-                    Admin/Abc123!
-                    <br />
-                    Mary.Lamb/Abc123!
-                    <br />
-                </p>
-                <p class="mb-1">
-                    @*<a asp-area="Identity" asp-page="/Account/forgotpassword" class="nav-link">I forgot my password</a>*@
-                </p>
-                <p class="mb-0">
-
-                    <a class="nav-link" asp-page="./Register">Register</a>
+        <br />
+        <div style="width: 95%; margin-left: 10px;">
+            <div>
+                <p style="text-align:center; color:Red; font-weight:bold;">
+                    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
                 </p>
             </div>
-            <!-- /.login-card-body -->
+            <br />
+            <div>
+                By using this IS (which includes any device attached to this IS), you consent to
+                the following conditions:
+                <ul>
+                    <br />
+                    <li>
+                        The USG routinely intercepts and monitors communications on this IS for purposes
+                        including, but not limited to, penetration testing, COMSEC monitoring, network
+                        operations and defense, personnel misconduct (PM), law enforcement (LE),
+                        and counterintelligence (CI) investigations.
+                    </li>
+                    <br />
+                    <li>
+                        At any time, the USG may inspect and seize data stored on this IS.
+                    </li>
+                    <br />
+                    <li>
+                        Communications using, or data stored on, this IS are not private, are subject to
+                        routine monitoring, interception, and search, and may be disclosed or used for any
+                        USG authorized purpose.
+                    </li>
+                    <br />
+                    <li>
+                        This IS includes security measures (e.g., authentication and access controls) to
+                        protect USG interests--not for your personal benefit or privacy.
+                    </li>
+                    <br />
+                    <li>
+                        Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI
+                        investigative searching or monitoring of the content of privileged communications,
+                        or work product, related to personal representation or services by attorneys,
+                        psychotherapists, or clergy, and their assistants.
+                        Such communications and work product are private and confidential.  See User Agreement for details.
+                    </li>
+                </ul>
+                <small>Updated: December 2018</small>
+            </div>
         </div>
-    </div>
-    <!-- /.login-box -->
+        <div align="center">
+            <div style="width: 50%">
+                <span class="text-danger">@Html.ValidationSummary(true)</span>
+                <br />
+                <input type="checkbox" asp-for="Input.DODAccept" placeholder="DoDAccept" value="true" />&nbsp;I Agree to the DoD statement above
+                <br />
+                <input type="submit" id="btnAccept" value="Accept & Login" title="Accept" />
+            </div>
+           
+        </div>
+    </form>
+    <br />
+    <a asp-page="./register" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">Register</a>
+    <br />
 </body>
 </html>

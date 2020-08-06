@@ -52,8 +52,5 @@ namespace Proteus.Application.ViewModels.Identity.Account
         ////note this grabbed from the CAC
         //public string EDI { get; set; }
 
-        [Required]
-        //note this grabbed from the CAC
-        public bool AgreeToTerms { get; set; }
     }
 }

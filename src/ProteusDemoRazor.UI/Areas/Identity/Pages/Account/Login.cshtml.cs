@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -22,14 +21,14 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
-        private readonly IApplicationConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;        
 
         public string ReturnUrl { get; set; }
         [TempData]
         public string ErrorMessage { get; set; }
-        
+
         [BindProperty]
-        public LoginViewModel Input { get; set; }
+        public DODViewModel Input { get; set; }
         public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration)
         {
             _signInManager = signInManager;
@@ -55,84 +54,22 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            string why = string.Empty;
+
+            if (Input.DODAccept == false)
+            {
+                ModelState.AddModelError(string.Empty, "You MUST accept the DoD statement before you can use this website.");
+                return Page();
+            }
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
-                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
-                var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
-                if(user == null)
-                {
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
-                }
-                else if (!user.IsEnabled)
-                {
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;                    
-                }
-                else if (DateTime.Now.Subtract(user.LastLoginDate).Days >= _configuration.MaxDaysBetweenLogins)
-                {
-                    //if they have not logged in for x number of days
-                    //disable the account!
-                    user.IsEnabled = false;
-                    await _signInManager.UserManager.UpdateAsync(user);
-                    result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
-                    why = "AccountDisabledDueToLackOfUse";
-                }                
-                else
-                {
-                    //check the password is correct
-                    bool validPassword = await _signInManager.UserManager.CheckPasswordAsync(user, Input.Password);
-                    if (validPassword)
-                    {
-                        ////get the roles
-                        //List<string> roleNames = (List<string>)await _signInManager.UserManager.GetRolesAsync(user) ;
-                        //var identity = new ClaimsIdentity(IdentityConstants.ApplicationScheme);
-                        //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()));
-                        //identity.AddClaim(new Claim(ClaimTypes.Name, user.UserName));
-                        //foreach (var roleName in roleNames)
-                        //{
-                        //    new Claim(ClaimTypes.Role, roleName);
-                        //    await HttpContext.SignInAsync(IdentityConstants.ApplicationScheme, new ClaimsPrincipal(identity));
-                        //    result = Microsoft.AspNetCore.Identity.SignInResult.Success;
-                        //}
-                        //allow the user in!
-                       result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, false, lockoutOnFailure: false);
-                    }
-                   
-                }
-
-                if (result.Succeeded)
-                {
-                    //now set the login time
-                    user.LastLoginDate = DateTime.Now;
-                    await _signInManager.UserManager.UpdateAsync(user);
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                else if (result.IsNotAllowed)
-                {
-                    if(why == "AccountDisabledDueToLackOfUse")
-                    {
-                        ModelState.AddModelError(string.Empty, "User Account has been Disabled due to lack of use.");
-                        _logger.LogWarning("User Account has not been enabled or it has been Disabled due to lack of use");
-                        return Page();
-                    }
-                    
-                    ModelState.AddModelError(string.Empty, "User Account has not been Enabled.");
-                    _logger.LogWarning("User Account has not been Enabled.");
-                    return RedirectToPage("./AccountDisabled");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
+                return RedirectToPage("./login2");
             }
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }
+

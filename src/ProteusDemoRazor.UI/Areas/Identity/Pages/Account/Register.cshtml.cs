@@ -49,12 +49,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            //see that checkbox has been clicked
-            if (Input.AgreeToTerms == false)
-            {
-                ModelState.AddModelError(string.Empty, "You MUST agree to the terms before you can use this website.");
-                return Page();
-            }
+           
             if (ModelState.IsValid)
             {
                 var user = new User
