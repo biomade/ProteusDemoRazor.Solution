@@ -1,14 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -36,15 +33,24 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             _passwordHasher = passwordHasher;
         }
         public async Task<IActionResult> OnGet()
-        {        
+        {
             //now get the user
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
-            Input.Id = user.Id;
-            Input.UserName = user.UserName;
-            Input.FirstName = user.FirstName;
-            Input.MI = user.MI;
-            Input.LastName = user.LastName;
+            //automapper converts it
             Input.Email = user.Email;
+            Input.FirstName = user.FirstName;
+            Input.GovPOCEmail = user.GovPOCEmail;
+            Input.GovPOCName = user.GovPOCName;
+            Input.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
+            Input.Id = user.Id;
+            Input.LastName = user.LastName;
+            Input.MI = user.MI;
+            Input.PasswordHash = user.PasswordHash;
+            Input.Phone = user.PhoneNumber;
+            Input.UserName = user.UserName;
+            Input.EDI = user.EDI;
+
+            //Input =  ObjectMapper.Mapper.Map<UserProfileViewModel>(user);           
             return Page();
         }
 
@@ -58,9 +64,15 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             //get user and update the profile fields
             var user = await _userManager.FindByIdAsync(Input.Id.ToString());
 
-             user.FirstName  = Input.FirstName ;
-             user.MI= Input.MI;
-             user.LastName = Input.LastName;
+            user.FirstName = Input.FirstName;
+            user.MI = Input.MI;
+            user.LastName = Input.LastName;
+            user.PhoneNumber = Input.Phone;
+            user.GovPOCEmail = Input.GovPOCEmail;
+            user.GovPOCName = Input.GovPOCName;
+            user.GovPOCPhoneNumber = Input.GovPOCPhoneNumber;
+            user.EDI = Input.EDI;
+
             if (String.IsNullOrEmpty(Input.Email))
             {
                 ModelState.AddModelError(string.Empty, "Email can not be empty");
@@ -71,11 +83,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             {
                 user.Email = Input.Email;
             }
-             user.ModifiedDate = System.DateTime.Now;
-           if (!string.IsNullOrEmpty(Input.Password))
-            {
-                user.PasswordHash = _passwordHasher.HashPassword(user, Input.Password);
-            }
+
+            user.ModifiedDate = System.DateTime.Now;
+            user.PasswordHash = Input.PasswordHash;
 
             IdentityResult result = await _userManager.UpdateAsync(user);
             if (result.Succeeded)

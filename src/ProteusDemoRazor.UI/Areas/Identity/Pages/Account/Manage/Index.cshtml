@@ -21,8 +21,6 @@
                             <div class="form-group">
                                 <label for="Input.UserName" class="control-label">UserName: </label>
                                 @Html.DisplayFor(model => model.Input.UserName)
-                                <input type="hidden" asp-for="Input.UserName" />
-                                <input type="hidden" asp-for="Input.Id" />
                             </div>
                             <div class="form-group">
                                 <label asp-for="Input.FirstName" class="control-label"> First Name</label>
@@ -42,18 +40,43 @@
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Input.Password" class="control-label">Password</label>
-                                <input asp-for="Input.Password" class="form-control" />
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                <label asp-for="Input.Phone" class="control-label">Phone </label>
+                                <input type="text" class="form-control" asp-for="Input.Phone" placeholder="Phone">
+                                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                            </div>
+                            @*<div class="form-group">
+                                    <label asp-for="Input.Password" class="control-label">Password</label>
+                                    <input asp-for="Input.Password" class="form-control" />
+                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Input.ConfirmPassword" class="control-label">Password</label>
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>*@
+                            <div class="form-group">
+                                <label asp-for="Input.GovPOCName" class="control-label">Gov. POC Name </label>
+                                <input type="text" class="form-control" asp-for="Input.GovPOCName" placeholder="GovPOCName">
+                                <span asp-validation-for="Input.GovPOCName" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Input.ConfirmPassword" class="control-label">Password</label>
-                                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                <label asp-for="Input.GovPOCEmail" class="control-label">Gov. POC Email </label>
+                                <input type="text" class="form-control" asp-for="Input.GovPOCEmail" placeholder="GovPOCEmail">
+                                <span asp-validation-for="Input.GovPOCEmail" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.GovPOCPhoneNumber" class="control-label">Gov. POC Phone </label>
+                                <input type="text" class="form-control" asp-for="Input.GovPOCPhoneNumber" placeholder="GovPOCPhoneNumber">
+                                <span asp-validation-for="Input.GovPOCPhoneNumber" class="text-danger"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer">
+                        <div class="">
+                            <input type="hidden" asp-for="Input.UserName" />
+                            <input type="hidden" asp-for="Input.Id" />
+                            <input type="hidden" asp-for="Input.EDI" placeholder="EDI">
+                            <input type="hidden" asp-for="Input.PasswordHash" placeholder="PasswordHash">
+
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
