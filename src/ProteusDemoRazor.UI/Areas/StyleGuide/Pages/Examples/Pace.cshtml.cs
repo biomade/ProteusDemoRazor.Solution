@@ -8,7 +8,7 @@ using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.StyleGuide.Pages.Examples
 {
-    [Breadcrumb(AreaName = "StyleGuide", Title = "Pace Progress Bar", FromPage = typeof(StyleGuide.Pages.IndexModel))]
+    [Breadcrumb(AreaName = "StyleGuide", Title = "Pace Progress Bar", FromPage = typeof(StyleGuide.Pages.IndexStyleModel))]
     public class PaceModel : PageModel
     {
         public void OnGet()
