@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
 using Microsoft.Extensions.Configuration;
+using Proteus.Application.Interfaces;
 
 namespace Proteus.UI.Areas.Identity.Pages.Account
 {
@@ -23,12 +24,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger, Microsoft.Extensions.Configuration.IConfiguration configuration)
+            ILogger<RegisterModel> logger, IApplicationConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -48,26 +49,36 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            //see that checkbox has been clicked
+            if (Input.AgreeToTerms == false)
+            {
+                ModelState.AddModelError(string.Empty, "You MUST agree to the terms before you can use this website.");
+                return Page();
+            }
             if (ModelState.IsValid)
             {
-                var user = new User {
+                var user = new User
+                {
                     UserName = Input.Name,
                     Email = Input.Email,
+                    PhoneNumber = Input.Phone,
+                    GovPOCPhoneNumber = Input.GovPOCPhoneNumber,
+                    GovPOCName = Input.GovPOCName,
+                    GovPOCEmail = Input.GovPOCEmail,
+                    EDI = "1234567890", // Input.EDI,
                     IsEnabled = false,
                     IsLockedOut = false,
                     CreatedDate = DateTime.Now
                 };
-               
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    
                     //now set up a default role
                     user = await _userManager.FindByNameAsync(user.UserName);
                    
-                    var roleResult = _userManager.AddToRoleAsync(user, _configuration["AppSettings:DefaultRole"].ToString());
+                    var roleResult = _userManager.AddToRoleAsync(user, _configuration.DefaultRole);
                     _logger.LogInformation("User created a new account with password.");
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToPage("./AccountDisabled");
                 }
                 foreach (var error in result.Errors)

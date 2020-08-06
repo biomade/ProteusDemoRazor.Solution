@@ -10,7 +10,7 @@ namespace Proteus.Core.Entities.Identity
     //TODO IDENTITY: Step 1a - Create class that extends from Identity
     [Table("User")]
     public class User : Entity
-    {        
+    {
 
         [Required, MaxLength(50)]
         public string UserName { get; set; }
@@ -22,6 +22,8 @@ namespace Proteus.Core.Entities.Identity
 
         [Required, MaxLength(128)]
         public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         public string NormalizedEmail { get; set; }
 
@@ -35,7 +37,15 @@ namespace Proteus.Core.Entities.Identity
 
         public bool IsLockedOut { get; set; }
 
+        public bool UserOnLine { get; set; }
         public DateTime LastLoginDate { get; set; } //used to autolock users who have not logged in for a certain amount of time
+
+        public string GovPOCName { get; set; }
+        public string GovPOCEmail { get; set; }
+        public string GovPOCPhoneNumber { get; set; }
+
+        [Required, MaxLength(1024)]
+        public string EDI { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }

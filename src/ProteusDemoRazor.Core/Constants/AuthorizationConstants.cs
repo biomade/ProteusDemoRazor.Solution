@@ -11,6 +11,6 @@ namespace Proteus.Core.Constants
             public const string ADMINISTRATORS = "Administrators";
         }
 
-        public const string DEFAULT_PASSWORD = "Pass@word1";
+        public const string DEFAULT_PASSWORD = "Abc123!";
     }
 }

@@ -17,7 +17,6 @@ namespace Proteus.Infrastructure.Identity
             //used to call everything else
             SeedRoles(roleManager);
             SeedUser(userManager);
-            //SeedUserRoles(userManager, roleManager);
         }
 
         private static void SeedUserRoles(UserManager<User> userManager, RoleManager<Role> roleManager)
@@ -38,6 +37,17 @@ namespace Proteus.Infrastructure.Identity
             role = roleManager.FindByNameAsync("Visitor").Result;
             userRoles = userManager.GetRolesAsync(user).Result;
             if (!userRoles.Contains("Visitor"))
+            {
+                UserRole ur = new UserRole();
+                ur.RoleId = role.Id;
+                ur.UserId = user.Id;
+                ur.CreatedDate = System.DateTime.Now;
+            }
+
+            user = userManager.FindByNameAsync("KERN.LAURIE.JANE").Result;
+            role = roleManager.FindByNameAsync("Administrator").Result;
+            userRoles = userManager.GetRolesAsync(user).Result;
+            if (!userRoles.Contains("Administrator"))
             {
                 UserRole ur = new UserRole();
                 ur.RoleId = role.Id;
@@ -99,6 +109,7 @@ namespace Proteus.Infrastructure.Identity
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
                 user.LastLoginDate = System.DateTime.Now;
+                user.EDI = "1234567890";
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
@@ -119,10 +130,33 @@ namespace Proteus.Infrastructure.Identity
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
                 user.LastLoginDate = System.DateTime.Now;
+                user.EDI = "1234567890";
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
                     Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Visitor");
+                }
+            }
+
+            if (userManager.FindByNameAsync("KERN.LAURIE.JANEb").Result == null)
+            {
+                User user = new User();
+                user.FirstName = "Laurie";
+                user.MI = "J";
+                user.LastName = "Kern";
+                user.UserName = "KERN.LAURIE.JANE";
+                user.Email = "laurie.kern.ctr@us.af.mil";
+                user.EDI = "1377060284";
+                user.NormalizedEmail = user.Email.ToUpper();
+                user.NormalizedUserName = user.UserName.ToUpper();
+                user.IsEnabled = true;
+                user.IsLockedOut = false;
+                user.CreatedDate = System.DateTime.Now;
+                user.LastLoginDate = System.DateTime.Now;
+                IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
+                if (userResult.Succeeded)
+                {
+                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Administrator");
                 }
             }
         }
