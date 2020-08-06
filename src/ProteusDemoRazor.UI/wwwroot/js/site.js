@@ -20,4 +20,14 @@ $(document).ready(function () {
         return this.href == url;
     }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
+    //for the session warning dialog box from https://www.jqueryscript.net/other/session-expiration-idle-hands.html
+    var timeout = $('#TimeOut').val(); // '@AppSettings.SessionTimeOutMinutes';
+    $.idleHands({
+        applicationId: 'Proteus',
+        heartRate: 15, //how often to check in seconds
+        inactivityDialogDuration: 45, //seconds 
+        inactivityLogoutUrl: '/Identity/Account/Logout',
+        maxInactivitySeconds: timeout * 60//get this from the session setting convert to seconds
+    });
+
 });

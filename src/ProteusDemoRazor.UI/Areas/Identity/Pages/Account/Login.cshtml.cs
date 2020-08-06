@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels.Identity.Account;
 using Proteus.Core.Entities.Identity;
 
@@ -21,7 +22,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
-        private readonly IConfiguration _configuration;
+        private readonly IApplicationConfiguration _configuration;
 
         public string ReturnUrl { get; set; }
         [TempData]
@@ -29,7 +30,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         
         [BindProperty]
         public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration,)
         {
             _signInManager = signInManager;
             _logger = logger;

@@ -25,21 +25,31 @@ using SmartBreadcrumbs.Extensions;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity.Stores;
 using Proteus.Core.Interfaces.Identity;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace Proteus.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _env;
+        public IConfiguration Configuration { get; }
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            /*
+               Create a service for DI that will return the ApplicationConfiguration
+               section of appsettings. This is just a factory function.
+           */
+            services.AddScoped<IApplicationConfiguration, ApplicationConfiguration>(
+                e => Configuration.GetSection("AppSettings")
+                        .Get<ApplicationConfiguration>());
+
             ConfigureDatabases(services);
 
             //TODO IDENTITY: Step 5a - Configure the services for Identity
@@ -82,7 +92,18 @@ namespace Proteus.UI
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/AccessDenied";
             });
-            //end todo
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.Name = "ProteusDemo";
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(Convert.ToDouble(Configuration["AppSettings:SessionTimeOutMinutes"])); //how long to keep the cookie, then the user will be logged out
+                //options.Cookie.HttpOnly = true;
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+                options.AccessDeniedPath = "/AccessDenied";
+            });
+            //end Identity todo
 
             services.AddBreadcrumbs(GetType().Assembly, options =>
             {

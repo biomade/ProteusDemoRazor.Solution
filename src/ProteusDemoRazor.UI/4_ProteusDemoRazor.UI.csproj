@@ -41,6 +41,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\session-expiration-idle-hands\jquery-idle-hands.js" />
+    <None Include="wwwroot\lib\session-expiration-idle-hands\jquery-idle-hands.min.js" />
+    <None Include="wwwroot\lib\session-expiration-idle-hands\LICENSE" />
+    <None Include="wwwroot\lib\session-expiration-idle-hands\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.5" />
