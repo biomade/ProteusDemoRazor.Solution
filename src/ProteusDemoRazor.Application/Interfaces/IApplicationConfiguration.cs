@@ -16,5 +16,7 @@ namespace Proteus.Application.Interfaces
         int EarlyWarningSeconds { get; set; }
 
         int SessionTimeOutMinutes { get; set; }
+
+        string NetworkLocation { get; set; }
     }
 }
