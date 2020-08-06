@@ -30,7 +30,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         
         [BindProperty]
         public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration,)
+        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
@@ -71,7 +71,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 {
                     result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;                    
                 }
-                else if (DateTime.Now.Subtract(user.LastLoginDate).Days >= Convert.ToInt32(_configuration["AppSettings:MaxDaysBetweenLogins"]))
+                else if (DateTime.Now.Subtract(user.LastLoginDate).Days >= _configuration.MaxDaysBetweenLogins)
                 {
                     //if they have not logged in for x number of days
                     //disable the account!
