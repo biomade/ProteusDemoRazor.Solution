@@ -37,7 +37,20 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             //now get the user
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
             //automapper converts it
-           Input =  ObjectMapper.Mapper.Map<UserProfileViewModel>(user);           
+            Input.Email = user.Email;
+            Input.FirstName = user.FirstName;
+            Input.GovPOCEmail = user.GovPOCEmail;
+            Input.GovPOCName = user.GovPOCName;
+            Input.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
+            Input.Id = user.Id;
+            Input.LastName = user.LastName;
+            Input.MI = user.MI;
+            Input.PasswordHash = user.PasswordHash;
+            Input.Phone = user.PhoneNumber;
+            Input.UserName = user.UserName;
+            Input.EDI = user.EDI;
+
+           //Input =  ObjectMapper.Mapper.Map<UserProfileViewModel>(user);           
             return Page();
         }
 
