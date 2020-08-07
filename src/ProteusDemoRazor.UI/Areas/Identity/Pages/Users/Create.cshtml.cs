@@ -39,7 +39,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         }
 
         [BindProperty]
-        public User User { get; set; }
+        public User Input { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -50,19 +50,19 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return Page();
             }
 
-            User.NormalizedUserName = User.UserName.ToUpper();
-            User.NormalizedEmail = User.Email.ToUpper();
-            User.PasswordHash = _passwordHasher.HashPassword(User, User.PasswordHash);
+            Input.NormalizedUserName = Input.UserName.ToUpper();
+            Input.NormalizedEmail = Input.Email.ToUpper();
+            Input.PasswordHash = _passwordHasher.HashPassword(Input, Input.PasswordHash);
 
-            if (User.IsEnabled)
+            if (Input.IsEnabled)
             {
-                User.LastLoginDate = System.DateTime.Now;
+                Input.LastLoginDate = System.DateTime.Now;
             }
-            User.CreatedDate = System.DateTime.Now;
+            Input.CreatedDate = System.DateTime.Now;
             //hash the password entered
 
 
-            IdentityResult result =  await _userManager.CreateAsync(User);
+            IdentityResult result =  await _userManager.CreateAsync(Input);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -75,9 +75,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             }
             //set up user with the visitor Role
             //now set up a default role
-            User = await _userManager.FindByNameAsync(User.UserName);
+            Input = await _userManager.FindByNameAsync(Input.UserName);
 
-            var roleResult = _userManager.AddToRoleAsync(User, _configuration.DefaultRole);
+            var roleResult = _userManager.AddToRoleAsync(Input, _configuration.DefaultRole);
 
             return RedirectToPage("./Index");
         }

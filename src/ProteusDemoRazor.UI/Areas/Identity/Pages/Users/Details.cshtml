@@ -21,37 +21,37 @@
                                 User Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.UserName)
+                                @Html.DisplayFor(model => model.Input.UserName)
                             </dd>  
                             <dt class="col-sm-3">
                                 Email
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.Email)
+                                @Html.DisplayFor(model => model.Input.Email)
                             </dd>                            
                             <dt class="col-sm-3">
                                First Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.FirstName)
+                                @Html.DisplayFor(model => model.Input.FirstName)
                             </dd>
                             <dt class="col-sm-3">
                                 M.I.
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.MI)
+                                @Html.DisplayFor(model => model.Input.MI)
                             </dd>
                             <dt class="col-sm-3">
                                Last Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.LastName)
+                                @Html.DisplayFor(model => model.Input.LastName)
                             </dd>
                             <dt class="col-sm-3">
                                 Is Enabled
                             </dt>
                             <dd class="col-sm-7">
-                                @if (Model.User.IsEnabled)
+                                @if (Model.Input.IsEnabled)
                                 {
                                     <i class="fas fa-check" style="color:green"></i>
                                 }
@@ -64,7 +64,7 @@
                                 Is Locked Out
                             </dt>
                             <dd class="col-sm-7">
-                                @if (Model.User.IsLockedOut)
+                                @if (Model.Input.IsLockedOut)
                                 {
                                     <i class="fas fa-lock" style="color:red"></i>
                                 }
@@ -77,23 +77,23 @@
                                 Last Login Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.LastLoginDate)
+                                @Html.DisplayFor(model => model.Input.LastLoginDate)
                             </dd>
                             <dt class="col-sm-3">
                                 Created Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.CreatedDate)
+                                @Html.DisplayFor(model => model.Input.CreatedDate)
                             </dd>
                             <dt class="col-sm-3">
                                 Modified Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.ModifiedDate)
+                                @Html.DisplayFor(model => model.Input.ModifiedDate)
                             </dd>
                         </dl>
                         <div>
-                            <a asp-page="./Edit" asp-route-id="@Model.User.Id" asp-route-type="u">Edit</a>
+                            <a asp-page="./Edit" asp-route-id="@Model.Input.Id" asp-route-type="u">Edit</a>
                         </div>
                     </div>
                     <!-- /.card-body -->
@@ -105,7 +105,7 @@
                     <br />
                     <div class="card-body">
                         <dl class="row">
-                            @foreach (var userRole in Model.User.UserRoles)
+                            @foreach (var userRole in Model.Input.UserRoles)
                             {
                                 <dt class="col-sm-3">
                                     Role Name
@@ -117,7 +117,7 @@
                             }
                         </dl>
                         <div>
-                            <a asp-area="Identity" asp-page="/UserRoles/EditUserRoles" asp-route-id="@Model.User.Id">Edit User Roles</a>
+                            <a asp-area="Identity" asp-page="/UserRoles/EditUserRoles" asp-route-id="@Model.Input.Id">Edit User Roles</a>
                         </div>
                     </div>
                 </div>

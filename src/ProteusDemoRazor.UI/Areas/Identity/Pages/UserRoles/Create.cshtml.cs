@@ -39,7 +39,7 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
         }
 
         [BindProperty]
-        public UserRole UserRole { get; set; }
+        public UserRole Input { get; set; }
 
         private int? Id { get; set; }
         private string Type { get; set; }
@@ -55,7 +55,7 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
             }
 
             //check to see if user is already in the role
-            var exitingUser = _userRoleStore.FindByIdAsync(UserRole.RoleId,UserRole.UserId);
+            var exitingUser = _userRoleStore.FindByIdAsync(Input.RoleId,Input.UserId);
 
             if (exitingUser != null)
             {
@@ -66,8 +66,8 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
                 return Page();
             }
 
-            UserRole.CreatedDate = System.DateTime.Now;
-            var result = await _userRoleStore.DeleteAsync(UserRole);
+            Input.CreatedDate = System.DateTime.Now;
+            var result = await _userRoleStore.DeleteAsync(Input);
            
 
             return RedirectToPage("./Index");

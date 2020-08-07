@@ -21,31 +21,31 @@
                                 Role Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.Name)
+                                @Html.DisplayFor(model => model.Input.Name)
                             </dd>
                             <dt class="col-sm-3">
                                 Description
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.Description)
+                                @Html.DisplayFor(model => model.Input.Description)
                             </dd>
                             <dt class="col-sm-3">
                                 Created Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.CreatedDate)
+                                @Html.DisplayFor(model => model.Input.CreatedDate)
                             </dd>
                             <dt class="col-sm-3">
                                Modified Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.ModifiedDate)
+                                @Html.DisplayFor(model => model.Input.ModifiedDate)
                             </dd>
                         </dl>
                     </div>
                     <!-- /.card-body -->
                     <div >
-                        <a asp-page="./Edit" asp-route-id="@Model.Role.Id">Edit Role</a>
+                        <a asp-page="./Edit" asp-route-id="@Model.Input.Id">Edit Role</a>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <br />
                     <div class="card-body">
                         <dl class="row">
-                            @foreach (var userRole in Model.Role.UserRoles)
+                            @foreach (var userRole in Model.Input.UserRoles)
                             {
                                 <dt class="col-sm-3">
                                     User Name
@@ -68,7 +68,7 @@
                         </dl>
                     </div>
                     <div>
-                        <a asp-area="Identity" asp-page="/UserRoles/Index" asp-route-id="@Model.Role.Id" asp-route-type="r">Edit Role Users</a>
+                        <a asp-area="Identity" asp-page="/UserRoles/Index" asp-route-id="@Model.Input.Id" asp-route-type="r">Edit Role Users</a>
                     </div>
                 </div>
             </div>

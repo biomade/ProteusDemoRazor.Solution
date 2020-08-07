@@ -28,7 +28,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         }
 
         [BindProperty]
-        public User User { get; set; }
+        public User Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,9 +37,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _userManager.FindByIdAsync(id.ToString());
+            Input = await _userManager.FindByIdAsync(id.ToString());
 
-            if (User == null)
+            if (Input == null)
             {
                 return NotFound();
             }
@@ -53,12 +53,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            User = await _userManager.FindByIdAsync(id.ToString());
+            Input = await _userManager.FindByIdAsync(id.ToString());
 
-            if (User != null)
+            if (Input != null)
             {
                 //this will delete the user roles too
-             var result =   await  _userManager.DeleteAsync(User); 
+             var result =   await  _userManager.DeleteAsync(Input); 
                 
             }
 

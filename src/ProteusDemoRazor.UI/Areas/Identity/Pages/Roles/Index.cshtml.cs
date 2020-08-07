@@ -27,11 +27,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             _logger = logger;
         }
 
-        public IList<Role> Roles { get;set; }
+        public IList<Role> Inputs { get;set; }
 
         public async Task OnGetAsync()
         {
-            Roles =  _roleManager.Roles.AsQueryable().ToList();
+            Inputs =  _roleManager.Roles.AsQueryable().ToList();
         }
     }
 }

@@ -25,26 +25,26 @@
                                 Role Name
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.UserRole.Role.Name)
+                                @Html.DisplayFor(model => model.Input.Role.Name)
                             </dd>
                             <dt class="col-sm-2">
                                 User Name
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.UserRole.User.UserName)
+                                @Html.DisplayFor(model => model.Input.User.UserName)
                             </dd>
                             <dt class="col-sm-2">
                                 User Email
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.UserRole.User.Email)
+                                @Html.DisplayFor(model => model.Input.User.Email)
                             </dd>
                             
                         </dl>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <input type="hidden" asp-for="UserRole.Id" />
+                        <input type="hidden" asp-for="Input.Id" />
                         <input type="submit" value="Delete" class="btn btn-danger" />
                     </div>
                 </form>

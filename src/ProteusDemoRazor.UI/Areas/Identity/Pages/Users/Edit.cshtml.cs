@@ -33,7 +33,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         }
 
         [BindProperty]
-        public UserEditViewModel Item { get; set; }
+        public UserEditViewModel Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -48,20 +48,20 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             {
                 return NotFound();
             }
-            Item = new UserEditViewModel();
-            Item.Id = user.Id;
-            Item.Email = user.Email;
-            Item.FirstName = user.FirstName;
-            Item.GovPOCEmail = user.GovPOCEmail;
-            Item.GovPOCName = user.GovPOCName;
-            Item.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
-            Item.IsEnabled = user.IsEnabled;
-            Item.IsLockedOut = user.IsLockedOut;
-            Item.LastName = user.LastName;
-            Item.MI = user.MI;
-            Item.Phone = user.PhoneNumber;
-            Item.UserName = user.UserName;
-            Item.UserOnLine = user.UserOnLine;
+            Input = new UserEditViewModel();
+            Input.Id = user.Id;
+            Input.Email = user.Email;
+            Input.FirstName = user.FirstName;
+            Input.GovPOCEmail = user.GovPOCEmail;
+            Input.GovPOCName = user.GovPOCName;
+            Input.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
+            Input.IsEnabled = user.IsEnabled;
+            Input.IsLockedOut = user.IsLockedOut;
+            Input.LastName = user.LastName;
+            Input.MI = user.MI;
+            Input.Phone = user.PhoneNumber;
+            Input.UserName = user.UserName;
+            Input.UserOnLine = user.UserOnLine;
 
 
             return Page();
@@ -78,31 +78,31 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
             try
             {
-                var user = await _userManager.FindByIdAsync(Item.Id.ToString());
-                user.Email = Item.Email;
-                user.FirstName = Item.FirstName;
-                user.GovPOCEmail = Item.GovPOCEmail;
-                user.GovPOCName = Item.GovPOCName;
-                user.GovPOCPhoneNumber = Item.GovPOCPhoneNumber;
-                user.IsEnabled = Item.IsEnabled;
-                user.IsLockedOut = Item.IsLockedOut;
-                user.LastName = Item.LastName;
-                user.MI = Item.MI;
-                if (!string.IsNullOrEmpty(Item.Password))
+                var user = await _userManager.FindByIdAsync(Input.Id.ToString());
+                user.Email = Input.Email;
+                user.FirstName = Input.FirstName;
+                user.GovPOCEmail = Input.GovPOCEmail;
+                user.GovPOCName = Input.GovPOCName;
+                user.GovPOCPhoneNumber = Input.GovPOCPhoneNumber;
+                user.IsEnabled = Input.IsEnabled;
+                user.IsLockedOut = Input.IsLockedOut;
+                user.LastName = Input.LastName;
+                user.MI = Input.MI;
+                if (!string.IsNullOrEmpty(Input.Password))
                 {
                     //if not empty update the password
-                    user.PasswordHash = _passwordHasher.HashPassword(user, Item.Password);
+                    user.PasswordHash = _passwordHasher.HashPassword(user, Input.Password);
                 }
-                user.PhoneNumber = Item.Phone;
-                user.UserName = Item.UserName;
-                user.UserOnLine = Item.UserOnLine;
+                user.PhoneNumber = Input.Phone;
+                user.UserName = Input.UserName;
+                user.UserOnLine = Input.UserOnLine;
                 user.ModifiedDate = System.DateTime.Now;
-                user.NormalizedEmail = Item.Email.ToUpper();
+                user.NormalizedEmail = Input.Email.ToUpper();
                 await _userManager.UpdateAsync(user);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(Item.Id))
+                if (!UserExists(Input.Id))
                 {
                     return NotFound();
                 }

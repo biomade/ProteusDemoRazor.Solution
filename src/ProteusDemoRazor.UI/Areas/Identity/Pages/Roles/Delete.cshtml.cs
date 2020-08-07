@@ -28,7 +28,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
         }
 
         [BindProperty]
-        public Role Role { get; set; }
+        public Role Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,9 +37,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
                 return NotFound();
             }
 
-            Role = await _roleManager.FindByIdAsync(id.ToString());
+            Input = await _roleManager.FindByIdAsync(id.ToString());
 
-            if (Role == null)
+            if (Input == null)
             {
                 return NotFound();
             }
@@ -53,18 +53,18 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
                 return NotFound();
             }
 
-            Role = await _roleManager.FindByIdAsync(id.ToString());
+            Input = await _roleManager.FindByIdAsync(id.ToString());
 
-            if (Role != null)
+            if (Input != null)
             {
                 //if there a users in the role, don't delete
-                if (Role.UserRoles.Count >= 0)
+                if (Input.UserRoles.Count >= 0)
                 {
                     ModelState.AddModelError(string.Empty, "Users assigned to this role must be removed before you can delete the Role");
                     _logger.LogWarning("Delete Role: Users assigned to this role must be removed before you can delete the Role");
                     return Page();
                 }
-              var result =   await _roleManager.DeleteAsync(Role);
+              var result =   await _roleManager.DeleteAsync(Input);
             }
 
             return RedirectToPage("./Index");

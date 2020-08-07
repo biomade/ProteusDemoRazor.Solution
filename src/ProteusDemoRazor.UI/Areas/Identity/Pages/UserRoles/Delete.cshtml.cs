@@ -31,7 +31,7 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
         }
 
         [BindProperty]
-        public UserRole UserRole { get; set; }
+        public UserRole Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -40,9 +40,9 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
                 return NotFound();
             }
 
-            UserRole = await _userRoleStore.FindByIdAsync((int)id);
+            Input = await _userRoleStore.FindByIdAsync((int)id);
 
-            if (UserRole == null)
+            if (Input == null)
             {
                 return NotFound();
             }
@@ -56,11 +56,11 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
                 return NotFound();
             }
 
-            UserRole = await _userRoleStore.FindByIdAsync((int)id);
+            Input = await _userRoleStore.FindByIdAsync((int)id);
 
-            if (UserRole != null)
+            if (Input != null)
             {
-                await _userRoleStore.DeleteAsync(UserRole); 
+                await _userRoleStore.DeleteAsync(Input); 
             }
 
             return RedirectToPage("./Index");

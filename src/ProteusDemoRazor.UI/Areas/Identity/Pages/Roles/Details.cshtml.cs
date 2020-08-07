@@ -27,7 +27,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             _logger = logger;
         }
 
-        public Role Role { get; set; }
+        public Role Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,9 +36,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
                 return NotFound();
             }
 
-            Role = await _roleManager.FindByIdAsync(id.ToString());
+            Input = await _roleManager.FindByIdAsync(id.ToString());
 
-            if (Role == null)
+            if (Input == null)
             {
                 return NotFound();
             }
