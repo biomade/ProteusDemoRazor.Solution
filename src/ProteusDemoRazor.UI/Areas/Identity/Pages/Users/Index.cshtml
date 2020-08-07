@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Manage Users";
+    string tmp = DateTime.Now.ToShortDateString();
 }
 <!-- DataTables -->
 <script src="~/lib/datatables/jquery.dataTables.min.js" asp-append-version="true"></script>
@@ -29,7 +30,7 @@
         <div class="col-12">
             <div class="card card-light">
                 <div class="card-header">
-                    <h3 class="card-title">Users List</h3> 
+                    <h3 class="card-title">Users List</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -44,7 +45,7 @@
                                 </th>
                                 <th>
                                     Email
-                                </th>                                
+                                </th>
                                 <th>
                                     Enabled
                                 </th>
@@ -52,10 +53,13 @@
                                     Locked Out
                                 </th>
                                 <th>
-                                   Last Login Date
+                                    Last Login Date
                                 </th>
                                 <th>
-                                   Created Date
+                                    Session Flag
+                                </th>
+                                <th>
+                                    Created Date
                                 </th>
                                 <th>
                                     Modified Date
@@ -94,10 +98,31 @@
                                         }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.LastLoginDate)
+                                        @if (item.LastLoginDate == DateTime.MinValue)
+                                        {
+                                            //do nothing
+                                        }
+                                        else
+                                        {
+                                            tmp = item.LastLoginDate.ToString("dd-MMM-yyyy");
+                                            <label>@tmp</label>
+                                        }
+                                    </td>
+                                    <td align="center">
+                                        @if (item.UserOnLine)
+                                        {
+                                            <i class="fas fa-lock-open" style="color:green"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-lock" style="color:red"></i>
+                                        }
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                        @{
+                                            tmp = item.CreatedDate.ToString("dd-MMM-yyyy");
+                                            <label>@tmp</label>
+                                        }
                                     </td>
                                     <td>
                                         @if (item.ModifiedDate == DateTime.MinValue)
@@ -106,7 +131,9 @@
                                         }
                                         else
                                         {
-                                            @Html.DisplayFor(modelItem => item.ModifiedDate)
+                                            tmp = item.ModifiedDate.ToString("dd-MMM-yyyy");
+                                            <label>@tmp</label>
+
                                         }
                                     </td>
                                     <td>
@@ -156,4 +183,3 @@
         });
     </script>
 }
-

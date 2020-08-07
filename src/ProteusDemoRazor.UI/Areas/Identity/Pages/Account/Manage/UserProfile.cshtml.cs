@@ -14,7 +14,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
 {
     [Authorize]
     [Breadcrumb("User Profile")]
-    public class IndexModel : PageModel
+    public class UserProfileModel : PageModel
     {
         private readonly UserManager<User> _userManager;
         private readonly ILogger _logger;
@@ -26,7 +26,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public UserProfileViewModel Input { get; set; } = new UserProfileViewModel();
 
-        public IndexModel(UserManager<User> userManager, ILogger<IndexModel> logger, IPasswordHasher<User> passwordHasher)
+        public UserProfileModel(UserManager<User> userManager, ILogger<UserProfileModel> logger, IPasswordHasher<User> passwordHasher)
         {
             _userManager = userManager;
             _logger = logger;
