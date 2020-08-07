@@ -68,6 +68,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError(string.Empty, "Required Fields are Missing");
                 return Page();
             }
 
