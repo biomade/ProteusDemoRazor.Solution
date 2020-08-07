@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels.Identity.Account;
+using Proteus.Application.ViewModels.Identity.Account.Manage;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
 
@@ -14,7 +15,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
 {
     [Authorize]
     [Breadcrumb("User Profile")]
-    public class IndexModel : PageModel
+    public class UserProfileModel : PageModel
     {
         private readonly UserManager<User> _userManager;
         private readonly ILogger _logger;
@@ -26,7 +27,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public UserProfileViewModel Input { get; set; } = new UserProfileViewModel();
 
-        public IndexModel(UserManager<User> userManager, ILogger<IndexModel> logger, IPasswordHasher<User> passwordHasher)
+        public UserProfileModel(UserManager<User> userManager, ILogger<UserProfileModel> logger, IPasswordHasher<User> passwordHasher)
         {
             _userManager = userManager;
             _logger = logger;
@@ -36,7 +37,6 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
         {
             //now get the user
             var user = await _userManager.FindByNameAsync(this.User.Identity.Name);
-            //automapper converts it
             Input.Email = user.Email;
             Input.FirstName = user.FirstName;
             Input.GovPOCEmail = user.GovPOCEmail;
@@ -49,8 +49,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             Input.Phone = user.PhoneNumber;
             Input.UserName = user.UserName;
             Input.EDI = user.EDI;
-
-           //Input =  ObjectMapper.Mapper.Map<UserProfileViewModel>(user);           
+          
             return Page();
         }
 
