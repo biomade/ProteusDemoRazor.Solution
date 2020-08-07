@@ -28,21 +28,16 @@
                             <label asp-for="Input.EDI" class="control-label">EDI</label>
                             <input asp-for="Input.EDI" class="form-control" /> (EDI from CAC)
                             <span asp-validation-for="Input.EDI" class="text-danger"></span>
-                        </div>
-                        @*<div class="form-group">
-            <label asp-for="Input.PasswordHash" class="control-label">Password</label>
-            <input asp-for="Input.PasswordHash" class="form-control" />
-            <span asp-validation-for="Input.PasswordHash" class="text-danger"></span>
-        </div>*@
+                        </div>                       
                         <div class="form-group">
                             <label asp-for="Input.Email" class="control-label">Email </label>
                             <input asp-for="Input.Email" class="form-control" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Input.PhoneNumber" class="control-label">Phone </label>
-                            <input asp-for="Input.PhoneNumber" class="form-control" />
-                            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            <label asp-for="Input.Phone" class="control-label">Phone </label>
+                            <input asp-for="Input.Phone" class="form-control" />
+                            <span asp-validation-for="Input.Phone" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label asp-for="Input.FirstName" class="control-label">First Name</label>
@@ -95,9 +90,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <input type="hidden" asp-for="Input.Id" />
-                        <input type="hidden" asp-for="Input.PasswordHash" />
                         <input type="hidden" asp-for="Input.LastLoginDate" />
-                        <input type="hidden" asp-for="Input.CreatedDate" />
                         <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
                         <button type="reset" class="btn btn-primary">Reset</button>
                     </div>

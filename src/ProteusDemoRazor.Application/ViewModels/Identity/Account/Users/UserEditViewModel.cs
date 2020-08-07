@@ -25,8 +25,7 @@ namespace Proteus.Application.ViewModels.Identity.Account.Users
 
 
         [Required]
-        [RegularExpression(@"^[[0-9]{10}$", ErrorMessage = "The EDI must be 10 numbers.")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [RegularExpression(@"^[[0-9]{10}$", ErrorMessage = "The EDI must be 10 numbers.")]    
         public string EDI { get; set; }
 
         public string FirstName { get; set; }

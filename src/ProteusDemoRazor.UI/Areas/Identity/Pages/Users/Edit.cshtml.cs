@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Proteus.Application.ViewModels.Identity.Account.Users;
 using Proteus.Core.Constants;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -27,7 +28,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         }
 
         [BindProperty]
-        public User Input { get; set; }
+        public UserEditViewModel Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,12 +37,28 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return NotFound();
             }
 
-            Input = await _userManager.FindByIdAsync(id.ToString());
-            
-            if (Input == null)
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user == null)
             {
                 return NotFound();
             }
+            Input = new UserEditViewModel();
+            Input.Id = user.Id;
+            Input.Email = user.Email;
+            Input.FirstName = user.FirstName;
+            Input.GovPOCEmail = user.GovPOCEmail;
+            Input.GovPOCName = user.GovPOCName;
+            Input.GovPOCPhoneNumber = user.GovPOCPhoneNumber;
+            Input.IsEnabled = user.IsEnabled;
+            Input.IsLockedOut = user.IsLockedOut;
+            Input.LastName = user.LastName;
+            Input.MI = user.MI;
+            Input.Phone = user.PhoneNumber;
+            Input.UserName = user.UserName;
+            Input.UserOnLine = user.UserOnLine;
+            Input.EDI = user.EDI;
+            Input.LastLoginDate = user.LastLoginDate;
             return Page();
         }
 
@@ -56,9 +73,23 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
             try
             {
-                Input.ModifiedDate = System.DateTime.Now;
-                Input.NormalizedEmail = Input.Email.ToUpper();               ;
-                await _userManager.UpdateAsync(Input);
+                var user = await _userManager.FindByIdAsync(Input.Id.ToString());
+                user.Email = Input.Email;
+                user.FirstName = Input.FirstName;
+                user.GovPOCEmail = Input.GovPOCEmail;
+                user.GovPOCName = Input.GovPOCName;
+                user.GovPOCPhoneNumber = Input.GovPOCPhoneNumber;
+                user.IsEnabled = Input.IsEnabled;
+                user.IsLockedOut = Input.IsLockedOut;
+                user.LastName = Input.LastName;
+                user.MI = Input.MI;                
+                user.PhoneNumber = Input.Phone;
+                user.UserName = Input.UserName;
+                user.UserOnLine = Input.UserOnLine;
+                user.ModifiedDate = System.DateTime.Now;
+                user.NormalizedEmail = Input.Email.ToUpper();
+                user.EDI = Input.EDI;
+                await _userManager.UpdateAsync(user);
             }
             catch (DbUpdateConcurrencyException)
             {

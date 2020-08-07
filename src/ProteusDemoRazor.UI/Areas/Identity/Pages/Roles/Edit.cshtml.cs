@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Proteus.Application.ViewModels.Identity.Account.Roles;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
 
@@ -24,7 +25,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
         }
 
         [BindProperty]
-        public Role Inputs { get; set; }
+        public RoleEditViewModel Input { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,12 +34,17 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
                 return NotFound();
             }
 
-            Inputs = await _roleManager.FindByIdAsync(id.ToString());
+            var role = await _roleManager.FindByIdAsync(id.ToString());
 
-            if (Inputs == null)
+            if (role == null)
             {
                 return NotFound();
             }
+            Input = new RoleEditViewModel();
+            Input.Id = role.Id;
+            Input.Name = role.Name;
+            Input.Description = role.Description;
+
             return Page();
         }
 
@@ -56,13 +62,19 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             {
                 //Possibly don't allow role name to change 
                 //in case it is used for authorization which will mess things up
-                Inputs.NormalizedName = Inputs.Name.ToUpper();
-                Inputs.ModifiedDate = System.DateTime.Now;
-                await _roleManager.UpdateAsync(Inputs);
+                var role = await _roleManager.FindByIdAsync(Input.Id.ToString());
+
+                role.Description = Input.Description;
+                role.ModifiedDate = System.DateTime.Now;
+                var result = await _roleManager.UpdateAsync(role);
+                if (result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Profile Updated");
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(Inputs.Id))
+                if (!RoleExists(Input.Id))
                 {
                     return NotFound();
                 }
