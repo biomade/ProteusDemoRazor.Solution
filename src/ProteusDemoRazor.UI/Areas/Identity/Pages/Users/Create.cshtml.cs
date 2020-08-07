@@ -35,7 +35,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         }
 
         [BindProperty]
-        public User UserViewModel { get; set; }
+        public User Input { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -46,20 +46,20 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 return Page();
             }
 
-            UserViewModel.NormalizedUserName = UserViewModel.UserName.ToUpper();
-            UserViewModel.NormalizedEmail = UserViewModel.Email.ToUpper();
+            Input.NormalizedUserName = Input.UserName.ToUpper();
+            Input.NormalizedEmail = Input.Email.ToUpper();
             //hash the password and put it back!
-            UserViewModel.PasswordHash = _passwordHasher.HashPassword(UserViewModel,AuthorizationConstants.DEFAULT_PASSWORD);
+            Input.PasswordHash = _passwordHasher.HashPassword(Input,AuthorizationConstants.DEFAULT_PASSWORD);
 
-            if (UserViewModel.IsEnabled)
+            if (Input.IsEnabled)
             {
-                UserViewModel.LastLoginDate = System.DateTime.Now;
+                Input.LastLoginDate = System.DateTime.Now;
             }
-            UserViewModel.CreatedDate = System.DateTime.Now;
+            Input.CreatedDate = System.DateTime.Now;
             //hash the password entered
 
 
-            IdentityResult result =  await _userManager.CreateAsync(UserViewModel);
+            IdentityResult result =  await _userManager.CreateAsync(Input);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -72,9 +72,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             }
             //set up user with the visitor Role
             //now set up a default role
-            UserViewModel = await _userManager.FindByNameAsync(UserViewModel.UserName);
+            Input = await _userManager.FindByNameAsync(Input.UserName);
 
-            var roleResult = _userManager.AddToRoleAsync(UserViewModel, _configuration.DefaultRole);
+            var roleResult = _userManager.AddToRoleAsync(Input, _configuration.DefaultRole);
 
             return RedirectToPage("./Index");
         }

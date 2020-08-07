@@ -22,7 +22,7 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
             _logger = logger;
         }
 
-        public IList<UserRole> UserRole { get; set; }
+        public IList<UserRole> Inputs { get; set; }
 
         public string UserRoleType { get; set; }
         public int? Id { get; set; }
@@ -34,15 +34,15 @@ namespace Proteus.UI.Areas.Identity.Pages.UserRoles
 
             if (id == null)
             {
-                UserRole = await _userRoleStore.GetUserRolesAsync();
+                Inputs = await _userRoleStore.GetUserRolesAsync();
             }
             else if (type.ToLower() =="r")
             {
-                UserRole = await _userRoleStore.GetUserRolesForRoleAsync((int)id);
+                Inputs = await _userRoleStore.GetUserRolesForRoleAsync((int)id);
             }
             else if (type.ToLower() == "u")
             {
-                UserRole = await _userRoleStore.GetUserRolesForUserAsync((int)id);
+                Inputs = await _userRoleStore.GetUserRolesForUserAsync((int)id);
             }
         }
     }

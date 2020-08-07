@@ -28,7 +28,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
         }
 
         [BindProperty]
-        public Role Role { get; set; }
+        public Role Input { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -38,9 +38,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             {
                 return Page();
             }
-            Role.NormalizedName = Role.Name.ToUpper();
-            Role.CreatedDate = System.DateTime.Now;
-            IdentityResult result =   await _roleManager.CreateAsync(Role);
+            Input.NormalizedName = Input.Name.ToUpper();
+            Input.CreatedDate = System.DateTime.Now;
+            IdentityResult result =   await _roleManager.CreateAsync(Input);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)

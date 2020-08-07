@@ -25,11 +25,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             _logger = logger;
         }
 
-        public IList<User> Users { get;set; }
+        public IList<User> Inputs { get;set; }
 
         public async Task OnGetAsync()
         {
-            Users =  _userManager.Users.AsQueryable().ToList(); 
+            Inputs =  _userManager.Users.AsQueryable().ToList(); 
         }
     }
 }

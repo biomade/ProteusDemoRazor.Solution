@@ -24,7 +24,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
         }
 
         [BindProperty]
-        public Role Role { get; set; }
+        public Role Inputs { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,9 +33,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
                 return NotFound();
             }
 
-            Role = await _roleManager.FindByIdAsync(id.ToString());
+            Inputs = await _roleManager.FindByIdAsync(id.ToString());
 
-            if (Role == null)
+            if (Inputs == null)
             {
                 return NotFound();
             }
@@ -56,13 +56,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             {
                 //Possibly don't allow role name to change 
                 //in case it is used for authorization which will mess things up
-                Role.NormalizedName = Role.Name.ToUpper();
-                Role.ModifiedDate = System.DateTime.Now;
-                await _roleManager.UpdateAsync(Role);
+                Inputs.NormalizedName = Inputs.Name.ToUpper();
+                Inputs.ModifiedDate = System.DateTime.Now;
+                await _roleManager.UpdateAsync(Inputs);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoleExists(Role.Id))
+                if (!RoleExists(Inputs.Id))
                 {
                     return NotFound();
                 }

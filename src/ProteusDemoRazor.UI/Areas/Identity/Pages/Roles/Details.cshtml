@@ -2,7 +2,7 @@
 @model Proteus.UI.Areas.Identity.Pages.Roles.DetailsModel
 
 @{
-    ViewData["Title"] = "Role Details";
+    ViewData["Title"] = "Input Details";
 }
 
 <div class="container-fluid">
@@ -13,62 +13,62 @@
         <div class="card-deck">
             <div class="card col-7">
                 <div class="card-body">
-                    <h5 class="card-title">Role Information</h5>
+                    <h5 class="card-title">Input Information</h5>
                     <br />
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-3">
-                                Role Name
+                                Input Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.Name)
+                                @Html.DisplayFor(model => model.Input.Name)
                             </dd>
                             <dt class="col-sm-3">
                                 Description
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.Description)
+                                @Html.DisplayFor(model => model.Input.Description)
                             </dd>
                             <dt class="col-sm-3">
                                 Created Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.CreatedDate)
+                                @Html.DisplayFor(model => model.Input.CreatedDate)
                             </dd>
                             <dt class="col-sm-3">
                                Modified Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Role.ModifiedDate)
+                                @Html.DisplayFor(model => model.Input.ModifiedDate)
                             </dd>
                         </dl>
                     </div>
                     <!-- /.card-body -->
                     <div >
-                        <a asp-page="./Edit" asp-route-id="@Model.Role.Id">Edit Role</a>
+                        <a asp-page="./Edit" asp-route-id="@Model.Input.Id">Edit Input</a>
                     </div>
                 </div>
             </div>
             <div class="card col-5">
                 <div class="card-body">
-                    <h5 class="card-title">Users in Role</h5>
+                    <h5 class="card-title">Users in Input</h5>
                     <br />
                     <div class="card-body">
                         <dl class="row">
-                            @foreach (var userRole in Model.Role.UserRoles)
+                            @foreach (var userInput in Model.Input.UserRoles)
                             {
                                 <dt class="col-sm-3">
                                     User Name
                                 </dt>
                                 <dd class="col-sm-7">
-                                    @userRole.User.UserName
+                                    @userInput.User.UserName
                                 </dd>
 
                             }
                         </dl>
                     </div>
                     <div>
-                        <a asp-area="Identity" asp-page="/UserRoles/Index" asp-route-id="@Model.Role.Id" asp-route-type="r">Edit Role Users</a>
+                        <a asp-area="Identity" asp-page="/UserInputs/Index" asp-route-id="@Model.Input.Id" asp-route-type="r">Edit Input Users</a>
                     </div>
                 </div>
             </div>

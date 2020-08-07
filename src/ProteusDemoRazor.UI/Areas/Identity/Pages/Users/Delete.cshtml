@@ -22,67 +22,67 @@
                                 User Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.UserName)
+                                @Html.DisplayFor(model => model.Input.UserName)
                             </dd>
                             <dt class="col-sm-3">
                                 EDI
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.EDI)
+                                @Html.DisplayFor(model => model.Input.EDI)
                             </dd>
                             <dt class="col-sm-3">
                                 Email
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.Email)
+                                @Html.DisplayFor(model => model.Input.Email)
                             </dd>
                             <dt class="col-sm-3">
                                 Phone 
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.PhoneNumber)
+                                @Html.DisplayFor(model => model.Input.PhoneNumber)
                             </dd>
                             <dt class="col-sm-3">
                                 First Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.FirstName)
+                                @Html.DisplayFor(model => model.Input.FirstName)
                             </dd>
                             <dt class="col-sm-3">
                                 M.I.
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.MI)
+                                @Html.DisplayFor(model => model.Input.MI)
                             </dd>
                             <dt class="col-sm-3">
                                 Last Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.LastName)
+                                @Html.DisplayFor(model => model.Input.LastName)
                             </dd>
                             <dt class="col-sm-3">
                                 Gov. POC Name
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.GovPOCName)
+                                @Html.DisplayFor(model => model.Input.GovPOCName)
                             </dd>
                             <dt class="col-sm-3">
                                 Gov.POC Email
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.GovPOCEmail)
+                                @Html.DisplayFor(model => model.Input.GovPOCEmail)
                             </dd>
                             <dt class="col-sm-3">
                                 Gov. POC Phone
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.GovPOCPhoneNumber)
+                                @Html.DisplayFor(model => model.Input.GovPOCPhoneNumber)
                             </dd>
                             <dt class="col-sm-3">
                                 Is Enabled
                             </dt>
                             <dd class="col-sm-7">
-                                @if (Model.User.IsEnabled)
+                                @if (Model.Input.IsEnabled)
                                 {
                                     <i class="fas fa-check" style="color:green"></i>
                                 }
@@ -95,7 +95,7 @@
                                 Is Locked Out
                             </dt>
                             <dd class="col-sm-7">
-                                @if (Model.User.IsLockedOut)
+                                @if (Model.Input.IsLockedOut)
                                 {
                                     <i class="fas fa-lock" style="color:red"></i>
                                 }
@@ -108,19 +108,19 @@
                                 Last Login Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.LastLoginDate)
+                                @Html.DisplayFor(model => model.Input.LastLoginDate)
                             </dd>
                             <dt class="col-sm-3">
                                 Created Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.CreatedDate)
+                                @Html.DisplayFor(model => model.Input.CreatedDate)
                             </dd>
                             <dt class="col-sm-3">
                                 Modified Date
                             </dt>
                             <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.User.ModifiedDate)
+                                @Html.DisplayFor(model => model.Input.ModifiedDate)
                             </dd>
                         </dl>
                     </div>
@@ -133,7 +133,7 @@
                     <br />
                     <div class="card-body">
                         <dl class="row">
-                            @foreach (var userRole in Model.User.UserRoles)
+                            @foreach (var userRole in Model.Input.UserRoles)
                             {
                                 <dt class="col-sm-3">
                                     Role Name
@@ -150,7 +150,7 @@
         </div>
         <div class="card-footer">
             <form method="post" role="form">
-                <input type="hidden" asp-for="User.Id" />
+                <input type="hidden" asp-for="Input.Id" />
                 <input type="submit" value="Delete" class="btn btn-danger" />
 
             </form>

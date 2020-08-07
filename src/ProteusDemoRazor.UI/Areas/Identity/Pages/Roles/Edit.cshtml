@@ -19,19 +19,19 @@
                         <div class="card-body">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
-                                <label asp-for="Role.Description" class="control-label">Role Name</label>
-                                <input asp-for="Role.Name" class="form-control" type="text" />
-                                <span asp-validation-for="Role.Name" class="text-danger"></span>
+                                <label asp-for="Inputs.Description" class="control-label">Role Name</label>
+                                <input asp-for="Inputs.Name" class="form-control" type="text" />
+                                <span asp-validation-for="Inputs.Name" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Role.Description" class="control-label"> Role Description</label>
-                                <input asp-for="Role.Description" class="form-control" />
-                                <span asp-validation-for="Role.Description" class="text-danger"></span>
+                                <label asp-for="Inputs.Description" class="control-label"> Role Description</label>
+                                <input asp-for="Inputs.Description" class="form-control" />
+                                <span asp-validation-for="Inputs.Description" class="text-danger"></span>
                             </div>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <input type="hidden" asp-for="Role.Id" />
+                            <input type="hidden" asp-for="Inputs.Id" />
                             <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
                             <button type="reset" class="btn btn-primary">Reset</button>
                         </div>
