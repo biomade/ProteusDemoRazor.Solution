@@ -3,16 +3,27 @@
 <ul class="navbar-nav">
     @if (Context.User.Identity.IsAuthenticated)
     {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
-        </li>
+        if (Context.User.IsInRole("Administrator"))
+        {
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="fas fa-user-cog"></i>
+                    <span class="text-dark">Administration</span>
+                </a>
+                <div class="dropdown-menu">
+                    <a asp-area="Identity" asp-page="/Users/Index" class="dropdown-item">Manage Users</a>
+                    <a asp-area="Identity" asp-page="/UserRoles/Index" class="dropdown-item">Manage User Roles</a>
+                    <a asp-area="Identity" asp-page="/Roles/Index" title="Manage" class="dropdown-item">Manage Roles</a>
+                </div>
+            </li>
+        }
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="fas fa-user-cog"></i>
                 <span class="text-dark">Hello @User.Identity.Name!</span>
             </a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu" style="width:250px">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/UserProfile" title="Manage">Manage My Profile</a>
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                     <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
