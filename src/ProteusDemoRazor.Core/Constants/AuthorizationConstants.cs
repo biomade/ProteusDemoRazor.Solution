@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Proteus.Core.Constants
 {
-    public class AuthorizationConstants
+    public static class AuthorizationConstants
     {
         public static class Roles
         {

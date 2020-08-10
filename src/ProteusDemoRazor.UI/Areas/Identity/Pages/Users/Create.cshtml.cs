@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
+using Proteus.Application.ViewModels.Identity.Account.Users;
+using Proteus.Core.Constants;
 using Proteus.Core.Entities.Identity;
-using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.Users
@@ -35,11 +33,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
         public IActionResult OnGet()
         {
+
             return Page();
         }
 
         [BindProperty]
-        public User Input { get; set; }
+        public UserCreateViewModel Input { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -47,22 +46,35 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError(string.Empty, "Required Fields are Missing");
                 return Page();
             }
 
-            Input.NormalizedUserName = Input.UserName.ToUpper();
-            Input.NormalizedEmail = Input.Email.ToUpper();
-            Input.PasswordHash = _passwordHasher.HashPassword(Input, Input.PasswordHash);
-
+            var user = new User();
+            
+            user.CreatedDate = DateTime.Now;
+            user.Email = Input.Email;
+            user.FirstName = Input.FirstName;
+            user.GovPOCEmail = Input.GovPOCEmail;
+            user.GovPOCName = Input.GovPOCName;
+            user.GovPOCPhoneNumber = Input.GovPOCPhoneNumber;
+            user.IsEnabled = Input.IsEnabled;
             if (Input.IsEnabled)
             {
-                Input.LastLoginDate = System.DateTime.Now;
+                user.LastLoginDate = System.DateTime.Now;
             }
-            Input.CreatedDate = System.DateTime.Now;
-            //hash the password entered
+            user.IsLockedOut = Input.IsLockedOut;
+            user.LastName = Input.LastName;
+            user.MI = user.MI;        
+            user.NormalizedEmail = Input.Email.ToUpper();
+            user.NormalizedUserName = Input.UserName.ToUpper();
+            user.PhoneNumber = Input.Phone;
+            user.UserName = Input.UserName;
 
+           //hash the password and put it back!
+           user.PasswordHash = _passwordHasher.HashPassword(user,Input.Password);
 
-            IdentityResult result =  await _userManager.CreateAsync(Input);
+            IdentityResult result =  await _userManager.CreateAsync(user);
             if (!result.Succeeded)
             {
                 foreach (var error in result.Errors)
@@ -73,11 +85,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
                 return Page();
             }
+
             //set up user with the visitor Role
             //now set up a default role
-            Input = await _userManager.FindByNameAsync(Input.UserName);
+            user = await _userManager.FindByNameAsync(user.UserName);
 
-            var roleResult = _userManager.AddToRoleAsync(Input, _configuration.DefaultRole);
+            var roleResult = await _userManager.AddToRoleAsync(user, _configuration.DefaultRole);
 
             return RedirectToPage("./Index");
         }

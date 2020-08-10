@@ -10,7 +10,7 @@ using Proteus.Infrastructure.Identity;
 namespace Proteus.Infrastructure.Migrations.IdentityDb
 {
     [DbContext(typeof(IdentityDbContext))]
-    [Migration("20200806160428_CreateIdentity")]
+    [Migration("20200804152246_CreateIdentity")]
     partial class CreateIdentity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

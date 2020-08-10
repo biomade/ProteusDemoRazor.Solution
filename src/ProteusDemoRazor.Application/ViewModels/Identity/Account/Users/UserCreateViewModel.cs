@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Proteus.Application.ViewModels.Identity.Account
+namespace Proteus.Application.ViewModels.Identity.Account.Users
 {
-    public class UserEditViewModel
+   public class UserCreateViewModel
     {
-        [Key, Required]
-        public int Id { get; set; }
-
+        
         public string UserName { get; set; }
 
         [Required]
@@ -23,7 +21,8 @@ namespace Proteus.Application.ViewModels.Identity.Account
         [Display(Name = "Phone")]
         public string Phone { get; set; }
 
-        //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -32,7 +31,7 @@ namespace Proteus.Application.ViewModels.Identity.Account
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        
+
         public string FirstName { get; set; }
 
         public string MI { get; set; }
@@ -56,7 +55,8 @@ namespace Proteus.Application.ViewModels.Identity.Account
 
         public bool IsLockedOut { get; set; }
 
-        public bool UserOnLine { get; set; }
+
+        public DateTime LastLoginDate { get; set; }
 
     }
 }

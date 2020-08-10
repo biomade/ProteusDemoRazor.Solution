@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Proteus.Application.ViewModels.Identity;
-using Proteus.Application.ViewModels.Identity.Account;
+using Proteus.Application.ViewModels.Identity.Account.Roles;
 using Proteus.Core.Entities.Identity;
-using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.Roles
@@ -41,7 +35,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             }
 
             var role = await _roleManager.FindByIdAsync(id.ToString());
-            
+
             if (role == null)
             {
                 return NotFound();
@@ -50,7 +44,6 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             Input.Id = role.Id;
             Input.Name = role.Name;
             Input.Description = role.Description;
-
 
             return Page();
         }
@@ -63,15 +56,21 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
             {
                 return Page();
             }
+
+
             try
             {
                 //Possibly don't allow role name to change 
                 //in case it is used for authorization which will mess things up
-                var role = await _roleManager.FindByIdAsync(Input.Id.ToString()) ;
+                var role = await _roleManager.FindByIdAsync(Input.Id.ToString());
 
                 role.Description = Input.Description;
                 role.ModifiedDate = System.DateTime.Now;
-                await _roleManager.UpdateAsync(role);
+                var result = await _roleManager.UpdateAsync(role);
+                if (result.Succeeded)
+                {
+                    ModelState.AddModelError(string.Empty, "Profile Updated");
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +9,6 @@ using Microsoft.Extensions.Hosting;
 using Proteus.Infrastructure.Identity;
 using Proteus.Infrastructure.Repository.Base;
 using Proteus.Infrastructure.Data;
-using AutoMapper;
 using Proteus.UI.HealthCheck;
 using Proteus.Infrastructure.Repository;
 using Proteus.Application.Interfaces;
@@ -25,27 +19,47 @@ using SmartBreadcrumbs.Extensions;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity.Stores;
 using Proteus.Core.Interfaces.Identity;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Microsoft.AspNetCore.Http;
 
 namespace Proteus.UI
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _env;
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostEnvironment env)
         {
             Configuration = configuration;
             _env = env;
         }
 
+        private readonly IHostEnvironment _env;
+        private IConfiguration Configuration { get; }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            /*
-               Create a service for DI that will return the ApplicationConfiguration
-               section of appsettings. This is just a factory function.
-           */
+            //https://pradeeploganathan.com/aspnetcore/https-in-asp-net-core-31/
+            //https://www.thesslstore.com/blog/how-to-make-ssl-certificates-play-nice-with-asp-net-core/
+            if (!_env.IsDevelopment())
+            {
+                services.AddHttpsRedirection(opts =>
+                {
+                    opts.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                    opts.HttpsPort = 44300;
+                });
+            }
+            else
+            {
+                services.AddHttpsRedirection(opts =>
+                {
+                    opts.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                    opts.HttpsPort = 44300;
+                });
+            }
+
+            /**
+                Create a service for DI that will return the ApplicationConfiguration
+                section of appsettings. This is just a factory function.
+            */
             services.AddScoped<IApplicationConfiguration, ApplicationConfiguration>(
                 e => Configuration.GetSection("AppSettings")
                         .Get<ApplicationConfiguration>());
@@ -57,9 +71,9 @@ namespace Proteus.UI
             services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("sqlConnection"))
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-            
+
             //tell Identity to use our user and roles
-            services.AddIdentity<User, Role>(                 
+            services.AddIdentity<User, Role>(
             );
 
             services.AddScoped<IUserClaimsPrincipalFactory<User>, UserClaimsPrincipalFactory<User, Role>>();
@@ -86,24 +100,13 @@ namespace Proteus.UI
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.Name = "ProteusDemo";
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(60); //how long to keep the cookie
-                options.Cookie.HttpOnly = true;
-                options.LoginPath = "/Identity/Account/Login";
-                options.LogoutPath = "/Identity/Account/Logout";
-                options.AccessDeniedPath = "/AccessDenied";
-            });
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Cookie.Name = "ProteusDemo";
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(Convert.ToDouble(Configuration["AppSettings:SessionTimeOutMinutes"])); //how long to keep the cookie, then the user will be logged out
-                //options.Cookie.HttpOnly = true;
                 options.LoginPath = "/Identity/Account/Login";
                 options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/AccessDenied";
             });
-            //end Identity todo
+            //end todo
 
             services.AddBreadcrumbs(GetType().Assembly, options =>
             {
@@ -133,6 +136,12 @@ namespace Proteus.UI
                 //options.Conventions.AllowAnonymousToPage("/Private/PublicPage");
                 //options.Conventions.AllowAnonymousToFolder("/Private/PublicPages");
             });
+
+            //TODO CAC Authentication 0: Add Microsoft.AspNetCoreAuthentication.Certificate nuget package
+            //TODO CAC Authentication 1: add "https_port": 443, to the appsettings.json config
+            //TODO CAC Authentication 2a: configure service to validate cert         
+            //TODO CAC Authentication 2b: configure authentication Serive
+
         }
 
 
@@ -156,14 +165,19 @@ namespace Proteus.UI
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            //TODO CAC Authentication 3:Add use cert forwarding
+            app.UseCertificateForwarding();
             //TODO IDENTITY: Step 5c Add use of Authentication
             app.UseAuthentication();
+
             //TODO IDENTITY: Step 5d - call to method for seed data
             IdentityDbContextSeed.SeedData(userManager, roleManager);
+            //TODO IDENTITY: Step 5e - turn on authorization for users and roles
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -179,10 +193,11 @@ namespace Proteus.UI
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserRoleStore, UserRoleStore>();
-            
+
             // Add Application Layer
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICertValidationService, CertValidationService>();
 
             // Add Web Layer
 
@@ -203,6 +218,8 @@ namespace Proteus.UI
 
 
             // use real database
+            //NOTE IF YOU ARE MODIFYING THE DATABASE RUN
+            //Add-Migration  xxx -Context ProteusContext
             //if used execute the following commands in the Package Manager Console
             //1) dotnet restore
             //2a) update-database -Context ProteusContext

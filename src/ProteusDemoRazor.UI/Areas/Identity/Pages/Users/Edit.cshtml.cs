@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Proteus.Application.ViewModels.Identity.Account;
+using Proteus.Application.ViewModels.Identity.Account.Users;
+using Proteus.Core.Constants;
 using Proteus.Core.Entities.Identity;
-using Proteus.Infrastructure.Identity;
 using SmartBreadcrumbs.Attributes;
 
 namespace Proteus.UI.Areas.Identity.Pages.Users
@@ -27,7 +22,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
         public EditModel(UserManager<User> userManager, ILogger<EditModel> logger, IPasswordHasher<User> passwordHasher)
         {
-            _userManager = userManager;
+             _userManager = userManager;
             _logger = logger;
             _passwordHasher = passwordHasher;
         }
@@ -62,8 +57,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
             Input.Phone = user.PhoneNumber;
             Input.UserName = user.UserName;
             Input.UserOnLine = user.UserOnLine;
-
-
+            Input.LastLoginDate = user.LastLoginDate;
             return Page();
         }
 
@@ -73,6 +67,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError(string.Empty, "Required Fields are Missing");
                 return Page();
             }
 
@@ -87,17 +82,13 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
                 user.IsEnabled = Input.IsEnabled;
                 user.IsLockedOut = Input.IsLockedOut;
                 user.LastName = Input.LastName;
-                user.MI = Input.MI;
-                if (!string.IsNullOrEmpty(Input.Password))
-                {
-                    //if not empty update the password
-                    user.PasswordHash = _passwordHasher.HashPassword(user, Input.Password);
-                }
+                user.MI = Input.MI;                
                 user.PhoneNumber = Input.Phone;
                 user.UserName = Input.UserName;
                 user.UserOnLine = Input.UserOnLine;
                 user.ModifiedDate = System.DateTime.Now;
                 user.NormalizedEmail = Input.Email.ToUpper();
+                user.PasswordHash = _passwordHasher.HashPassword(user, Input.Password);
                 await _userManager.UpdateAsync(user);
             }
             catch (DbUpdateConcurrencyException)

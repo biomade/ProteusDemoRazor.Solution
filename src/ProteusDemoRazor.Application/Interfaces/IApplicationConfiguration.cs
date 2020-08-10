@@ -11,11 +11,8 @@ namespace Proteus.Application.Interfaces
             name of each property in my appsettings.json config object
         */
         int MaxDaysBetweenLogins { get; set; }
-        
         string DefaultRole { get; set; }
-        
         int WarnAfterMinutes { get; set; }
-        
         int EarlyWarningSeconds { get; set; }
 
         int SessionTimeOutMinutes { get; set; }

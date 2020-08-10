@@ -6,125 +6,203 @@
 }
 
 <div class="container-fluid">
-    <div class="card card-light">
-        <div class="card-header ">
-            <h3 class="card-title">User Details</h3>
-        </div>
-        <div class="card-deck">
-            <div class="card col-7">
-                <div class="card-body">
-                    <h5 class="card-title">User Information</h5>
-                    <br />
-                    <div class="card-body">
-                        <dl class="row">
-                            <dt class="col-sm-3">
-                                User Name
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.UserName)
-                            </dd>  
-                            <dt class="col-sm-3">
-                                Email
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.Email)
-                            </dd>                            
-                            <dt class="col-sm-3">
-                               First Name
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.FirstName)
-                            </dd>
-                            <dt class="col-sm-3">
-                                M.I.
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.MI)
-                            </dd>
-                            <dt class="col-sm-3">
-                               Last Name
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.LastName)
-                            </dd>
-                            <dt class="col-sm-3">
-                                Is Enabled
-                            </dt>
-                            <dd class="col-sm-7">
-                                @if (Model.Input.IsEnabled)
-                                {
-                                    <i class="fas fa-check" style="color:green"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-times" style="color:red"></i>
-                                }
-                            </dd>
-                            <dt class="col-sm-3">
-                                Is Locked Out
-                            </dt>
-                            <dd class="col-sm-7">
-                                @if (Model.Input.IsLockedOut)
-                                {
-                                    <i class="fas fa-lock" style="color:red"></i>
-                                }
-                                else
-                                {
-                                    <i class="fas fa-lock-open" style="color:green"></i>
-                                }
-                            </dd>
-                            <dt class="col-sm-3">
-                                Last Login Date
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.LastLoginDate)
-                            </dd>
-                            <dt class="col-sm-3">
-                                Created Date
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.CreatedDate)
-                            </dd>
-                            <dt class="col-sm-3">
-                                Modified Date
-                            </dt>
-                            <dd class="col-sm-7">
-                                @Html.DisplayFor(model => model.Input.ModifiedDate)
-                            </dd>
-                        </dl>
-                        <div>
-                            <a asp-page="./Edit" asp-route-id="@Model.Input.Id" asp-route-type="u">Edit</a>
-                        </div>
-                    </div>
-                    <!-- /.card-body -->
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-8">
+            <!-- general form elements -->
+            <div class="card card-light">
+                <div class="card-header">
+                    <h3 class="card-title">User Details</h3>
                 </div>
-            </div>
-            <div class="card col-5">
+                <!-- /.card-header -->
                 <div class="card-body">
-                    <h5 class="card-title">Roles for User</h5>
-                    <br />
-                    <div class="card-body">
-                        <dl class="row">
-                            @foreach (var userRole in Model.Input.UserRoles)
-                            {
-                                <dt class="col-sm-3">
-                                    Role Name
-                                </dt>
-                                <dd class="col-sm-7">
-                                    @userRole.Role.Name
-                                </dd>
+                    <div>
+                        <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">User Info.</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">User Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Govt. Info.</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-content-below-locks-tab" data-toggle="pill" href="#custom-content-below-locks" role="tab" aria-controls="custom-content-below-locks" aria-selected="false">Locks</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="custom-content-below-roles-tab" data-toggle="pill" href="#custom-content-below-roles" role="tab" aria-controls="custom-content-below-roles" aria-selected="false">Roles</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="custom-content-below-tabContent">
+                            <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+                                <br />
+                                <dl class="row">
+                                    <dt class="col-sm-3">
+                                        User Name
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.UserName)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Password
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        XXXXXXXXX
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                                <br />
+                                <dl class="row">
+                                    <dt class="col-sm-3">
+                                        First Name
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.FirstName)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        M.I.
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.MI)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Last Name
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.LastName)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Email
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.Email)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Phone
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.PhoneNumber)
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
+                                <br />
+                                <dl class="row">
+                                    <dt class="col-sm-3">
+                                        Gov. POC Name
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.GovPOCName)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Gov.POC Email
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.GovPOCEmail)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Gov. POC Phone
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.GovPOCPhoneNumber)
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-locks" role="tabpanel" aria-labelledby="custom-content-below-locks-tab">
+                                <br />
+                                <dl class="row">
+                                    <dt class="col-sm-3">
+                                        Is Enabled
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @if (Model.Input.IsEnabled)
+                                        {
+                                            <i class="fas fa-check" style="color:green"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-times" style="color:red"></i>
+                                        }
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Is Locked Out
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @if (Model.Input.IsLockedOut)
+                                        {
+                                            <i class="fas fa-lock" style="color:red"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-lock-open" style="color:green"></i>
+                                        }
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Active Session
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @if (Model.Input.UserOnLine)
+                                        {
+                                        <i class="fas fa-check" style="color:green"></i> 
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-times" style="color:red"></i>                                            
+                                        }
+                                    </dd>
+                                    
+                                    <dt class="col-sm-3">
+                                        Last Login Date
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.LastLoginDate)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Created Date
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.CreatedDate)
+                                    </dd>
+                                    <dt class="col-sm-3">
+                                        Modified Date
+                                    </dt>
+                                    <dd class="col-sm-7">
+                                        @Html.DisplayFor(model => model.Input.ModifiedDate)
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="tab-pane fade" id="custom-content-below-roles" role="tabpanel" aria-labelledby="custom-content-below-roles-tab">
+                                <br />
+                                <dl class="row">
+                                    @foreach (var userRole in Model.Input.UserRoles)
+                                    {
+                                        <dt class="col-sm-3">
+                                            Role Name
+                                        </dt>
+                                        <dd class="col-sm-7">
+                                            @userRole.Role.Name
+                                        </dd>
+                                    }
+                                </dl>
+                            </div>
 
-                            }
-                        </dl>
-                        <div>
-                            <a asp-area="Identity" asp-page="/UserRoles/EditUserRoles" asp-route-id="@Model.Input.Id">Edit User Roles</a>
                         </div>
                     </div>
+                    <br />
+                </div>
+                <div class="card-footer">
+                    <a asp-page="./Edit" asp-route-id="@Model.Input.Id" asp-route-type="u">Edit User Profile</a> 
+                    &nbsp;| &nbsp;
+                    <a asp-area="Identity" asp-page="/UserRoles/EditUserRoles" asp-route-id="@Model.Input.Id">Edit User Roles</a>
                 </div>
             </div>
+            <!-- /.card -->
         </div>
     </div>
+                 
     <div>
-       <a asp-page="./Index">Back to List</a>
+        <a asp-page="./Index">Back to List</a>
     </div>
 </div>

@@ -3,13 +3,12 @@
 
 // Write your jQuery/Javascript code.
 
-
 $(document).ready(function () {
     //this sets the active link , 
     //the selected route/page will be selected
-
+    var timeout = $('#TimeOut').val(); // '@AppSettings.SessionTimeOutMinutes';
     var url = window.location.href;
-    
+   
     // for sidebar menu entirely but not cover treeview
     $('ul.nav-sidebar a').filter(function () {
         return this.href == url;
@@ -21,7 +20,6 @@ $(document).ready(function () {
     }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
     //for the session warning dialog box from https://www.jqueryscript.net/other/session-expiration-idle-hands.html
-    var timeout = $('#TimeOut').val(); // '@AppSettings.SessionTimeOutMinutes';
     $.idleHands({
         applicationId: 'Proteus',
         heartRate: 15, //how often to check in seconds

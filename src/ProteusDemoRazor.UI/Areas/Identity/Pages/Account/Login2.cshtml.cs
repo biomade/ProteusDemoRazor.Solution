@@ -29,7 +29,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public string ErrorMessage { get; set; }
 
         [BindProperty]
-        public LoginViewModel Input { get; set; }
+        public Login2ViewModel Input { get; set; }
         public Login2Model(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration)
         {
             _signInManager = signInManager;

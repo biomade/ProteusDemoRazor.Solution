@@ -109,7 +109,7 @@ namespace Proteus.Infrastructure.Identity
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
                 user.LastLoginDate = System.DateTime.Now;
-                user.EDI = "1234567890";
+                user.EDI = "NONE";
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
@@ -130,7 +130,7 @@ namespace Proteus.Infrastructure.Identity
                 user.IsLockedOut = false;
                 user.CreatedDate = System.DateTime.Now;
                 user.LastLoginDate = System.DateTime.Now;
-                user.EDI = "1234567890";
+                user.EDI = "NONE";
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
@@ -156,7 +156,7 @@ namespace Proteus.Infrastructure.Identity
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
-                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Administrator");
+                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Visitor");
                 }
             }
         }

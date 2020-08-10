@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Proteus.Infrastructure.Data;
 using Proteus.Infrastructure.Identity;
 using NLog.Web;
+using Microsoft.AspNetCore.Server.Kestrel.Https;
 
 namespace Proteus.UI
 {
@@ -39,17 +40,25 @@ namespace Proteus.UI
                 // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
                 NLog.LogManager.Shutdown();
             }
-           
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
              WebHost.CreateDefaultBuilder(args)
-             .UseStartup<Startup>()
-             .ConfigureLogging(logging =>
-             {
-                 logging.ClearProviders();
-                 logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
-             })
+                .UseStartup<Startup>()
+                .UseSetting("https_port", "443")
+                // TODO CAC Authentication 4: configure app to always requrire certificates, this prompts for the CAC pin
+                .ConfigureKestrel(options =>
+                {
+                    //not logging in with the CAC
+                    //options.ConfigureHttpsDefaults(opt =>
+                    //opt.ClientCertificateMode = ClientCertificateMode.RequireCertificate);
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
+                })
                 .UseNLog();  // NLog: Setup NLog for Dependency injection
 
         private static void SeedDatabase(IWebHost host)

@@ -2,7 +2,7 @@
 @model Proteus.UI.Areas.Identity.Pages.Roles.DetailsModel
 
 @{
-    ViewData["Title"] = "Role Details";
+    ViewData["Title"] = "Input Details";
 }
 
 <div class="container-fluid">
@@ -13,12 +13,12 @@
         <div class="card-deck">
             <div class="card col-7">
                 <div class="card-body">
-                    <h5 class="card-title">Role Information</h5>
+                    <h5 class="card-title">Input Information</h5>
                     <br />
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-3">
-                                Role Name
+                                Input Name
                             </dt>
                             <dd class="col-sm-7">
                                 @Html.DisplayFor(model => model.Input.Name)
@@ -45,30 +45,30 @@
                     </div>
                     <!-- /.card-body -->
                     <div >
-                        <a asp-page="./Edit" asp-route-id="@Model.Input.Id">Edit Role</a>
+                        <a asp-page="./Edit" asp-route-id="@Model.Input.Id">Edit Input</a>
                     </div>
                 </div>
             </div>
             <div class="card col-5">
                 <div class="card-body">
-                    <h5 class="card-title">Users in Role</h5>
+                    <h5 class="card-title">Users in Input</h5>
                     <br />
                     <div class="card-body">
                         <dl class="row">
-                            @foreach (var userRole in Model.Input.UserRoles)
+                            @foreach (var userInput in Model.Input.UserRoles)
                             {
                                 <dt class="col-sm-3">
                                     User Name
                                 </dt>
                                 <dd class="col-sm-7">
-                                    @userRole.User.UserName
+                                    @userInput.User.UserName
                                 </dd>
 
                             }
                         </dl>
                     </div>
                     <div>
-                        <a asp-area="Identity" asp-page="/UserRoles/Index" asp-route-id="@Model.Input.Id" asp-route-type="r">Edit Role Users</a>
+                        <a asp-area="Identity" asp-page="/UserInputs/Index" asp-route-id="@Model.Input.Id" asp-route-type="r">Edit Input Users</a>
                     </div>
                 </div>
             </div>

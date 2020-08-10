@@ -12,88 +12,128 @@
             <!-- general form elements -->
             <div class="card card-light">
                 <div class="card-header">
-                    <h3 class="card-title">Edit User</h3>
+                    <h3 class="card-title">User Details</h3>
                 </div>
                 <!-- /.card-header -->
-                <!-- form start -->
                 <form method="post" role="form">
                     <div class="card-body">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Input.UserName" class="control-label">User Name</label>
-                            <input asp-for="Input.UserName" class="form-control" readonly="readonly" />
-                            <span asp-validation-for="Input.UserName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.Email" class="control-label">Email </label>
-                            <input asp-for="Input.Email" class="form-control" />
-                            <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.Password" class="control-label">Password</label>
-                            <input asp-for="Input.Password" class="form-control" />
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.ConfirmPassword" class="control-label">Password</label>
-                            <input asp-for="Input.ConfirmPassword" class="form-control" />
-                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.FirstName" class="control-label">First Name</label>
-                            <input asp-for="Input.FirstName" class="form-control" />
-                            <span asp-validation-for="Input.FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.MI" class="control-label">M.I.</label>
-                            <input asp-for="Input.MI" class="form-control" />
-                            <span asp-validation-for="Input.MI" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.LastName" class="control-label">Last Name</label>
-                            <input asp-for="Input.LastName" class="form-control" />
-                            <span asp-validation-for="Input.LastName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.Phone" class="control-label">Phone </label>
-                            <input asp-for="Input.Phone" class="form-control" />
-                            <span asp-validation-for="Input.Phone" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.GovPOCName" class="control-label">Gov. POC Name</label>
-                            <input asp-for="Input.GovPOCName" class="form-control" />
-                            <span asp-validation-for="Input.GovPOCName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Input.GovPOCEmail" class="control-label">Gov. POC Email</label>
-                            <input asp-for="Input.GovPOCEmail" class="form-control" />
-                            <span asp-validation-for="Input.GovPOCEmail" class="text-danger"></span>
-                        </div>
+                        <div>
+                            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-content-below-home-tab" data-toggle="pill" href="#custom-content-below-home" role="tab" aria-controls="custom-content-below-home" aria-selected="true">User Info.</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="false">User Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-content-below-messages-tab" data-toggle="pill" href="#custom-content-below-messages" role="tab" aria-controls="custom-content-below-messages" aria-selected="false">Govt. Info.</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-content-below-locks-tab" data-toggle="pill" href="#custom-content-below-locks" role="tab" aria-controls="custom-content-below-locks" aria-selected="false">Locks</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-content-below-roles-tab" data-toggle="pill" href="#custom-content-below-roles" role="tab" aria-controls="custom-content-below-roles" aria-selected="false">Roles</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="custom-content-below-tabContent">
+                                <div class="tab-pane fade show active" id="custom-content-below-home" role="tabpanel" aria-labelledby="custom-content-below-home-tab">
+                                    <br />
+                                    <div class="form-group">
+                                        <label asp-for="Input.UserName" class="control-label">User Name</label>
+                                        <input asp-for="Input.UserName" class="form-control" /> (Name from CAC in the format of LastName.FirstName[.xx])
+                                        <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.Password" class="control-label">Password</label>
+                                        <input asp-for="Input.Password" class="form-control" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.ConfirmPassword" class="control-label">Confirm Password</label>
+                                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                   
+                                </div>
+                                <div class="tab-pane fade" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
+                                    <br />
+                                    <div class="form-group">
+                                        <label asp-for="Input.FirstName" class="control-label">First Name</label>
+                                        <input asp-for="Input.FirstName" class="form-control" />
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.MI" class="control-label">M.I.</label>
+                                        <input asp-for="Input.MI" class="form-control" />
+                                        <span asp-validation-for="Input.MI" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.LastName" class="control-label">Last Name</label>
+                                        <input asp-for="Input.LastName" class="form-control" />
+                                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                    </div> <div class="form-group">
+                                        <label asp-for="Input.Email" class="control-label">Email </label>
+                                        <input asp-for="Input.Email" class="form-control" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.Phone" class="control-label">Phone </label>
+                                        <input asp-for="Input.Phone" class="form-control" />
+                                        <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                                    </div>
 
-                        <div class="form-group">
-                            <label asp-for="Input.GovPOCPhoneNumber" class="control-label">Gov. POC Phone </label>
-                            <input asp-for="Input.GovPOCPhoneNumber" class="form-control" />
-                            <span asp-validation-for="Input.GovPOCPhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="tab-pane fade" id="custom-content-below-messages" role="tabpanel" aria-labelledby="custom-content-below-messages-tab">
+                                    <br />
+                                    <div class="form-group">
+                                        <label asp-for="Input.GovPOCName" class="control-label">Gov. POC Name</label>
+                                        <input asp-for="Input.GovPOCName" class="form-control" />
+                                        <span asp-validation-for="Input.GovPOCName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Input.GovPOCEmail" class="control-label">Gov. POC Email</label>
+                                        <input asp-for="Input.GovPOCEmail" class="form-control" />
+                                        <span asp-validation-for="Input.GovPOCEmail" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Input.GovPOCPhoneNumber" class="control-label">Gov. POC Phone </label>
+                                        <input asp-for="Input.GovPOCPhoneNumber" class="form-control" />
+                                        <span asp-validation-for="Input.GovPOCPhoneNumber" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="custom-content-below-locks" role="tabpanel" aria-labelledby="custom-content-below-locks-tab">
+                                    <br />
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Input.IsEnabled" /> User Account Is Enabled
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Input.IsLockedOut" /> User Account Is Locked Out
+                                        </label>
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Input.UserOnLine" /> Active Session (Last Logged in Date:  <label asp-for="Input.LastLoginDate">@Model.Input.LastLoginDate</label> )
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="custom-content-below-roles" role="tabpanel" aria-labelledby="custom-content-below-roles-tab">
+                                    <br />
+
+                                </div>
+
+                            </div>
                         </div>
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Input.IsEnabled" /> User Account Is Enabled
-                            </label>
-                        </div>
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Input.IsLockedOut" /> User Account Is Locked Out
-                            </label>
-                        </div>
-                        <div class="form-group form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Input.UserOnLine" /> User is On-Line
-                            </label>
-                        </div>
+                        <br />
                     </div>
-                    <!-- /.card-body -->
                     <div class="card-footer">
                         <input type="hidden" asp-for="Input.Id" />
+                        <input type="hidden" asp-for="Input.LastLoginDate" />
                         <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
                         <button type="reset" class="btn btn-primary">Reset</button>
                     </div>
@@ -102,6 +142,8 @@
             <!-- /.card -->
         </div>
     </div>
+
+                   
     <div>
         <a asp-page="./Index">Back to List</a>
     </div>

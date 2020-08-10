@@ -5,10 +5,13 @@ using System.Text;
 
 namespace Proteus.Application.ViewModels.Identity.Account
 {
-    public class DODViewModel
+    public class Login2ViewModel
     {
-        //modified to only have the checkbox for Cert login, no username/pwd
         [Required]
-        public bool DODAccept { get; set; }
+        public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
     }
 }

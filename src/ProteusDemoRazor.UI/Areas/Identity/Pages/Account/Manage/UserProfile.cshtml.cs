@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels.Identity.Account;
+using Proteus.Application.ViewModels.Identity.Account.Manage;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
 

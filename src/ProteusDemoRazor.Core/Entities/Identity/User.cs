@@ -10,7 +10,7 @@ namespace Proteus.Core.Entities.Identity
     //TODO IDENTITY: Step 1a - Create class that extends from Identity
     [Table("User")]
     public class User : Entity
-    {
+    {        
 
         [Required, MaxLength(50)]
         public string UserName { get; set; }

@@ -28,7 +28,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public string ErrorMessage { get; set; }
 
         [BindProperty]
-        public DODViewModel Input { get; set; }
+        public LoginViewModel Input { get; set; }
         public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration)
         {
             _signInManager = signInManager;
