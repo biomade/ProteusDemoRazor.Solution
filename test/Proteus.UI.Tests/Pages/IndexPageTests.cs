@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using Proteus.Infrastructure.Data;
@@ -15,10 +16,10 @@ namespace Proteus.UI.Tests
         private IndexModel _pageModel;
 
         [SetUp]
-        public void Setup()
+        public void Setup(ILogger<IndexModel> logger)
         {
             // Arrange
-            _pageModel = new IndexModel();
+            _pageModel = new IndexModel(logger);
         }
 
         [Test]

@@ -223,7 +223,7 @@ namespace Proteus.UI
             //if used execute the following commands in the Package Manager Console
             //1) dotnet restore
             //2a) update-database -Context ProteusContext
-            //2b) update-database -Context AppIdentityDbContext
+            //2b) update-database -Context IdentityDbContext
             services.AddDbContext<ProteusContext>(c =>
                 c.UseSqlServer(Configuration.GetConnectionString("ProteusConnection")));
             // Add Identity DbContext
