@@ -1,0 +1,9 @@
+Removes all the dev certs
+
+
+PM> dotnet dev-certs https --clean
+
+Creates new certs
+PM> dotnet dev-certs https --trust
+
+if required, go to the control panel and repair the IISExpress installation and the localhost dev cert will be installed in the Personel Certs folder in the 
