@@ -1,0 +1,16 @@
+Open VS Developer Command Window as admin
+
+CD to this folder
+
+at the Prompt run > CreateCARoot.cmd
+at the Prompt run > CreateSslServerCert.cmd <ServerCertSSL> Note: where <xxx> is the name to assign to the cert files 
+at the Prompt run > CreateSsl_LaurieKern_ClientCert.cmd <LaurieClientCert> Note: where <xxx> is the name to assign to the cert files 
+
+Modify the host file to add the new website via local host
+C:\Windows\System32\drivers\etc\hosts
+
+add> 127.0.0.1 proteusTest.net www.proteusTest.net
+
+
+in the address bar run chrome://flags/#allow-insecure-localhost
+set the flag to allow
