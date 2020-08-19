@@ -67,6 +67,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
             {
                 //grab the uers cert
                 X509Certificate2 x509 = HttpContext.Connection.ClientCertificate;
+                if (x509 == null)
+                {
+                    //redirect to error page
+                    ;
+                    return Redirect("./Error");
+                }
                 List<Tuple<string, string>> certInfo = _validationService.GetCertificateInfo(x509);
                 var user = await _signInManager.UserManager.FindByNameAsync(certInfo[1].Item2);
 
