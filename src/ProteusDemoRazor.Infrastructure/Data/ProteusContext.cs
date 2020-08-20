@@ -31,7 +31,8 @@ namespace Proteus.Infrastructure.Data
             builder.HasKey(ci => ci.Id);
 
             builder.Property(ci => ci.Id)
-               .ForSqlServerUseSequenceHiLo("aspnetrun_type_hilo")
+                .UseHiLo("aspnetrun_type_hilo")
+               //.ForSqlServerUseSequenceHiLo("aspnetrun_type_hilo")
                .IsRequired();
 
             builder.Property(cb => cb.ProductName)
@@ -46,7 +47,7 @@ namespace Proteus.Infrastructure.Data
             builder.HasKey(ci => ci.Id);
 
             builder.Property(ci => ci.Id)
-               .ForSqlServerUseSequenceHiLo("aspnetrun_type_hilo")
+               .UseHiLo("aspnetrun_type_hilo")
                .IsRequired();
 
             builder.Property(cb => cb.CategoryName)

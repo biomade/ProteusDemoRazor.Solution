@@ -25,7 +25,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Roles
 
         public IList<Role> Inputs { get;set; }
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
             Inputs =  _roleManager.Roles.AsQueryable().ToList();
         }

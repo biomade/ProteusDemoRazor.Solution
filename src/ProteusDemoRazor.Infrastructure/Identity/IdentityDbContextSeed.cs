@@ -19,42 +19,42 @@ namespace Proteus.Infrastructure.Identity
             SeedUser(userManager);
         }
 
-        //private static void SeedUserRoles(UserManager<User> userManager, RoleManager<Role> roleManager)
-        //{
+        private static void SeedUserRoles(UserManager<User> userManager, RoleManager<Role> roleManager)
+        {
 
-        //    var user = userManager.FindByNameAsync("Admin").Result;
-        //    var role = roleManager.FindByNameAsync("Administrator").Result;
-        //    var userRoles = userManager.GetRolesAsync(user).Result;
-        //    if (!userRoles.Contains("Administrator"))
-        //    {
-        //        UserRole ur = new UserRole();
-        //        ur.RoleId = role.Id;
-        //        ur.UserId = user.Id;
-        //        ur.CreatedDate = System.DateTime.Now;
-        //    }
+            var user = userManager.FindByNameAsync("Admin").Result;
+            var role = roleManager.FindByNameAsync("Administrator").Result;
+            var userRoles = userManager.GetRolesAsync(user).Result;
+            if (!userRoles.Contains("Administrator"))
+            {
+                UserRole ur = new UserRole();
+                ur.RoleId = role.Id;
+                ur.UserId = user.Id;
+                ur.CreatedDate = System.DateTime.Now;
+            }
 
-        //    user = userManager.FindByNameAsync("Mary.Lamb").Result;
-        //    role = roleManager.FindByNameAsync("Visitor").Result;
-        //    userRoles = userManager.GetRolesAsync(user).Result;
-        //    if (!userRoles.Contains("Visitor"))
-        //    {
-        //        UserRole ur = new UserRole();
-        //        ur.RoleId = role.Id;
-        //        ur.UserId = user.Id;
-        //        ur.CreatedDate = System.DateTime.Now;
-        //    }
+            user = userManager.FindByNameAsync("Mary.Lamb").Result;
+            role = roleManager.FindByNameAsync("Visitor").Result;
+            userRoles = userManager.GetRolesAsync(user).Result;
+            if (!userRoles.Contains("Visitor"))
+            {
+                UserRole ur = new UserRole();
+                ur.RoleId = role.Id;
+                ur.UserId = user.Id;
+                ur.CreatedDate = System.DateTime.Now;
+            }
 
-        //    user = userManager.FindByNameAsync("KERN.LAURIE.JANE").Result;
-        //    role = roleManager.FindByNameAsync("Administrator").Result;
-        //    userRoles = userManager.GetRolesAsync(user).Result;
-        //    if (!userRoles.Contains("Administrator"))
-        //    {
-        //        UserRole ur = new UserRole();
-        //        ur.RoleId = role.Id;
-        //        ur.UserId = user.Id;
-        //        ur.CreatedDate = System.DateTime.Now;
-        //    }
-        //}
+            user = userManager.FindByNameAsync("KERN.LAURIE.JANE").Result;
+            role = roleManager.FindByNameAsync("Administrator").Result;
+            userRoles = userManager.GetRolesAsync(user).Result;
+            if (!userRoles.Contains("Administrator"))
+            {
+                UserRole ur = new UserRole();
+                ur.RoleId = role.Id;
+                ur.UserId = user.Id;
+                ur.CreatedDate = System.DateTime.Now;
+            }
+        }
 
         private static void SeedRoles(RoleManager<Role> roleManager)
         {
@@ -138,15 +138,15 @@ namespace Proteus.Infrastructure.Identity
                 }
             }
 
-            if (userManager.FindByNameAsync("KERN.LAURIE.JANE").Result == null)
+            if (userManager.FindByNameAsync("KERN.LAURIE.JANEb").Result == null)
             {
                 User user = new User();
                 user.FirstName = "Laurie";
                 user.MI = "J";
                 user.LastName = "Kern";
-                user.UserName = "Kern.Laurie.Jane";
+                user.UserName = "KERN.LAURIE.JANE";
                 user.Email = "laurie.kern.ctr@us.af.mil";
-                user.EDI = "1234567890";
+                user.EDI = "1377060284";
                 user.NormalizedEmail = user.Email.ToUpper();
                 user.NormalizedUserName = user.UserName.ToUpper();
                 user.IsEnabled = true;
@@ -156,7 +156,7 @@ namespace Proteus.Infrastructure.Identity
                 IdentityResult userResult = userManager.CreateAsync(user, "Abc123!").Result;
                 if (userResult.Succeeded)
                 {
-                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Administrator");
+                    Task<IdentityResult> result = userManager.AddToRoleAsync(user, "Visitor");
                 }
             }
         }

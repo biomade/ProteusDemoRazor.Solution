@@ -1,0 +1,131 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset0 Courier New;}{\f2\fnil\fcharset0 MS Shell Dlg 2;}{\f3\fnil Courier New;}{\f4\fnil\fcharset2 Symbol;}}
+{\colortbl ;\red255\green255\blue0;\red255\green0\blue0;}
+{\*\generator Riched20 10.0.18362}\viewkind4\uc1 
+\pard\sl240\slmult1\qc\b\f0\fs20\lang9 How to: Create and Install Temporary Client/Server Certificates\par
+\b0\i\par
+
+\pard\sl240\slmult1\i0\par
+Notes: \par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li720\sl240\slmult1 Run windows command as administrator\par
+{\pntext\f4\'B7\tab}Use iit as password when needed\par
+
+\pard\sl240\slmult1\b\par
+Step 1\b0 : Create a Certificate to Act as Your Client Root Certificate Authority (use "proteus" as password)\par
+\strike\par
+\strike0\f1\fs18 makecert -n "CN=ProteusRootCA,OU=DoD" -r -sv ProteusRootCA.pvk ProteusRootCA.cer\strike\par
+\strike0\f0\fs20\par
+\par
+\b Step 2\b0 : Create a Certificate Revocation List File from the Root Certificate\par
+\par
+\f1\fs18 makecert -crl -n "CN=ProteusRootCA,OU=DoD" -r -sv ProteusRootCA.pvk ProteusRootCA.crl\par
+\f0\fs20\par
+\par
+\b Step 3\b0 : Install Your Client Root Certificate Authority on the Client and Server Machines\par
+\par
+Repeat the following steps on both the client and server machines:\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li360\sl240\slmult1 Copy the ProteusRootCA.cer file to the client and server machines.\par
+{\pntext\f4\'B7\tab}Click Start and then click Run. \par
+{\pntext\f4\'B7\tab}In the command line, type MMC and then click OK.\par
+{\pntext\f4\'B7\tab}In the Microsoft Management Console, on the File menu, click Add/Remove Snap-in.\par
+{\pntext\f4\'B7\tab}In the Add Remove Snap-in dialog box, click Add.\par
+{\pntext\f4\'B7\tab}In the Add Standalone Snap-in dialog box, select Certificates and then click Add.\par
+{\pntext\f4\'B7\tab}In the Certificates snap-in dialog box, select the Computer account radio button (because the certificate needs to be made available to all users), and then click Next.\par
+{\pntext\f4\'B7\tab}In the Select Computer dialog box, leave the default Local computer: (the computer this console is running on) selected and then click Finish.\par
+{\pntext\f4\'B7\tab}In the Add Standalone Snap-in dialog box, click Close.\par
+{\pntext\f4\'B7\tab}In the Add/Remove Snap-in dialog box, click OK.\par
+{\pntext\f4\'B7\tab}In the left pane, expand the Certificates (Local Computer) node, and then expand the Trusted Root Certification Authorities folder.\par
+{\pntext\f4\'B7\tab}Under Trusted Root Certification Authorities, right-click the Certificates subfolder, click All Tasks, and then click Import.\par
+{\pntext\f4\'B7\tab}On the Certificate Import Wizard welcome screen, click Next.\par
+{\pntext\f4\'B7\tab}On the File to Import screen, click Browse.\par
+{\pntext\f4\'B7\tab}Browse to the location of the signed root CA ProteusRootCA.cer file copied in Step 1, select the file, and then click Open.\par
+{\pntext\f4\'B7\tab}On the File to Import screen, click Next.\par
+{\pntext\f4\'B7\tab}On the Certificate Store screen, accept the default choice and then click Next.\par
+{\pntext\f4\'B7\tab}On the Completing the Certificate Import Wizard screen, click Finish.\par
+
+\pard\sl240\slmult1\par
+\par
+\b Step 4\b0 : Install the Certificate Revocation List File on the Server and Client Machines\par
+\par
+Repeat the following steps on both the client and server machines:\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li360\sl240\slmult1 Copy the ProteusRootCA.crl file to the client and server machines.\par
+{\pntext\f4\'B7\tab}Click Start and then click Run. \par
+{\pntext\f4\'B7\tab}In the command line, type MMC and then click OK.\par
+{\pntext\f4\'B7\tab}In the Microsoft Management Console, on the File menu, click Add/Remove Snap-in.\par
+{\pntext\f4\'B7\tab}In the Add Remove Snap-in dialog box, click Add.\par
+{\pntext\f4\'B7\tab}In the Add Standalone Snap-in dialog box, select Certificates and then click Add.\par
+{\pntext\f4\'B7\tab}In the Certificates snap-in dialog box, select the Computer account radio button (because the certificate needs to be made available to all users), and then click Next.\par
+{\pntext\f4\'B7\tab}In the Select Computer dialog box, leave the default Local computer: (the computer this console is running on) selected and then click Finish.\par
+{\pntext\f4\'B7\tab}In the Add Standalone Snap-in dialog box, click Close.\par
+{\pntext\f4\'B7\tab}In the Add/Remove Snap-in dialog box, click OK.\par
+{\pntext\f4\'B7\tab}In the left pane, expand the Certificates (Local Computer) node, and then expand the Trusted Root Certification Authorities folder.\par
+{\pntext\f4\'B7\tab}Under Trusted Root Certification Authorities, right-click the Certificates subfolder, select All Tasks, and then click Import.\par
+{\pntext\f4\'B7\tab}On the Certificate Import Wizard welcome screen, click Next.\par
+{\pntext\f4\'B7\tab}On the File to Import screen, click Browse.\par
+{\pntext\f4\'B7\tab}On the Files of Type screen, select Certificate Revocation List.\par
+{\pntext\f4\'B7\tab}Browse to the location of the signed root CA ProteusRootCA.crl file copied in Step 1, select the file, and then click Open.\par
+{\pntext\f4\'B7\tab}On the File to Import screen, click Next.\par
+{\pntext\f4\'B7\tab}On the Certificate Store screen, accept the default choice and then click Next.\par
+{\pntext\f4\'B7\tab}On the Completing the Certificate Import Wizard screen, click Finish.\par
+
+\pard\sl240\slmult1\par
+\par
+\b Step 5\b0 : Create and Install the temp Web Certificate signed by the temp Root CA\par
+\par
+\f1\fs18 makecert -n "CN=localhost" -iv ProteusRootCA.pvk -ic ProteusRootCA.cer -pe -ss my -sr localmachine -sv "localhost.pvk" localhost.cer\par
+\f0\fs20\par
+\b Step 6\b0 : Assign the Certificate Signed by Root CA to the Website\par
+\par
+\f1\fs18 pvk2pfx -pvk localhost.pvk -spc localhost.cer -pfx localhost.pfx\par
+\f0\fs20\par
+\par
+\b Step 7\b0 : Install Certificate \ldblquote\f1\fs18 localhost\f0\fs20\rdblquote  to IIS local machine.\par
+\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li360\sl240\slmult1 Start IIS7 -> Click on root folder Localhost node\par
+{\pntext\f4\'B7\tab}Double-click on Server Certificates then select \ldblquote Import\rdblquote  from the \ldblquote Action\rdblquote  pane to the right.\par
+{\pntext\f4\'B7\tab}Browse to \f1\fs18 localhost\f0\fs20 .pfx; there is a place to enter password, but ignore it as this is not the password used to protect the private key file. \par
+{\pntext\f4\'B7\tab}Go to the website to assign the server certificate, click on Bindings, highlight the binding and click on Edit\par
+{\pntext\f4\'B7\tab}You can see now the \ldblquote\f1\fs18 localhost\f0\fs20\rdblquote  certificate is showing in the certificates dropdown list; select it and done. \par
+{\pntext\f4\'B7\tab}\par
+
+\pard\sl240\slmult1\par
+\par
+\b Step 8\b0 : Create and Install Your Temporary Client Certificate\par
+\par
+\b\f1 Run the following command in Command Line. Make sure to Change Directory (CD) to the folder containing ProteusRootCA files before running them. \par
+\par
+Don\rquote t forget to add beginning date to be the date it\rquote s run, otherwise the default begin date will be GMT time which is 6 hours later.\par
+\par
+You can create one under your name. Just change the yellow highlight text to your account and assigned edi (not real edi). \par
+\par
+NOTE: This command will also install the cert in your personal cert store. WHEN PROMPTED for a password enter "proteus" (without the quotes)\par
+\b0\par
+makecert -sk \highlight1 Kern.Laurie.Jane.1234567890\highlight0  -iv ProteusRootCA.pvk -n "CN= \highlight1 Kern.Laurie.Jane.1234567890\highlight0\f2\fs17\lang1033 ,OU = CONTRACTOR,OU = PKI,OU = DoD,O = U.S. Government,C = US\f1\fs20\lang9 " \cf2\b -b 08/19/2020\b0  \cf0 -ic ProteusRootCA.cer -sr currentuser -ss my -sky signature \f3\endash\f1 pe\par
+\par
+\b\f0 Optional Step 1\b0 : How to delete a certificate.\par
+\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li720\sl240\slmult1 Run the Microsoft Mangement Console\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li1440\sl240\slmult1 Click Start. Type mmc.\par
+{\pntext\f4\'B7\tab}Click mmc.exe\par
+
+\pard{\pntext\f4\'B7\tab}{\*\pn\pnlvlblt\pnf4\pnindent360{\pntxtb\'B7}}\fi-360\li720\sl240\slmult1 File->Add/Remove Snap In\par
+{\pntext\f4\'B7\tab}Select Certificates\par
+{\pntext\f4\'B7\tab}Click Add button\par
+{\pntext\f4\'B7\tab}Select My user account\par
+{\pntext\f4\'B7\tab}Click Finish button\par
+{\pntext\f4\'B7\tab}Click OK button\par
+{\pntext\f4\'B7\tab}Expand Certificates - Current User\par
+{\pntext\f4\'B7\tab}Expand Personal folder\par
+{\pntext\f4\'B7\tab}Select Certificates\par
+{\pntext\f4\'B7\tab}Right click certificate you want to remove\par
+{\pntext\f4\'B7\tab}Select Delete\par
+
+\pard\sl240\slmult1\f1\par
+\f0\par
+}
+ 

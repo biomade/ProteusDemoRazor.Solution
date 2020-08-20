@@ -51,9 +51,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
             ReturnUrl = returnUrl;
         }
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public IActionResult OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl =  returnUrl ?? Url.Content("~/");
 
             if (Input.DODAccept == false)
             {
