@@ -18,7 +18,10 @@ namespace Proteus.Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
+        [Obsolete]
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
         protected override void OnModelCreating(ModelBuilder builder)
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
         {
             builder.Entity<Product>(ConfigureProduct);
             builder.Entity<Category>(ConfigureCategory);
@@ -31,13 +34,14 @@ namespace Proteus.Infrastructure.Data
             builder.HasKey(ci => ci.Id);
 
             builder.Property(ci => ci.Id)
-               .ForSqlServerUseSequenceHiLo("aspnetrun_type_hilo")
+                .UseHiLo("DBSequenceHiLo")
                .IsRequired();
 
             builder.Property(cb => cb.ProductName)
                 .IsRequired()
                 .HasMaxLength(100);
         }
+
 
         private void ConfigureCategory(EntityTypeBuilder<Category> builder)
         {
@@ -46,7 +50,7 @@ namespace Proteus.Infrastructure.Data
             builder.HasKey(ci => ci.Id);
 
             builder.Property(ci => ci.Id)
-               .ForSqlServerUseSequenceHiLo("aspnetrun_type_hilo")
+                .UseHiLo("DBSequenceHiLo")
                .IsRequired();
 
             builder.Property(cb => cb.CategoryName)

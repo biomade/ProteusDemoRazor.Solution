@@ -15,7 +15,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
     [Authorize(Roles = "Administrator")]
     public class IndexModel : PageModel
     {
-        private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context; //for the unit tests
+       // private readonly Proteus.Infrastructure.Identity.IdentityDbContext _context; //for the unit tests
         private readonly UserManager<User> _userManager;
         private readonly ILogger<IndexModel> _logger;
 
