@@ -27,7 +27,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Users
 
         public IList<User> Inputs { get;set; }
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
             Inputs =  _userManager.Users.AsQueryable().ToList(); 
         }

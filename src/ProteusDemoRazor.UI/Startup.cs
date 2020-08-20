@@ -19,20 +19,19 @@ using SmartBreadcrumbs.Extensions;
 using Proteus.Core.Entities.Identity;
 using Proteus.Infrastructure.Identity.Stores;
 using Proteus.Core.Interfaces.Identity;
-using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using Microsoft.AspNetCore.Http;
 
 namespace Proteus.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, Microsoft.AspNetCore.Hosting.IWebHostEnvironment env)
         {
             Configuration = configuration;
             _env = env;
         }
 
-        private readonly IHostingEnvironment _env;
+        private readonly Microsoft.AspNetCore.Hosting.IWebHostEnvironment _env;
         private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.

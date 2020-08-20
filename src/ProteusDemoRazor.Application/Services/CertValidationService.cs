@@ -33,7 +33,6 @@ namespace Proteus.Application.Services
             List<Tuple<string, string>> certInfo = new List<Tuple<string, string>>();
             //LJK CAN WE GRAB THE CERTIFICATE AND LOG IN  WITH IT
             string userCert = x509.Subject;
-            
             Tuple<string, string> Subject = Tuple.Create<string, string>("Subject", userCert);
             certInfo.Add(Subject);
 

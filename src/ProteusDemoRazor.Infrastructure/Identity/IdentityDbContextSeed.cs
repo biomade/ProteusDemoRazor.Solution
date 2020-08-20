@@ -138,7 +138,7 @@ namespace Proteus.Infrastructure.Identity
                 }
             }
 
-            if (userManager.FindByNameAsync("KERN.LAURIE.JANE").Result == null)
+            if (userManager.FindByNameAsync("Kern.Laurie.Jane").Result == null)
             {
                 User user = new User();
                 user.FirstName = "Laurie";
