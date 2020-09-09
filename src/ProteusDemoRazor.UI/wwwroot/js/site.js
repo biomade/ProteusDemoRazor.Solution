@@ -4,6 +4,7 @@
 // Write your jQuery/Javascript code.
 
 $(document).ready(function () {
+   
     //this sets the active link , 
     //the selected route/page will be selected
     var timeout = $('#TimeOut').val(); // '@AppSettings.SessionTimeOutMinutes';
