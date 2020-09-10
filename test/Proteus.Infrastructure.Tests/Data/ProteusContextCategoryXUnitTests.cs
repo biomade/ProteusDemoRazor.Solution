@@ -8,9 +8,8 @@ using Xunit;
 namespace Proteus.Infrastructure.Tests.Data
 {
     
-    public class ProteusContextCategoryXUnitTests : BaseEFProteusRepoTestFixture
+    public class ProteusContextCategoryXUnitTests : BaseEFProteusTestFixture
     {
-        
 
         [Trait("Infrastructure", "Data")]
         [Fact]

@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
     <PackageReference Include="Moq" Version="4.14.5" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
@@ -35,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Identity\" />
+    <Folder Include="Identity\Stores\" />
     <Folder Include="Repository\" />
     <Folder Include="Services\" />
   </ItemGroup>

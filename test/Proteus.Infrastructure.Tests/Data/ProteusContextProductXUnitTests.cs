@@ -8,7 +8,7 @@ using Xunit;
 namespace Proteus.Infrastructure.Tests.Data
 {
     
-    public class ProteusContextProductXUnitTests : BaseEFProteusRepoTestFixture
+    public class ProteusContextProductXUnitTests : BaseEFProteusTestFixture
     {
        
 

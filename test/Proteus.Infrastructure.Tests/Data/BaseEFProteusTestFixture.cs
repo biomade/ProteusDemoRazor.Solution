@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Proteus.Infrastructure.Tests.Data
 {
-    public abstract class BaseEFProteusRepoTestFixture
+    public abstract class BaseEFProteusTestFixture
     {
         protected static DbContextOptions<ProteusContext> CreateNewContextOptions()
         {
