@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+[assembly: InternalsVisibleTo("Proteus.Infrastructure.Tests")]//added so it can be unit tested
 namespace Proteus.Infrastructure.Exceptions
 {
     public class InfrastructureException : Exception
