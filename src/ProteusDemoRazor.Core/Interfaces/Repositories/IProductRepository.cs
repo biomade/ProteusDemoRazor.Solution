@@ -11,6 +11,6 @@ namespace Proteus.Core.Interfaces.Repositories
     {
         Task<IEnumerable<Product>> GetProductListAsync();
         Task<IEnumerable<Product>> GetProductByNameAsync(string productName);
-        Task<IEnumerable<Product>> GetProductByCategoryAsync(int categoryId);
+        Task<IEnumerable<Product>> GetProductByCategory(int categoryId);
     }
 }

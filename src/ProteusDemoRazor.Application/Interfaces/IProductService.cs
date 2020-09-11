@@ -1,5 +1,6 @@
 ﻿
 using Proteus.Application.ViewModels;
+using Proteus.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,14 +10,14 @@ namespace Proteus.Application.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductViewModel>> GetProductList();
-        Task<ProductViewModel> GetProductById(int productId);
-        Task<IEnumerable<ProductViewModel>> GetProductByName(string productName);
-        Task<IEnumerable<ProductViewModel>> GetProductByCategory(int categoryId);
-        Task<ProductViewModel> Create(ProductViewModel productModel);
-        Task Update(ProductViewModel productModel);
-        Task Delete(ProductViewModel productModel);
-        Task<IEnumerable<CategoryViewModel>> GetCategoryList();
-        Task<IEnumerable<ProductViewModel>> GetProducts(string searchTerm);
+        Task<IEnumerable<Product>> GetProductList();
+        Task<Product> GetProductById(int productId);
+        Task<IEnumerable<Product>> GetProductByName(string productName);
+        Task<IEnumerable<Product>> GetProductByCategory(int categoryId);
+        Task<Product> Create(Product productModel);
+        Task Update(Product productModel);
+        Task Delete(Product productModel);
+        Task<IEnumerable<Category>> GetCategoryList();
+        Task<IEnumerable<Product>> GetProducts(string searchTerm);
     }
 }

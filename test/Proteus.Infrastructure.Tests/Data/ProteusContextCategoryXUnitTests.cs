@@ -85,7 +85,7 @@ namespace Proteus.Infrastructure.Tests.Data
             categories = context.Categories.ToList();
 
             //assert
-            Assert.Equal(1, categories.Count);
+            Assert.Single<Category>(categories);
         }
 
     }

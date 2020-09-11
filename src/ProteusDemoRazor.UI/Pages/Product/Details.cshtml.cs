@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -31,11 +32,12 @@ namespace Proteus.UI.Pages.Product
                 return NotFound();
             }
 
-            Product = await _productService.GetProductById(productId.Value);
-            if (Product == null)
+            var product = await _productService.GetProductById(productId.Value);
+            if (product == null)
             {
                 return NotFound();
             }
+            Product = Application.Mapper.ObjectMapper.Mapper.Map<ProductViewModel>(product);
             return Page();
         }
     }

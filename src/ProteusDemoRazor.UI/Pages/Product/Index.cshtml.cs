@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels;
 using SmartBreadcrumbs.Attributes;
 
@@ -29,7 +30,8 @@ namespace Proteus.UI.Pages.Product
 
         public async Task<IActionResult> OnGetAsync()
         {
-            ProductList = await _productService.GetProducts(SearchTerm);
+            var products = await _productService.GetProducts(SearchTerm);
+            ProductList = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(products);
             return Page();
         }
     }

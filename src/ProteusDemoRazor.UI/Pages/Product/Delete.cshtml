@@ -20,52 +20,52 @@
                 <div class="card-body">
                     <dl class="row">
                         <dt class="col-sm-2">
-                            <label for="Product.ProductName" class="control-label">Product Name</label>
+                            <label for="ProductVM.ProductName" class="control-label">Product Name</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.ProductName)
+                            @Html.DisplayFor(model => model.ProductVM.ProductName)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.QuantityPerUnit" class="control-label"> Quantity/Unit</label>
+                            <label asp-for="ProductVM.QuantityPerUnit" class="control-label"> Quantity/Unit</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.QuantityPerUnit)
+                            @Html.DisplayFor(model => model.ProductVM.QuantityPerUnit)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.UnitPrice" class="control-label">Unit Price</label>
+                            <label asp-for="ProductVM.UnitPrice" class="control-label">Unit Price</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.UnitPrice)
+                            @Html.DisplayFor(model => model.ProductVM.UnitPrice)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.UnitsInStock" class="control-label">Units in Stock</label>
+                            <label asp-for="ProductVM.UnitsInStock" class="control-label">Units in Stock</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.UnitsInStock)
+                            @Html.DisplayFor(model => model.ProductVM.UnitsInStock)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.UnitsOnOrder" class="control-label">Units on Order</label>
+                            <label asp-for="ProductVM.UnitsOnOrder" class="control-label">Units on Order</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.UnitsOnOrder)
+                            @Html.DisplayFor(model => model.ProductVM.UnitsOnOrder)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.ReorderLevel" class="control-label">Reorder Level</label>
+                            <label asp-for="ProductVM.ReorderLevel" class="control-label">Reorder Level</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.ReorderLevel)
+                            @Html.DisplayFor(model => model.ProductVM.ReorderLevel)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.Discontinued" class="control-label">Discontinued</label>
+                            <label asp-for="ProductVM.Discontinued" class="control-label">Discontinued</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.Discontinued)
+                            @Html.DisplayFor(model => model.ProductVM.Discontinued)
                         </dd>
                         <dt class="col-sm-2">
-                            <label asp-for="Product.CategoryId" class="control-label">Category</label>
+                            <label asp-for="ProductVM.CategoryId" class="control-label">Category</label>
                         </dt>
                         <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Product.Category.CategoryName)
+                            @Html.DisplayFor(model => model.ProductVM.Category.CategoryName)
                         </dd>
                     </dl>
                 </div>
@@ -74,7 +74,7 @@
         </div>
     </div>
     <form method="post">
-        <input type="hidden" asp-for="Product.Id" />
+        <input type="hidden" asp-for="ProductVM.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-page="./Index">Back to List</a>
     </form>

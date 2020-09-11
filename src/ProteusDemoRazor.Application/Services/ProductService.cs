@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Proteus.Core.Entities;
 using Proteus.Application.Mapper;
 using Proteus.Application.Interfaces;
-using Proteus.Application.ViewModels;
 using Microsoft.Extensions.Logging;
 using Proteus.Core.Interfaces.Repositories;
 
@@ -25,64 +24,73 @@ namespace Proteus.Application.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProductList()
+        public async Task<IEnumerable<Product>> GetProductList()
         {
             var productList = await _productRepository.GetProductListAsync();
-            var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(productList);
-            return mapped;
+            
+            return productList;
         }
 
-        public async Task<ProductViewModel> GetProductById(int productId)
+        public async Task<Product> GetProductById(int productId)
         {
             var product = await _productRepository.GetByIdAsync(productId);
-            var mapped = ObjectMapper.Mapper.Map<ProductViewModel>(product);
-            return mapped;
+           
+            return product;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProductByName(string productName)
+        public async Task<IEnumerable<Product>> GetProductByName(string productName)
         {
             var productList = await _productRepository.GetProductByNameAsync(productName);
-            var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(productList);
-            return mapped;
+            //var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(productList);
+            return productList;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProductByCategory(int categoryId)
+        public async Task<IEnumerable<Product>> GetProductByCategory(int categoryId)
         {
-            var productList = await _productRepository.GetProductByCategoryAsync(categoryId);
-            var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(productList);
-            return mapped;
+            var productList = await _productRepository.GetProductByCategory(categoryId);
+            //var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(productList);
+            return productList;
         }
 
-        public async Task<ProductViewModel> Create(ProductViewModel productModel)
+        public async Task<Product> Create(Product productModel)
         {
             await ValidateProductIfExist(productModel);
 
-            var mappedEntity = ObjectMapper.Mapper.Map<Product>(productModel);
-            if (mappedEntity == null)
-                throw new ApplicationException($"Entity could not be mapped.");
+            //var mappedEntity = ObjectMapper.Mapper.Map<Product>(productModel);
+            //if (mappedEntity == null)
+            //    throw new ApplicationException($"Entity could not be mapped.");
 
-            var newEntity = await _productRepository.AddAsync(mappedEntity);
+            var newEntity = await _productRepository.AddAsync(productModel);
             _logger.LogInformation($"Entity successfully added - AspnetRunAppService");
 
-            var newMappedEntity = ObjectMapper.Mapper.Map<ProductViewModel>(newEntity);
-            return newMappedEntity;
+            //var newMappedEntity = ObjectMapper.Mapper.Map<ProductViewModel>(newEntity);
+            return newEntity;
         }
 
-        public async Task Update(ProductViewModel productModel)
+        public async Task Update(Product productModel)
         {
             ValidateProductIfNotExist(productModel);
 
             var editProduct = await _productRepository.GetByIdAsync(productModel.Id);
             if (editProduct == null)
                 throw new ApplicationException($"Entity could not be loaded.");
+            //update the properties
+            //editProduct.Category = productModel.Category;
+            editProduct.CategoryId = productModel.CategoryId;
+            editProduct.Discontinued = productModel.Discontinued;
+            editProduct.ProductName = productModel.ProductName;
+            editProduct.QuantityPerUnit = productModel.QuantityPerUnit;
+            editProduct.ReorderLevel = productModel.ReorderLevel;
+            editProduct.UnitPrice = productModel.UnitPrice;
+            editProduct.UnitsInStock = productModel.UnitsInStock;
+            editProduct.UnitsOnOrder = productModel.UnitsOnOrder;
 
-            ObjectMapper.Mapper.Map<ProductViewModel, Product>(productModel, editProduct);
 
             await _productRepository.UpdateAsync(editProduct);
             _logger.LogInformation($"Entity successfully updated - AspnetRunAppService");
         }
 
-        public async Task Delete(ProductViewModel productModel)
+        public async Task Delete(Product productModel)
         {
             ValidateProductIfNotExist(productModel);
             var deletedProduct = await _productRepository.GetByIdAsync(productModel.Id);
@@ -93,39 +101,38 @@ namespace Proteus.Application.Services
             _logger.LogInformation($"Entity successfully deleted - AspnetRunAppService");
         }
 
-        private async Task ValidateProductIfExist(ProductViewModel productModel)
+        private async Task ValidateProductIfExist(Product productModel)
         {
             var existingEntity = await _productRepository.GetByIdAsync(productModel.Id);
             if (existingEntity != null)
                 throw new ApplicationException($"{productModel.ToString()} with this id already exists");
         }
 
-        private void ValidateProductIfNotExist(ProductViewModel productModel)
+        private void ValidateProductIfNotExist(Product productModel)
         {
             var existingEntity = _productRepository.GetByIdAsync(productModel.Id);
             if (existingEntity == null)
                 throw new ApplicationException($"{productModel.ToString()} with this id is not exists");
         }
 
-        public async Task<IEnumerable<CategoryViewModel>> GetCategoryList()
+        public async Task<IEnumerable<Category>> GetCategoryList()
         {
             var category = await _categoryRepository.GetAllAsync();
-            var mapped = ObjectMapper.Mapper.Map<IEnumerable<CategoryViewModel>>(category);
-            return mapped;
+            return category;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProducts(string searchTerm)
+        public async Task<IEnumerable<Product>> GetProducts(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 var list = await _productRepository.GetProductListAsync();
-                var allmapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(list);
-                return allmapped;
+                //var allmapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(list);
+                return list;
             }
 
             var listByName = await _productRepository.GetProductByNameAsync(searchTerm);
-            var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(listByName);
-            return mapped;
+            //var mapped = ObjectMapper.Mapper.Map<IEnumerable<ProductViewModel>>(listByName);
+            return listByName;
         }
     }
 }

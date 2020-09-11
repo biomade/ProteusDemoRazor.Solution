@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels;
 using SmartBreadcrumbs.Attributes;
 
@@ -23,7 +24,7 @@ namespace Proteus.UI.Pages.Product
         }
 
         [BindProperty]
-        public ProductViewModel Product { get; set; }
+        public ProductViewModel ProductVM { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? productId)
         {
@@ -32,11 +33,14 @@ namespace Proteus.UI.Pages.Product
                 return NotFound();
             }
 
-            Product = await _productService.GetProductById(productId.Value);
-            if (Product == null)
+             var product = await _productService.GetProductById(productId.Value);
+
+            if (product == null)
             {
                 return NotFound();
             }
+
+            ProductVM = ObjectMapper.Mapper.Map<ProductViewModel>(product);
             return Page();
         }
 
@@ -47,7 +51,8 @@ namespace Proteus.UI.Pages.Product
                 return NotFound();
             }
 
-            await _productService.Delete(Product);
+            var product =  ObjectMapper.Mapper.Map<Proteus.Core.Entities.Product>(ProductVM);
+            await _productService.Delete(product);
             return RedirectToPage("./Index");
         }
     }

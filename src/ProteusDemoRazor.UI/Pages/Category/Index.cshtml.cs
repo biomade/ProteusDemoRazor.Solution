@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels;
 using Proteus.Core.Entities.Identity;
 using SmartBreadcrumbs.Attributes;
@@ -30,7 +31,8 @@ namespace Proteus.UI.Pages.Category
 
         public async Task<IActionResult> OnGetAsync()
         {
-            CategoryList = (IEnumerable<CategoryViewModel>)await _categoryService.GetCategoryList();
+            var categories = (IEnumerable<CategoryViewModel>)await _categoryService.GetCategoryList();
+             CategoryList = ObjectMapper.Mapper.Map<IEnumerable<CategoryViewModel>>(categories);
             return Page();
         }
     }

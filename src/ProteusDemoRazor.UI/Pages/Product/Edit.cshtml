@@ -19,45 +19,45 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label for="Product.ProductName" class="control-label">Product Name</label>
-                            <input asp-for="Product.ProductName" class="form-control" type="text" />
-                            <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+                            <input asp-for="ProductVM.ProductName" class="form-control" type="text" />
+                            <span asp-validation-for="ProductVM.ProductName" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Product.QuantityPerUnit" class="control-label"> Quantity/Unit</label>
-                            <input asp-for="Product.QuantityPerUnit" class="form-control" />
-                            <span asp-validation-for="Product.QuantityPerUnit" class="text-danger"></span>
+                            <label asp-for="ProductVM.QuantityPerUnit" class="control-label"> Quantity/Unit</label>
+                            <input asp-for="ProductVM.QuantityPerUnit" class="form-control" />
+                            <span asp-validation-for="ProductVM.QuantityPerUnit" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Product.UnitPrice" class="control-label">Unit Price</label>
-                            <input asp-for="Product.UnitPrice" class="form-control" />
-                            <span asp-validation-for="Product.UnitPrice" class="text-danger"></span>
+                            <label asp-for="ProductVM.UnitPrice" class="control-label">Unit Price</label>
+                            <input asp-for="ProductVM.UnitPrice" class="form-control" />
+                            <span asp-validation-for="ProductVM.UnitPrice" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Product.UnitsInStock" class="control-label">Units in Stock</label>
-                            <input asp-for="Product.UnitsInStock" class="form-control" />
-                            <span asp-validation-for="Product.UnitsInStock" class="text-danger"></span>
+                            <label asp-for="ProductVM.UnitsInStock" class="control-label">Units in Stock</label>
+                            <input asp-for="ProductVM.UnitsInStock" class="form-control" />
+                            <span asp-validation-for="ProductVM.UnitsInStock" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Product.UnitsOnOrder" class="control-label">Units on Order</label>
-                            <input asp-for="Product.UnitsOnOrder" class="form-control" />
-                            <span asp-validation-for="Product.UnitsOnOrder" class="text-danger"></span>
+                            <label asp-for="ProductVM.UnitsOnOrder" class="control-label">Units on Order</label>
+                            <input asp-for="ProductVM.UnitsOnOrder" class="form-control" />
+                            <span asp-validation-for="ProductVM.UnitsOnOrder" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Product.ReorderLevel" class="control-label">Reorder Level</label>
-                            <input asp-for="Product.ReorderLevel" class="form-control" />
-                            <span asp-validation-for="Product.ReorderLevel" class="text-danger"></span>
+                            <label asp-for="ProductVM.ReorderLevel" class="control-label">Reorder Level</label>
+                            <input asp-for="ProductVM.ReorderLevel" class="form-control" />
+                            <span asp-validation-for="ProductVM.ReorderLevel" class="text-danger"></span>
                         </div>
                         <div class="form-group form-check">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="Product.Discontinued" /> @Html.DisplayNameFor(model => model.Product.Discontinued)
+                                <input class="form-check-input" asp-for="ProductVM.Discontinued" /> @Html.DisplayNameFor(model => model.ProductVM.Discontinued)
                             </label>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Product.CategoryId" class="control-label">Category</label>
-                            <select asp-for="Product.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                            <label asp-for="ProductVM.CategoryId" class="control-label">Category</label>
+                            <select asp-for="ProductVM.CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                            <span asp-validation-for="ProductVM.CategoryId" class="text-danger"></span>
                         </div>
-                        <input type="hidden" asp-for="Product.Id" />
+                        <input type="hidden" asp-for="ProductVM.Id" />
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

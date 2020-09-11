@@ -41,7 +41,7 @@ namespace Proteus.Infrastructure.Repository
             //    .ToListAsync();
         }
 
-        public async Task<IEnumerable<Product>> GetProductByCategoryAsync(int categoryId)
+        public async Task<IEnumerable<Product>> GetProductByCategory(int categoryId)
         {
             return await _dbContext.Products
                 .Where(x => x.CategoryId == categoryId)

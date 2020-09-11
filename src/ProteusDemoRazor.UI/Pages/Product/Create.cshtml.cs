@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels;
 using SmartBreadcrumbs.Attributes;
 
@@ -31,7 +33,7 @@ namespace Proteus.UI.Pages.Product
         }
 
         [BindProperty]
-        public ProductViewModel Product { get; set; }
+        public ProductViewModel ProductVM { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -40,7 +42,11 @@ namespace Proteus.UI.Pages.Product
                 return Page();
             }
 
-            Product = await _productService.Create(Product);
+            var mappedEntity = ObjectMapper.Mapper.Map<Proteus.Core.Entities.Product>(ProductVM);
+            if (mappedEntity == null)
+                throw new ApplicationException($"Entity could not be mapped.");
+            var product = await _productService.Create(mappedEntity);
+            ProductVM = ObjectMapper.Mapper.Map<ProductViewModel>(product);
             return RedirectToPage("./Index");
         }
     }

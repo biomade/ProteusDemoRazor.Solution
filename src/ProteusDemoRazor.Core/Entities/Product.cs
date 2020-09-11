@@ -1,10 +1,13 @@
 ﻿using Proteus.Core.Entities.Base;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
+   
 namespace Proteus.Core.Entities
 {
+
     public class Product : Entity
     {
         public Product()

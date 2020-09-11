@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
+using Proteus.Application.Mapper;
 using Proteus.Application.ViewModels;
 using SmartBreadcrumbs.Attributes;
+using Proteus.Core.Entities;
 
 namespace Proteus.UI.Pages.Product
 {
@@ -25,7 +28,7 @@ namespace Proteus.UI.Pages.Product
         }
 
         [BindProperty]
-        public ProductViewModel Product { get; set; }
+        public ProductViewModel ProductVM { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? productId)
         {
@@ -34,8 +37,9 @@ namespace Proteus.UI.Pages.Product
                 return NotFound();
             }
 
-            Product = await _productService.GetProductById(productId.Value);
-            if (Product == null)
+            var product = await _productService.GetProductById(productId.Value);
+            ProductVM = ObjectMapper.Mapper.Map<ProductViewModel>(product);
+            if (ProductVM == null)
             {
                 return NotFound();
             }
@@ -53,11 +57,13 @@ namespace Proteus.UI.Pages.Product
 
             try
             {
-                await _productService.Update(Product);
+                //map the vm to the model
+                var product = ObjectMapper.Mapper.Map<Proteus.Core.Entities.Product>(ProductVM);
+                await _productService.Update(product);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(Product.Id))
+                if (!ProductExists(ProductVM.Id))
                 {
                     return NotFound();
                 }
