@@ -32,7 +32,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var roles = base.CreateRoles();
+            var roles = base.GetRoleList();
             foreach (var r in roles)
             {
                 //if the role exists, don't add
@@ -44,7 +44,7 @@ namespace Proteus.Infrastructure.Tests.Identity
                 }
             }
 
-            var users = base.CreateUsers();
+            var users = base.GetUserList();
             foreach (var u in users)
             {               
                 var found = context.Users.Where(ur => ur.UserName == ur.UserName).FirstOrDefault();
@@ -57,7 +57,7 @@ namespace Proteus.Infrastructure.Tests.Identity
 
             //act
             //now add the user roles
-            var userRole = base.CreateUserRole();
+            var userRole = base.CreateUserRoleObj();
             //set up the Admin as the Administrator Role
             var user = context.Users.Where(u => u.UserName == "Admin").FirstOrDefault();
             var role = context.Roles.Where(r => r.Name == "Administrator").FirstOrDefault();
@@ -79,7 +79,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var roles = base.CreateRoles();
+            var roles = base.GetRoleList();
             foreach (var r in roles)
             {
                 //if the role exists, don't add
@@ -91,7 +91,7 @@ namespace Proteus.Infrastructure.Tests.Identity
                 }
             }
 
-            var users = base.CreateUsers();
+            var users = base.GetUserList();
             foreach (var u in users)
             {
                 var found = context.Users.Where(ur => ur.UserName == ur.UserName).FirstOrDefault();
@@ -102,7 +102,7 @@ namespace Proteus.Infrastructure.Tests.Identity
                 }
             }
             //now add the user roles
-            var userRole = base.CreateUserRole();
+            var userRole = base.CreateUserRoleObj();
             //set up the Admin as the Administrator Role
             var user = context.Users.Where(u => u.UserName == "Admin").FirstOrDefault();
             var role = context.Roles.Where(r => r.Name == "Administrator").FirstOrDefault();
@@ -131,7 +131,7 @@ namespace Proteus.Infrastructure.Tests.Identity
         {//assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var roles = base.CreateRoles();
+            var roles = base.GetRoleList();
             foreach (var r in roles)
             {
                 //if the role exists, don't add
@@ -143,7 +143,7 @@ namespace Proteus.Infrastructure.Tests.Identity
                 }
             }
 
-            var users = base.CreateUsers();
+            var users = base.GetUserList();
             foreach (var u in users)
             {
                 var found = context.Users.Where(ur => ur.UserName == ur.UserName).FirstOrDefault();
@@ -154,7 +154,7 @@ namespace Proteus.Infrastructure.Tests.Identity
                 }
             }
             //now add the user roles
-            var userRole = base.CreateUserRole();
+            var userRole = base.CreateUserRoleObj();
             //set up the Admin as the Administrator Role
             var user = context.Users.Where(u => u.UserName == "Admin").FirstOrDefault();
             var role = context.Roles.Where(r => r.Name == "Administrator").FirstOrDefault();
@@ -168,7 +168,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //delete one!
             context.UserRoles.Remove(result[0]);
             context.SaveChanges();
-
+            result = context.UserRoles.ToList();
             //assert
             Assert.Empty(result);
         }

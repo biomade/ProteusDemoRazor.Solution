@@ -32,7 +32,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var users = base.CreateUsers();
+            var users = base.GetUserList();
             context.Add(users[0]);
            
             context.SaveChanges();
@@ -51,7 +51,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var users = base.CreateUsers();
+            var users = base.GetUserList();
             foreach(var u in users)
             {
                 context.Add(u);
@@ -78,7 +78,7 @@ namespace Proteus.Infrastructure.Tests.Identity
         {
             //assemble
             var context = base.GetDBContenxt();
-            var users = base.CreateUsers();
+            var users = base.GetUserList();
             foreach (var u in users)
             {
                 context.Add(u);

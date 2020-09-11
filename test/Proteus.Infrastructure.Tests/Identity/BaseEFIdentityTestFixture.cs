@@ -35,7 +35,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             return dbContext;
         }
 
-        protected List<User> CreateUsers()
+        protected List<User> GetUserList()
         {
             List<User> users = new List<User>();
             //insert seed data into db
@@ -73,29 +73,32 @@ namespace Proteus.Infrastructure.Tests.Identity
             return users;
         }
 
-        protected List<Role> CreateRoles()
+        protected List<Role> GetRoleList()
         {
             List<Role> roles = new List<Role>();
-            Role role1 = new Role();
+            Role role = new Role();
 
-            role1.Name = "Administrator";
-            role1.Description = "Can Do Everything";
-            roles.Add(role1);
+            role.Name = "Administrator";
+            role.NormalizedName = role.Name.ToUpper();
+            role.Description = "Can Do Everything";
+            roles.Add(role);
 
-            Role role2 = new Role();
-            role2.Name = "SuperUser";
-            role2.Description = "Almost everything";
-            roles.Add(role2);
+            role = new Role();
+            role.Name = "SuperUser";
+            role.NormalizedName = role.Name.ToUpper();
+            role.Description = "Almost everything";
+            roles.Add(role);
 
-            Role role3 = new Role();
-            role3.Name = "Visitor";
-            role3.Description = "A user who can look but not touch";
-            roles.Add(role3);
+            role = new Role();
+            role.Name = "Visitor";
+            role.NormalizedName = role.Name.ToUpper();
+            role.Description = "A user who can look but not touch";
+            roles.Add(role);
 
             return roles;
         }
 
-        protected UserRole CreateUserRole()
+        protected UserRole CreateUserRoleObj()
         {
             UserRole userRole = new UserRole();
             //Generic Role

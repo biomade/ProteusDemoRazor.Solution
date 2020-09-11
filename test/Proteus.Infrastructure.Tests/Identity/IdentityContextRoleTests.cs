@@ -32,7 +32,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var role = base.CreateRoles();
+            var role = base.GetRoleList();
 
             context.Add(role[0]);
             context.SaveChanges();
@@ -51,7 +51,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //seed data
-            var roles = base.CreateRoles();
+            var roles = base.GetRoleList();
             foreach (var r in roles)
             {
                 //if the role exists, don't add
@@ -83,7 +83,7 @@ namespace Proteus.Infrastructure.Tests.Identity
             //assemble
             var context = base.GetDBContenxt();
             //insert seed data into db
-            var roles = base.CreateRoles();
+            var roles = base.GetRoleList();
             foreach (var r in roles)
             {
                 //if the role exists, don't add

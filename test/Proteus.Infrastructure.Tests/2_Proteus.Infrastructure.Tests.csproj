@@ -36,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Identity\Stores\" />
     <Folder Include="Repository\" />
     <Folder Include="Services\" />
   </ItemGroup>
