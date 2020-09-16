@@ -33,7 +33,6 @@ namespace Proteus.Application.Tests.Services
             st.Open(OpenFlags.ReadOnly);
             var certCollection = st.Certificates;
             cert = certCollection.Find(X509FindType.FindByIssuerName,"Proteus", false)[0];
-           
 
             //act
             var result = certService.GetCertificateInfo(cert);
