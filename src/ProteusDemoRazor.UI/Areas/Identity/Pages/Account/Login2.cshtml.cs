@@ -30,14 +30,14 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         [BindProperty]
         public Login2ViewModel Input { get; set; }
-        public Login2Model(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration)
+        public Login2Model(SignInManager<User> signInManager, ILogger<Login2Model> logger, IApplicationConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
             _configuration = configuration;
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public IActionResult OnGet(string returnUrl = "")
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -46,11 +46,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-
-
             ReturnUrl = returnUrl;
+
+            return Page();
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {

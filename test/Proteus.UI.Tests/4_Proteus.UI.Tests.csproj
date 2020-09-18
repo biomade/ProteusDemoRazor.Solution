@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <AssemblyName>Proteus.UI.Tests</AssemblyName>
+
+    <RootNamespace>Proteus.UI.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +22,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Account\Manage\" />
+    <Folder Include="Areas\Identity\Roles\" />
+    <Folder Include="Areas\Identity\UserRoles\" />
+    <Folder Include="Areas\Identity\Users\" />
+    <Folder Include="Pages\Category\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ProteusDemoRazor.UI\4_ProteusDemoRazor.UI.csproj" />
   </ItemGroup>
 
 </Project>

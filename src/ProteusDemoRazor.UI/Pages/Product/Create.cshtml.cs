@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Proteus.Application.Interfaces;
 using Proteus.Application.Mapper;
@@ -28,10 +31,20 @@ namespace Proteus.UI.Pages.Product
         public async Task<IActionResult> OnGetAsync()
         {
             var categories = await _productService.GetCategoryList();
-            ViewData["CategoryId"] = new SelectList(categories, "Id", "CategoryName");
+            CategoryList = categories.Select(c =>
+                                  new SelectListItem
+                                  {
+                                      Value = c.Id.ToString(),
+                                      Text = c.CategoryName
+                                  }).ToList();
+
+            //ViewData["CategoryId"] = selectListItems;
             return Page();
         }
 
+        [BindProperty]
+        public List<SelectListItem> CategoryList { get; set; }
+        
         [BindProperty]
         public ProductViewModel ProductVM { get; set; }
 

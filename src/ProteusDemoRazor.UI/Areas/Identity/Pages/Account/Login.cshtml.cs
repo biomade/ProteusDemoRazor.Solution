@@ -1,27 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Proteus.Application.Interfaces;
 using Proteus.Application.ViewModels.Identity.Account;
-using Proteus.Core.Entities.Identity;
+using AllowAnonymousAttribute = Microsoft.AspNetCore.Authorization.AllowAnonymousAttribute;
 
 namespace Proteus.UI.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
-    {
-        private readonly SignInManager<User> _signInManager;
-        private readonly ILogger _logger;
-        private readonly IApplicationConfiguration _configuration;        
+    {   
 
         public string ReturnUrl { get; set; }
         [TempData]
@@ -29,14 +15,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         [BindProperty]
         public LoginViewModel Input { get; set; }
-        public LoginModel(SignInManager<User> signInManager, ILogger<LoginModel> logger, IApplicationConfiguration configuration)
+        public LoginModel()
         {
-            _signInManager = signInManager;
-            _logger = logger;
-            _configuration = configuration;
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public IActionResult OnGet(string returnUrl = "")
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -45,13 +28,10 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
-
-
             ReturnUrl = returnUrl;
+            return Page();
         }
-        public IActionResult OnPostAsync(string returnUrl = null)
+        public IActionResult OnPost(string returnUrl = null)
         {
             returnUrl =  returnUrl ?? Url.Content("~/");
 
