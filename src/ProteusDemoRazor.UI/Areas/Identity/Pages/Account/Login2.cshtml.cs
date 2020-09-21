@@ -19,8 +19,9 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class Login2Model : PageModel
-    {
+    {       
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger _logger;
         private readonly IApplicationConfiguration _configuration;
 
@@ -30,10 +31,11 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         [BindProperty]
         public Login2ViewModel Input { get; set; }
-        public Login2Model(SignInManager<User> signInManager, ILogger<Login2Model> logger, IApplicationConfiguration configuration)
+        public Login2Model(SignInManager<User> signInManager, UserManager<User> userManager, ILogger<Login2Model> logger, IApplicationConfiguration configuration)
         {
             _signInManager = signInManager;
-            _logger = logger;
+            _userManager = userManager;
+             _logger = logger;
             _configuration = configuration;
         }
 
@@ -60,13 +62,14 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true and implement IUserLockoutStore
                 //Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
-                var user = await _signInManager.UserManager.FindByNameAsync(Input.UserName);
+                var user = await _userManager.FindByNameAsync(Input.UserName);
                 if (user == null)
                 {
                     ModelState.Clear();
+                    //this is passed to the Register page!
                     TempData["ViewData"] = "No account found, registration is required.";
                     _logger.LogWarning("No account found, registration required.");
-                    return Redirect("./Register");
+                    return RedirectToPage("./Register");
 
                     //result = Microsoft.AspNetCore.Identity.SignInResult.NotAllowed;
                 }
@@ -89,7 +92,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         //if they have not logged in for x number of days
                         //disable the account!
                         user.IsEnabled = false;
-                        await _signInManager.UserManager.UpdateAsync(user);
+                        await _userManager.UpdateAsync(user);
                         ModelState.Clear();
                         _logger.LogWarning(string.Format("User Account has been Disabled due to lack of use, it has been more than {0} since your last login: {1}.", _configuration.MaxDaysBetweenLogins, user.UserName));
                         return RedirectToPage("./AccountLocked");
@@ -101,7 +104,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                         if (user.LastLoginDate < DateTime.Today)
                         {
                             user.UserOnLine = false;
-                            await _signInManager.UserManager.UpdateAsync(user);
+                            await _userManager.UpdateAsync(user);
                             await _signInManager.SignOutAsync();
                         }
 
@@ -116,7 +119,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     }
 
                     //check the password is correct
-                    bool validPassword = await _signInManager.UserManager.CheckPasswordAsync(user, Input.Password);
+                    bool validPassword = await _userManager.CheckPasswordAsync(user, Input.Password);
                     if (validPassword)
                     {
                         //roles are added as claims as part of a service in the setup
@@ -127,7 +130,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                             //now set the login time
                             user.LastLoginDate = DateTime.Now;
                             user.UserOnLine = true;
-                            await _signInManager.UserManager.UpdateAsync(user);
+                            await _userManager.UpdateAsync(user);
                             _logger.LogInformation("User logged in.");
                             return LocalRedirect(returnUrl);
                         }

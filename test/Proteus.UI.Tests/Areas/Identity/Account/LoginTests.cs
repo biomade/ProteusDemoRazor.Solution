@@ -11,9 +11,8 @@ using Xunit;
 
 namespace Proteus.UI.Tests.Areas.Identity.Account
 {
-    public class LoginTests : LoginTestFixture
-    {
-       
+    public class LoginTests 
+    {       
         public LoginTests()
         {
         }
