@@ -84,7 +84,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_InValidModelStateReturnsPage()
+        public async Task Login_OnPostAsync_InValidModelStateReturnsPageAsync()
         {
             //assemble and set up what each object requires
             var pageModel = GetPageModel();
@@ -92,7 +92,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             pageModel.ModelState.AddModelError("Message.Text", "The Text field is required.");
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<PageResult>(result);
@@ -100,7 +100,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserNotFound_RedirectsToRegisterPage()
+        public async Task Login_OnPostAsync_ValidModel_UserNotFound_RedirectsToRegisterPageAsync()
         {
             var pageModel = GetPageModel();
             //valid Model state
@@ -111,7 +111,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<RedirectToPageResult>(result);
@@ -121,7 +121,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserFound_AccountDisabled()
+        public async Task Login_OnPostAsync_ValidModel_UserFound_AccountDisabledAsync()
         {
             //assemble           
             var httpContext = new DefaultHttpContext();
@@ -149,7 +149,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<RedirectToPageResult>(result);
@@ -159,7 +159,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserFound_IsLockedOut()
+        public async Task Login_OnPostAsync_ValidModel_UserFound_IsLockedOutAsync()
         {
             Login2Model pageModel = GetPageModel();
             //valid Model state
@@ -170,7 +170,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<RedirectToPageResult>(result);
@@ -180,7 +180,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserFound_PastLoginDuration()
+        public async Task Login_OnPostAsync_ValidModel_UserFound_PastLoginDurationAsync()
         {
             Login2Model pageModel = GetPageModel();
             //valid Model state
@@ -191,7 +191,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<RedirectToPageResult>(result);
@@ -201,7 +201,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserFound_UserOnLine()
+        public async Task Login_OnPostAsync_ValidModel_UserFound_UserOnLineAsync()
         {
             Login2Model pageModel = GetPageModel();
             //valid Model state
@@ -212,7 +212,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<PageResult>(result);
@@ -221,7 +221,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserFound_InvalidPassword()
+        public async Task Login_OnPostAsync_ValidModel_UserFound_InvalidPasswordAsync()
         {
             Login2Model pageModel = GetPageModel();
             //valid Model state
@@ -232,7 +232,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(string.Empty).Result;
+            var result = await pageModel.OnPostAsync(string.Empty);
 
             //assert
             Assert.IsType<PageResult>(result);
@@ -241,7 +241,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
 
         [Fact]
         [Trait("UI", "Areas_Identity_Account")]
-        public void Login_OnPostAsync_ValidModel_UserFound_ValidPassword()
+        public async Task Login_OnPostAsync_ValidModel_UserFound_ValidPasswordAsync()
         {
             Login2Model pageModel = GetPageModel();
             //valid Model state
@@ -252,7 +252,7 @@ namespace Proteus.UI.Tests.Areas.Identity.Account
             };
 
             //act
-            var result = pageModel.OnPostAsync(null).Result;
+            var result = await pageModel.OnPostAsync(null);
 
             //assert
             Assert.IsType<LocalRedirectResult>(result);

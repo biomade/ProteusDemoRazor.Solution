@@ -29,7 +29,8 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger, IApplicationConfiguration configuration)
+            ILogger<RegisterModel> logger, 
+            IApplicationConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -41,9 +42,12 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
 
         [BindProperty]
         public RegisterViewModel Input { get; set; }
-        public void OnGet(string returnUrl = null)
+        
+        public IActionResult OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -76,6 +80,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToPage("./AccountDisabled");
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);

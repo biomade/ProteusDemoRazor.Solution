@@ -33,6 +33,7 @@ namespace Proteus.UI.Areas.Identity.Pages.Account.Manage
             _logger = logger;
             _passwordHasher = passwordHasher;
         }
+       
         public async Task<IActionResult> OnGet()
         {
             //now get the user
