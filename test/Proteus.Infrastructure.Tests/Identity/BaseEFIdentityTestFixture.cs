@@ -43,9 +43,9 @@ namespace Proteus.Infrastructure.Tests.Identity
             user.FirstName = "AdminFirstName";
             user.LastName = "AdminLastName";
             user.UserName = "Admin";
-            user.NormalizedUserName = user.UserName.ToUpper();
+            user.NormalizedUserName = "Admin".ToUpper();
             user.Email = "admin@gmail.com";
-            user.NormalizedEmail = user.Email.ToUpper();
+            user.NormalizedEmail = "admin@gmail.com".ToUpper();
             user.IsEnabled = true;
             user.IsLockedOut = false;
             user.CreatedDate = System.DateTime.Now;
@@ -59,9 +59,9 @@ namespace Proteus.Infrastructure.Tests.Identity
             user2.FirstName = "Mary";
             user2.LastName = "Lamb";
             user2.UserName = "MaryLamb";
-            user2.NormalizedUserName = user.UserName.ToUpper();
+            user2.NormalizedUserName = "MaryLamb".ToUpper();
             user2.Email = "mary.lamb@gmail.com";
-            user2.NormalizedEmail = user.Email.ToUpper();
+            user2.NormalizedEmail = "mary.lamb@gmail.com".ToUpper();
             user2.IsEnabled = true;
             user2.IsLockedOut = false;
             user2.CreatedDate = System.DateTime.Now;
