@@ -109,6 +109,5 @@ namespace Proteus.UI.Tests.Areas.Identity.Account.Manage
             };
             return pageModel;
         }
-
     }
 }
