@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proteus.Infrastructure.Data;
 
 namespace Proteus.Infrastructure.Migrations
 {
     [DbContext(typeof(ProteusContext))]
-    partial class ProteusContextModelSnapshot : ModelSnapshot
+    [Migration("20201202182309_initApp")]
+    partial class initApp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

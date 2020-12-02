@@ -18,7 +18,7 @@ namespace Proteus.UI.Tests
         public void Setup()
         {
             // Arrange
-            _pageModel = new IndexModel();
+          //  _pageModel = new IndexModel();
         }
 
         [Test]
